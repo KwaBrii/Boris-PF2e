@@ -1,146 +1,577 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Boris Leuenaar</title>
-        <link rel="stylesheet" href="style.css">
-        <script src="script.js" defer></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <body>
-        <header>
-            <p class="header-kicker">
-                ARQUIVO DE PERSONAGEM · PATHFINDER 2E
-            </p>
+    <meta name="description" content="Dossiê de Boris Leuenaar, personagem de Pathfinder 2e.">
+    <title>Boris Leuenaar | The Character Dossier</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
 
-            <h1>Boris Leuenaar</h1>
+<body>
 
-            <p class="header-subtitle">
-                Strength of Thousands · Registros de uma jornada
-            </p>
-
-            <div class="header-divider" aria-hidden="true">
-                <span>✦</span>
-            </div>
-        </header>
-
-        <nav aria-label="Navegação principal">
-            <a href="#inicio">Início</a>
-            <a href="#perfil">Perfil</a>
-            <a href="#inventario">Inventário</a>
-            <a href="#atributos">Atributos</a>
-            <a href="#diario">Diário e Correspondências</a>
-            <a href="#playlist">Playlist</a>
+    <!-- MENU LATERAL -->
+    <aside class="side-menu" aria-label="Menu principal">
+        <a class="menu-emblem" href="#inicio" aria-label="Voltar ao início">
+            ✦
+        </a>
+        <div class="menu-caption">DOSSIÊ</div>
+        <nav class="side-nav" aria-label="Seções do dossiê">
+            <button class="nav-link is-active"
+                    type="button"
+                    data-target="inicio"
+                    aria-label="Início"
+                    aria-current="page">
+                <span class="nav-number">00</span>
+                <span class="nav-label">Início</span>
+            </button>
+            <button class="nav-link"
+                    type="button"
+                    data-target="perfil"
+                    aria-label="Perfil"
+                    aria-current="false">
+                <span class="nav-number">01</span>
+                <span class="nav-label">Perfil</span>
+            </button>
+            <button class="nav-link"
+                    type="button"
+                    data-target="inventario"
+                    aria-label="Inventário"
+                    aria-current="false">
+                <span class="nav-number">02</span>
+                <span class="nav-label">Inventário</span>
+            </button>
+            <button class="nav-link"
+                    type="button"
+                    data-target="atributos"
+                    aria-label="Atributos"
+                    aria-current="false">
+                <span class="nav-number">03</span>
+                <span class="nav-label">Atributos</span>
+            </button>
+            <button class="nav-link"
+                    type="button"
+                    data-target="diario"
+                    aria-label="Diário"
+                    aria-current="false">
+                <span class="nav-number">04</span>
+                <span class="nav-label">Diário</span>
+            </button>
+            <button class="nav-link"
+                    type="button"
+                    data-target="relacoes"
+                    aria-label="Relações"
+                    aria-current="false">
+                <span class="nav-number">05</span>
+                <span class="nav-label">Relações</span>
+            </button>
+            <button class="nav-link"
+                    type="button"
+                    data-target="playlist"
+                    aria-label="Playlist"
+                    aria-current="false">
+                <span class="nav-number">06</span>
+                <span class="nav-label">Playlist</span>
+            </button>
         </nav>
+        <div class="menu-bottom-mark" aria-hidden="true">✧</div>
 
-        <main>
-            <!-- Página 1: Início -->
-            <section id="inicio" class="home-page">
+    </aside>
 
-                <div class="home-heading">
-                    <span class="section-kicker">REGISTRO PRINCIPAL</span>
-                    <h2>Arquivo de Boris</h2>
-                    <p>Uma jornada de estudos, descobertas e memórias.</p>
+    <!-- ÁREA PRINCIPAL -->
+    <main class="world" id="world" tabindex="0" aria-label="Páginas do dossiê">
+        <!-- PÁGINA 00: INÍCIO / CAPA -->
+        <section id="inicio"
+                 class="screen screen-cover"
+                 aria-labelledby="cover-title">
+            <!-- Área da ilustração -->
+            <div class="cover-art">
+                <div class="cover-art-frame">
+                    <div class="cover-moon"></div>
+                    <div class="cover-placeholder art-placeholder">
+                        <span class="placeholder-symbol">✦</span>
+                        <span>RETRATO DE BORIS</span>
+                        <small>Espaço reservado para ilustração</small>
+                    </div>
+                </div>
+                <span class="cover-ornament ornament-one">✧</span>
+                <span class="cover-ornament ornament-two">✦</span>
+                <span class="cover-side-note">
+                    STRENGTH OF THOUSANDS
+                </span>
+                <div class="cover-art-caption">
+                    <span>PERSONAGEM Nº 001</span>
+                    <span>PATHFINDER 2E</span>
+                </div>
+            </div>
+
+            <!-- Informações da capa -->
+            <div class="cover-info">
+                <div class="topline">
+                    <span class="topline-code">
+                        REGISTRO DE PERSONAGEM Nº 001
+                    </span>
+
+                    <span class="topline-code">
+                        RPG / DOSSIÊ
+                    </span>
                 </div>
 
-                <div class="home-layout">
+                <div class="cover-title-block">
+                    <p class="cover-kicker">
+                        THE CHARACTER DOSSIER
+                    </p>
+                    <h1 id="cover-title">
+                        Boris Leuenaar
+                    </h1>
+                    <p class="cover-epithet">
+                        Strength of Thousands · Registros de uma jornada
+                    </p>
 
-                    <!-- Espaço para o retrato -->
-                    <div class="home-portrait">
-                        <div class="portrait-frame">
-                            <span class="portrait-symbol">✦</span>
-                            <p>Retrato de Boris</p>
+                </div>
+                <div class="ornamental-rule" aria-hidden="true">
+                    ✦
+                </div>
+                <p class="cover-intro">
+                    Entre estudos, descobertas e experiências na
+                    Magaambya, este arquivo reúne os registros de Boris
+                    e os caminhos percorridos ao longo de sua aventura.
+                </p>
+                <!-- Atalhos para as páginas -->
+                <p class="cover-menu-label">
+                    SELECIONE UMA SEÇÃO
+                </p>
+
+                <div class="cover-menu" aria-label="Atalhos do dossiê">
+                    <button type="button" data-target="perfil">
+                        <span>01</span>
+                        Perfil
+                        <b aria-hidden="true">↗</b>
+                    </button>
+                    <button type="button" data-target="inventario">
+                        <span>02</span>
+                        Inventário
+                        <b aria-hidden="true">↗</b>
+                    </button>
+                    <button type="button" data-target="atributos">
+                        <span>03</span>
+                        Atributos
+                        <b aria-hidden="true">↗</b>
+                    </button>
+                    <button type="button" data-target="diario">
+                        <span>04</span>
+                        Diário
+                        <b aria-hidden="true">↗</b>
+                    </button>
+                    <button type="button" data-target="relacoes">
+                        <span>05</span>
+                        Relações
+                        <b aria-hidden="true">↗</b>
+                    </button>
+                    <button type="button" data-target="playlist">
+                        <span>06</span>
+                        Playlist
+                        <b aria-hidden="true">↗</b>
+                    </button>
+                </div>
+                <div class="cover-footer">
+                    <span>CONFIDENCIAL · USO DO MESTRE E JOGADOR</span>
+                    <span>DESLIZE OU USE ← →</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA 01: PERFIL -->
+        <section id="perfil"
+                 class="screen screen-paper profile-screen"
+                 aria-labelledby="profile-heading">
+            <div class="screen-heading">
+                <div>
+                    <span class="eyebrow">
+                        <i>01</i> REGISTRO INDIVIDUAL
+                    </span>
+                    <h2 id="profile-heading">Perfil</h2>
+                </div>
+                <span class="heading-side-note">
+                    ARQUIVO Nº 001
+                </span>
+            </div>
+
+            <div class="profile-layout">
+                <!-- Retrato -->
+                <div class="profile-art-panel">
+                    <div class="profile-art-wrap">
+                        <div class="art-placeholder">
+                            <span class="placeholder-symbol">✦</span>
+                            <span>RETRATO DE BORIS</span>
                             <small>Espaço reservado para ilustração</small>
+                        </div>
+                    </div>
+                    <div class="art-index">
+                        <span>FIG. 01</span>
+                        <span>BORIS LEUENAAR</span>
+                    </div>
+                    <span class="art-vertical-text">
+                        ARCHIVUM PERSONAE
+                    </span>
+                </div>
+
+                <!-- Informações do personagem -->
+                <div class="profile-content">
+                    <div class="profile-title-row">
+                        <div>
+                            <span class="eyebrow">
+                                <i>IDENTIFICAÇÃO</i>
+                            </span>
+                            <h3>Boris Leuenaar</h3>
+                            <p class="profile-role">
+                                Strength of Thousands · Magaambya
+                            </p>
+                        </div>
+                        <div class="wax-seal" aria-label="Selo do personagem">
+                            <span>✦</span>
+                            <small>BL</small>
                         </div>
                     </div>
 
                     <!-- Informações principais -->
-                    <div class="home-information">
+                    <div class="fact-grid">
+                        <div class="fact">
+                            <span>Ancestralidade</span>
+                            <strong>Elf</strong>
+                        </div>
+                        <div class="fact">
+                            <span>Herança</span>
+                            <strong>Nephilim ✧ Hellspawn</strong>
+                        </div>
+                        <div class="fact">
+                            <span>Classe</span>
+                            <strong>Oracle</strong>
+                        </div>
+                        <div class="fact">
+                            <span>Mistério</span>
+                            <strong>Lore</strong>
+                        </div>
+                        <div class="fact">
+                            <span>Nível</span>
+                            <strong>1</strong>
+                        </div>
+                        <div class="fact">
+                            <span>Antecedente</span>
+                            <strong>Sponsored by Teacher Ot</strong>
+                        </div>
+                    </div>
+                    <div class="paper-divider" aria-hidden="true">
+                        ✧
+                    </div>
+                    <!-- Apresentação -->
+                    <div class="profile-bio">
+                        <div class="subheading-row">
+                            <h4>Sobre esta jornada</h4>
 
-                        <div class="home-description">
-                            <h3>Sobre esta jornada</h3>
-                            <p>
-                                Entre estudos, descobertas e experiências na
-                                Magaambya, este arquivo reúne os registros
-                                de Boris e os caminhos percorridos ao longo
-                                de sua aventura.
-                            </p>
+                            <span>
+                                REGISTRO DE CAMPANHA
+                            </span>
                         </div>
 
-                        <div class="quick-info">
-
-                            <div class="info-card">
-                                <span>Ancestralidade</span>
-                                <strong>A definir</strong>
-                            </div>
-
-                            <div class="info-card">
-                                <span>Heritage</span>
-                                <strong>A definir</strong>
-                            </div>
-
-                            <div class="info-card">
-                                <span>Classe</span>
-                                <strong>A definir</strong>
-                            </div>
-
-                            <div class="info-card">
-                                <span>Mistério</span>
-                                <strong>A definir</strong>
-                            </div>
-
-                            <div class="info-card">
-                                <span>Nível</span>
-                                <strong>A definir</strong>
-                            </div>
-
-                            <div class="info-card">
-                                <span>Antecedente</span>
-                                <strong>A definir</strong>
-                            </div>
-
-                        </div>
-
-                        <div class="home-footer">
-                            <span>PATHFINDER 2E</span>
-                            <span>STRENGTH OF THOUSANDS</span>
-                        </div>
-
+                        <p>
+                            Entre estudos, descobertas e experiências na
+                            Magaambya, este arquivo reúne os registros
+                            de Boris e os caminhos percorridos ao longo
+                            de sua aventura.
+                        </p>
                     </div>
                 </div>
+            </div>
+        </section>
 
-            </section>
+        <!-- PÁGINA 02: INVENTÁRIO -->
+        <section id="inventario"
+                 class="screen screen-dark inventory-screen"
+                 aria-labelledby="inventory-heading">
 
-            <!-- Página 2: Perfil -->
-             <section id="perfil">
-                <h2>Perfil</h2>
-                <p>Informações pessoais e características de Boris Leuenaar.</p>
-             </section>
+            <div class="inventory-layout">
+                <!-- Painel lateral do inventário -->
+                <aside class="inventory-aside">
+                    <span class="eyebrow">
+                        <i>02</i> ARQUIVO DE POSSES
+                    </span>
+                    <h2 id="inventory-heading">
+                        Inventário
+                    </h2>
+                    <p class="inventory-lead">
+                        Equipamentos, armas, itens e moedas
+                        registrados durante a jornada.
+                    </p>
+                    <div class="inventory-emblem" aria-hidden="true">
+                        <div class="emblem-ring"></div>
+                        <span class="emblem-star">✧</span>
+                    </div>
 
-            <!-- Página 3: Inventário -->
-             <section id="inventario">
-                <h2>Inventário</h2>
-                <p>Equipamentos, armas, itens e moedas.</p>
-             </section>
+                    <div class="capacity-card">
 
-            <!-- Página 4: Atributos -->
-             <section id="atributos">
-                <h2>Atributos</h2>
-                <p>Atributos, perícias e estatísticas de Pathfinder 2e.</p>
-             </section>
+                        <span>ESTADO DO ACERVO</span>
 
-            <!-- Página 5: Diário e Correspondências -->
-             <section id="diario">
-                <h2>Diário e Correspondências</h2>
-                <p>Anotações, memórias, cartas e correspondências.</p>
-             </section>
+                        <strong>Em construção</strong>
 
-            <!-- Página 6: Playlist -->
-             <section id="playlist">
-                <h2>Playlist</h2>
-                <p>Músicas que fazem parte da história de Boris.</p>
-             </section>
-        </main>
-    </body>
+                        <div class="capacity-track">
+                            <span></span>
+                        </div>
+
+                        <small>
+                            Os itens serão registrados nesta seção.
+                        </small>
+                    </div>
+                    <div class="inventory-aside-footer">
+                        BORIS LEUENAAR · DOSSIÊ 001
+                    </div>
+                </aside>
+
+                <!-- Área dos itens -->
+                <div class="inventory-main">
+                    <div class="inventory-main-heading">
+                        <div>
+                            <span class="eyebrow">
+                                <i>02</i> ITENS REGISTRADOS
+                            </span>
+
+                            <h3>Acervo pessoal</h3>
+                        </div>
+                        <span class="inventory-total">
+                            REGISTROS EM CONSTRUÇÃO
+                        </span>
+                    </div>
+
+
+                    <div class="inventory-grid" id="inventory-grid">
+                        <div class="inventory-empty-state">
+                            <span>✧</span>
+                            <p>
+                                Os itens do inventário aparecerão aqui.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="inventory-footnote">
+                        <span>✦</span>
+                        Equipamentos, itens e moedas de Boris.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- PÁGINA 03: ATRIBUTOS -->
+        <section id="atributos"
+                 class="screen screen-paper stats-screen"
+                 aria-labelledby="stats-heading">
+
+            <!-- Painel lateral -->
+            <aside class="stats-sidebar">
+                <span class="eyebrow">
+                    <i>03</i> FICHA DE PERSONAGEM
+                </span>
+                <h2 id="stats-heading">
+                    Atributos
+                </h2>
+                <p>
+                    Atributos, perícias, proficiências e estatísticas
+                    de Pathfinder 2e.
+                </p>
+                <div class="level-plaque">
+                    <span>NÍVEL</span>
+                    <strong>1</strong>
+                    <small>Personagem</small>
+                </div>
+                <div class="stats-side-note">
+                    <span>✧</span>
+                    <p>
+                        Registro das capacidades e habilidades
+                        desenvolvidas ao longo da jornada.
+                    </p>
+                </div>
+            </aside>
+
+            <!-- Área dos atributos -->
+            <div class="stats-main">
+                <div class="stats-main-heading">
+                    <div>
+                        <span class="eyebrow">
+                            CARACTERÍSTICAS
+                        </span>
+                        <h3>Estatísticas</h3>
+                    </div>
+                    <span class="heading-side-note">
+                        PATHFINDER 2E
+                    </span>
+                </div>
+                <div class="stats-empty-state">
+                    <span>✧</span>
+                    <h4>Registro de atributos</h4>
+                    <p>
+                        Os valores de atributos, perícias e demais
+                        estatísticas de Boris serão organizados aqui.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA 04: DIÁRIO -->
+        <section id="diario"
+                 class="screen journal-screen"
+                 aria-labelledby="journal-heading">
+
+            <!-- Introdução do diário -->
+            <div class="journal-left">
+                <span class="eyebrow">
+                    <i>04</i> MEMÓRIAS E CORRESPONDÊNCIAS
+                </span>
+                <h2 id="journal-heading">
+                    Diário
+                </h2>
+                <p>
+                    Anotações, memórias, cartas e correspondências
+                    que registram os acontecimentos da jornada de Boris.
+                </p>
+                <div class="journal-left-bottom">
+                    REGISTROS · CARTAS · MEMÓRIAS
+                </div>
+            </div>
+
+
+            <!-- Área de escrita -->
+            <div class="journal-right">
+                <span class="journal-decoration" aria-hidden="true">
+                    ✧
+                </span>
+                <article class="journal-paper">
+                    <div class="journal-paper-top">
+                        <span>ARQUIVO DE REGISTROS</span>
+                        <i>CONFIDENCIAL</i>
+                    </div>
+                    <h3>
+                        Diário e Correspondências
+                    </h3>
+                    <p>
+                        Este espaço será destinado aos registros
+                        pessoais de Boris, incluindo acontecimentos
+                        importantes, memórias e correspondências
+                        trocadas durante sua jornada.
+                    </p>
+                    <div class="journal-signature">
+                        <span>BORIS LEUENAAR</span>
+                        <b>✧</b>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- PÁGINA 05: RELAÇÕES -->
+        <section id="relacoes"
+                 class="screen screen-paper relations-screen"
+                 aria-labelledby="relations-heading">
+            <div class="screen-heading">
+                <div>
+                    <span class="eyebrow">
+                        <i>05</i> LAÇOS E VÍNCULOS
+                    </span>
+                    <h2 id="relations-heading">
+                        Relações
+                    </h2>
+                </div>
+                <span class="heading-side-note">
+                    PERSONAGENS CONHECIDOS
+                </span>
+            </div>
+
+            <div class="relations-content">
+                <p class="relations-intro">
+                    Um registro das pessoas que Boris encontra ao longo
+                    de sua jornada e dos vínculos construídos com elas.
+                </p>
+                <div class="relations-grid">
+                    <div class="relations-empty-state">
+                        <span>✧</span>
+                        <h3>Laços e relacionamentos</h3>
+                        <p>
+                            Os personagens e seus relacionamentos
+                            com Boris serão registrados aqui.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PÁGINA 06: PLAYLIST -->
+        <section id="playlist"
+                 class="screen screen-dark playlist-screen"
+                 aria-labelledby="playlist-heading">
+
+            <div class="playlist-content">
+                <span class="eyebrow">
+                    <i>06</i> TRILHA SONORA
+                </span>
+                <h2 id="playlist-heading">
+                    Playlist
+                </h2>
+                <p class="playlist-intro">
+                    Músicas que acompanham a história de Boris,
+                    seus momentos e os acontecimentos de sua jornada.
+                </p>
+                <div class="playlist-empty-state">
+                    <span>♫</span>
+                    <h3>Trilha sonora de Boris</h3>
+                    <p>
+                        As músicas relacionadas ao personagem
+                        serão reunidas nesta seção.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- BARRA INFERIOR DE NAVEGAÇÃO -->
+    <footer class="bottom-hud" aria-label="Controles de navegação">
+
+        <div class="page-indicator" aria-label="Página 00 de 06">
+            <strong id="current-page">00</strong>
+            <span>/</span>
+            <span id="total-pages">06</span>
+        </div>
+
+        <div class="progress-track"
+             role="progressbar"
+             aria-label="Progresso pelas páginas"
+             aria-valuemin="0"
+             aria-valuemax="6"
+             aria-valuenow="0"
+             id="page-progress-track">
+
+            <span id="page-progress"></span>
+        </div>
+
+        <div class="bottom-controls">
+            <button type="button"
+                    id="previous-page"
+                    aria-label="Página anterior"
+                    disabled>
+                ←
+            </button>
+            <button type="button"
+                    id="next-page"
+                    aria-label="Próxima página">
+                →
+            </button>
+        </div>
+
+        <span class="scroll-hint">
+            DESLIZE OU USE ← →
+        </span>
+    </footer>
+
+</body>
 </html>
