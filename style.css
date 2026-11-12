@@ -3,14 +3,17 @@
 ================================= */
 
 :root {
-    --black: #090d16;
-    --dark-blue: #111a2a;
-    --blue: #243750;
-    --blue-light: #6f91b3;
-    --gold: #ad9257;
-    --gold-light: #d3bd83;
-    --text: #e5e1d6;
-    --text-muted: #a9a9a5;
+    --black: #121923;
+    --dark-blue: #1B2A3B;
+    --blue: #2C4B68;
+    --blue-light: #7895AE;
+
+    --silver: #8798A8;
+    --silver-light: #BBC2C9;
+
+    --text: #E5E9ED;
+    --text-muted: #AEB8C1;
+
     --paper: #d9c9a5;
     --paper-dark: #bba77e;
     --ink: #302b24;
@@ -48,12 +51,12 @@ header {
     margin: 0 auto;
     padding: 55px 20px 35px;
     text-align: center;
-    border-bottom: 1px solid var(--gold);
+    border-bottom: 1px solid var(--silver);
 }
 
 header h1 {
     margin: 0;
-    color: var(--gold-light);
+    color: var(--silver-light);
     font-size: clamp(2.5rem, 6vw, 4rem);
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -95,8 +98,8 @@ nav a {
 }
 
 nav a:hover {
-    color: var(--gold-light);
-    border-color: var(--gold);
+    color: var(--silver-light);
+    border-color: var(--silver);
     background: rgba(36, 55, 80, 0.5);
 }
 
@@ -125,7 +128,7 @@ section {
 section h2 {
     margin-top: 0;
     padding: 12px;
-    color: var(--gold-light);
+    color: var(--silver-light);
     font-size: 1.7rem;
     font-weight: normal;
     letter-spacing: 0.08em;
@@ -180,7 +183,7 @@ section p {
 ================================= */
 
 a:focus-visible {
-    outline: 2px solid var(--gold-light);
+    outline: 2px solid var(--silver-light);
     outline-offset: 4px;
 }
 
@@ -211,7 +214,7 @@ main {
     scroll-snap-type: x mandatory;
     padding-bottom: 18px;
     scrollbar-width: thin;
-    scrollbar-color: var(--gold) var(--dark-blue);
+    scrollbar-color: var(--silver) var(--dark-blue);
 }
 
 /* Barra de rolagem */
@@ -225,7 +228,7 @@ main::-webkit-scrollbar-track {
 }
 
 main::-webkit-scrollbar-thumb {
-    background: var(--gold);
+    background: var(--silver);
     border-radius: 10px;
 }
 
@@ -237,4 +240,528 @@ section {
     min-height: 520px;
     margin-bottom: 0;
     scroll-snap-align: start;
+}
+
+/* =================================
+   DETALHES DO CABEÇALHO
+================================= */
+
+.header-kicker {
+    margin: 0 0 12px;
+    color: var(--blue-light);
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+}
+
+header h1 {
+    margin: 0;
+    color: var(--silver-light);
+    font-size: clamp(3rem, 8vw, 5rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-shadow: 0 4px 20px rgba(173, 146, 87, 0.2);
+}
+
+.header-subtitle {
+    margin: 12px 0 20px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+}
+
+.header-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: min(360px, 80%);
+    margin: 0 auto;
+}
+
+.header-divider::before,
+.header-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        var(--silver)
+    );
+}
+
+.header-divider::after {
+    background: linear-gradient(
+        to left,
+        transparent,
+        var(--silver)
+    );
+}
+
+.header-divider span {
+    color: var(--silver-light);
+    font-size: 1.1rem;
+}
+
+/* =================================
+   MENU ESTILO RPG
+================================= */
+
+nav {
+    gap: 10px;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--silver);
+}
+
+nav a {
+    position: relative;
+    padding: 10px 17px;
+    color: var(--text-muted);
+    background: linear-gradient(
+        180deg,
+        rgba(36, 55, 80, 0.35),
+        rgba(9, 13, 22, 0.7)
+    );
+    border: 1px solid rgba(173, 146, 87, 0.3);
+    border-radius: 3px;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    transition: all 0.25s ease;
+}
+
+/* Pequeno símbolo decorativo */
+
+nav a::before {
+    content: "✦";
+    margin-right: 8px;
+    color: var(--silver);
+    font-size: 0.7rem;
+}
+
+/* Página selecionada */
+
+nav a:focus,
+nav a:focus-visible {
+    color: var(--silver-light);
+    border-color: var(--silver-light);
+}
+
+/* Destaque da página atualmente aberta */
+
+body:has(main section:target) nav a[href="#inicio"] {
+    color: var(--text-muted);
+    border-color: rgba(173, 146, 87, 0.3);
+    background: rgba(36, 55, 80, 0.35);
+}
+
+body:has(#inicio:target) nav a[href="#inicio"],
+body:has(#perfil:target) nav a[href="#perfil"],
+body:has(#inventario:target) nav a[href="#inventario"],
+body:has(#atributos:target) nav a[href="#atributos"],
+body:has(#diario:target) nav a[href="#diario"],
+body:has(#playlist:target) nav a[href="#playlist"] {
+    color: var(--silver-light);
+    border-color: var(--silver-light);
+    background: linear-gradient(
+        180deg,
+        rgba(36, 55, 80, 0.95),
+        rgba(17, 26, 42, 1)
+    );
+
+    box-shadow: inset 0 -2px 0 var(--silver);
+}
+
+/* Símbolo da página selecionada */
+
+body:has(main section:target) nav a[href="#inicio"]::before {
+    color: var(--silver);
+}
+
+body:has(#inicio:target) nav a[href="#inicio"]::before,
+body:has(#perfil:target) nav a[href="#perfil"]::before,
+body:has(#inventario:target) nav a[href="#inventario"]::before,
+body:has(#atributos:target) nav a[href="#atributos"]::before,
+body:has(#diario:target) nav a[href="#diario"]::before,
+body:has(#playlist:target) nav a[href="#playlist"]::before {
+    color: var(--silver-light);
+}
+
+/* Painel atualmente selecionado */
+
+section:target {
+    border-color: var(--silver-light);
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.35),
+        0 0 12px rgba(173, 146, 87, 0.12);
+}
+
+
+/* =================================
+   PÁGINA INICIAL
+================================= */
+
+.home-page {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Título da página */
+
+.home-heading {
+    text-align: center;
+}
+
+.section-kicker {
+    color: var(--blue-light);
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+}
+
+.home-heading h2 {
+    margin: 8px 0;
+    padding: 0;
+    border: none;
+    font-size: 2rem;
+}
+
+.home-heading p {
+    margin: 0;
+}
+
+/* Organização do conteúdo */
+
+.home-layout {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.4fr);
+    gap: 30px;
+}
+
+/* Retrato */
+
+.home-portrait {
+    display: flex;
+    align-items: stretch;
+}
+
+.portrait-frame {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 390px;
+    padding: 25px;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(36, 55, 80, 0.8),
+            rgba(9, 13, 22, 0.95)
+        );
+
+    border: 1px solid var(--silver);
+    outline: 1px solid rgba(173, 146, 87, 0.3);
+    outline-offset: -8px;
+}
+
+.portrait-symbol {
+    color: var(--silver-light);
+    font-size: 3rem;
+}
+
+.portrait-frame p {
+    margin: 12px 0 3px;
+    color: var(--silver-light);
+    letter-spacing: 0.1em;
+}
+
+.portrait-frame small {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+/* Informações */
+
+.home-information {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.home-description {
+    padding: 20px;
+
+    background: rgba(9, 13, 22, 0.45);
+    border-left: 2px solid var(--silver);
+}
+
+.home-description h3 {
+    margin: 0 0 10px;
+    color: var(--silver-light);
+    font-weight: normal;
+    letter-spacing: 0.08em;
+}
+
+.home-description p {
+    margin: 0;
+    line-height: 1.8;
+}
+
+/* Cartões de informações rápidas */
+
+.quick-info {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    padding: 16px;
+
+    background: rgba(36, 55, 80, 0.35);
+    border: 1px solid rgba(173, 146, 87, 0.35);
+}
+
+.info-card span {
+    color: var(--blue-light);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.info-card strong {
+    color: var(--silver-light);
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+/* Rodapé da apresentação */
+
+.home-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    padding-top: 15px;
+    border-top: 1px solid rgba(173, 146, 87, 0.4);
+
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+}
+
+/* Adaptação para celulares */
+
+@media (max-width: 700px) {
+    .home-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .portrait-frame {
+        min-height: 300px;
+    }
+}
+
+
+/* =================================
+   NOVA IDENTIDADE VISUAL
+================================= */
+
+header {
+    border-bottom-color: rgba(187, 194, 201, 0.4);
+}
+
+nav {
+    border-bottom-color: rgba(187, 194, 201, 0.35);
+}
+
+nav a {
+    border-color: rgba(187, 194, 201, 0.18);
+}
+
+nav a:hover {
+    border-color: var(--silver-light);
+}
+
+section {
+    border-color: rgba(120, 149, 174, 0.42);
+}
+
+section h2 {
+    border-bottom-color: rgba(120, 149, 174, 0.4);
+}
+
+#diario {
+    background: linear-gradient(
+        135deg,
+        var(--paper),
+        #C8D0D6
+    );
+
+    border-color: var(--paper-dark);
+}
+
+#diario h2 {
+    color: #46545F;
+    border-bottom-color: var(--paper-dark);
+}
+
+#diario p {
+    color: var(--ink);
+}
+
+.info-card {
+    border-color: rgba(187, 194, 201, 0.25);
+}
+
+.home-footer {
+    border-top-color: rgba(187, 194, 201, 0.3);
+}
+
+section:target {
+    border-color: var(--silver-light);
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.35),
+        0 0 12px rgba(120, 149, 174, 0.15);
+}
+
+
+/* =================================
+   PAPEL ORIGINAL DO DIÁRIO
+================================= */
+
+#diario {
+    background: linear-gradient(
+        135deg,
+        var(--paper),
+        #cdbb94
+    );
+
+    border: 3px double var(--paper-dark);
+    color: var(--ink);
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.35),
+        inset 0 0 30px rgba(100, 75, 35, 0.12);
+}
+
+#diario h2 {
+    color: #59472b;
+    border-bottom-color: var(--paper-dark);
+}
+
+#diario p {
+    color: var(--ink);
+}
+
+/* =================================
+   PÁGINA INICIAL DIVIDIDA
+================================= */
+
+.home-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    align-items: stretch;
+}
+
+/* Lado do retrato: azul e prata */
+
+.home-portrait {
+    padding: 20px;
+
+    background: linear-gradient(
+        145deg,
+        var(--dark-blue),
+        var(--black)
+    );
+
+    border: 1px solid var(--silver);
+}
+
+.portrait-frame {
+    height: 100%;
+    background: radial-gradient(
+        ellipse at center,
+        var(--blue),
+        var(--black)
+    );
+
+    border-color: var(--silver);
+}
+
+.portrait-symbol,
+.portrait-frame p {
+    color: var(--silver-light);
+}
+
+/* Lado das informações: papel envelhecido */
+
+.home-information {
+    padding: 24px;
+
+    background: linear-gradient(
+        135deg,
+        var(--paper),
+        #cdbb94
+    );
+
+    border: 3px double var(--paper-dark);
+
+    box-shadow:
+        inset 0 0 30px rgba(100, 75, 35, 0.12);
+}
+
+.home-description {
+    background: rgba(255, 255, 255, 0.12);
+    border-left-color: var(--blue);
+}
+
+.home-description h3 {
+    color: #46545F;
+}
+
+.home-description p {
+    color: var(--ink);
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(48, 58, 67, 0.25);
+}
+
+.info-card span {
+    color: #526d84;
+}
+
+.info-card strong {
+    color: var(--ink);
+}
+
+.home-footer {
+    border-top-color: rgba(48, 58, 67, 0.3);
+    color: #46545F;
+}
+
+/* Ajuste para telas menores */
+
+@media (max-width: 700px) {
+    .home-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .home-information {
+        padding: 20px;
+    }
 }
