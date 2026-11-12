@@ -106,22 +106,19 @@ a:focus-visible,
     top: 0;
     bottom: var(--hud-height);
     left: 0;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
     width: var(--menu-width);
     padding-bottom: 12px;
-
     background: linear-gradient(
         180deg,
         var(--ink-soft),
         var(--ink)
     );
-
     border-right: 1px solid var(--border-dark);
 }
+
 
 .menu-emblem {
     display: grid;
@@ -132,23 +129,40 @@ a:focus-visible,
 
     color: var(--silver-light);
     font-family: var(--serif);
-    font-size: 2rem;
+    font-size: 0;
 
     border-bottom: 1px solid var(--border-dark);
-
-    transition:
-        color 0.3s ease,
-        transform 0.3s ease;
 }
 
-.menu-emblem:hover {
+.menu-emblem::before {
+    content: "✦";
+    display: inline-block;
+
+    color: var(--silver-light);
+    font-family: var(--serif);
+    font-size: 2rem;
+
+    transform-origin: center;
+}
+
+.menu-emblem:hover::before {
     color: white;
-    transform: rotate(15deg);
+    animation: spin-star 1.5s linear infinite;
+}
+
+/* Animação da estrela */
+@keyframes spin-star {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .menu-caption {
     margin: 24px 0 20px;
-
     color: var(--silver);
     font-family: var(--serif);
     font-size: 0.55rem;
@@ -163,29 +177,23 @@ a:focus-visible,
     flex-direction: column;
     justify-content: center;
     gap: 7px;
-
     width: 100%;
 }
 
 .nav-link {
     position: relative;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 5px;
-
     width: 100%;
     min-height: 58px;
     padding: 7px 3px;
-
     background: transparent;
     border: none;
     cursor: pointer;
-
     color: var(--text-muted);
-
     transition:
         background 0.25s ease,
         color 0.25s ease;
@@ -195,13 +203,10 @@ a:focus-visible,
     position: absolute;
     top: 50%;
     left: 0;
-
     width: 2px;
     height: 0;
-
     background: var(--blue-light);
     content: "";
-
     transform: translateY(-50%);
     transition: height 0.25s ease;
 }
@@ -217,6 +222,7 @@ a:focus-visible,
 }
 
 .nav-number {
+    flex: 0 0 22px;
     color: var(--blue-light);
     font-family: var(--serif);
     font-size: 0.62rem;
@@ -225,15 +231,15 @@ a:focus-visible,
 
 .nav-label {
     font-size: 0.58rem;
-    letter-spacing: 0.04em;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
+    letter-spacing: 0.02em;
+    writing-mode: horizontal-tb;
+    transform: none;
+    white-space: nowrap;
 }
 
 .menu-bottom-mark {
     margin-top: auto;
     padding-top: 12px;
-
     color: var(--blue-light);
     font-family: var(--serif);
     font-size: 1.1rem;
@@ -2485,6 +2491,11 @@ a:focus-visible,
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
+    }
+
+    /* Exceção para a estrela do menu */
+    .menu-emblem:hover::before {
+        animation: spin-star 1.5s linear infinite !important;
     }
 }
 
