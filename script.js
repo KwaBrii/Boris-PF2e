@@ -1,3 +1,106 @@
+/*
+  PERSONALIZAÇÃO:
+  Edite os textos, atributos e itens dentro do objeto "character".
+  Para usar sua arte, coloque o arquivo em assets/personagem.png
+  e altere art: "" para art: "assets/personagem.png".
+*/
+
+const character = {
+  name: "Nome do Personagem",
+  epithet: "O título ou epíteto do personagem",
+  intro: "Uma breve apresentação do personagem. Conte em poucas linhas quem ele é, de onde veio ou o que o torna inesquecível.",
+  role: "Classe · Arquétipo · Ocupação",
+  level: 1,
+  className: "Classe / arquétipo",
+  art: "", // Exemplo: "assets/personagem.png"
+
+  facts: [
+    { label: "Raça", value: "Não definida" },
+    { label: "Idade", value: "—" },
+    { label: "Origem", value: "Não definida" },
+    { label: "Alinhamento", value: "—" }
+  ],
+
+  bio: "Adicione aqui a história resumida, personalidade ou descrição geral do personagem. Você pode escrever um texto curto ou detalhar características, aparência e motivações.",
+
+  stats: [
+    { abbreviation: "FOR", name: "Força", value: 14, max: 20 },
+    { abbreviation: "DES", name: "Destreza", value: 16, max: 20 },
+    { abbreviation: "CON", name: "Constituição", value: 12, max: 20 },
+    { abbreviation: "INT", name: "Inteligência", value: 13, max: 20 },
+    { abbreviation: "SAB", name: "Sabedoria", value: 10, max: 20 },
+    { abbreviation: "CAR", name: "Carisma", value: 15, max: 20 }
+  ],
+
+  derivedStats: [
+    { label: "PONTOS DE VIDA", value: "32 / 32", note: "PV atuais / máximos" },
+    { label: "ENERGIA / MANA", value: "18 / 24", note: "Recurso mágico" },
+    { label: "CLASSE DE ARMADURA", value: "15", note: "Defesa atual" }
+  ],
+
+  carry: { current: 18, max: 40 },
+
+  inventory: [
+    {
+      name: "Lâmina esquecida",
+      category: "equipment",
+      type: "Arma",
+      rarity: "Incomum",
+      icon: "⚔",
+      quantity: 1,
+      description: "Uma arma antiga, marcada por pequenas inscrições. Substitua esta descrição pelas propriedades, bônus e história do item."
+    },
+    {
+      name: "Manto de viagem",
+      category: "equipment",
+      type: "Vestimenta",
+      rarity: "Comum",
+      icon: "♜",
+      quantity: 1,
+      description: "Um manto resistente, usado em longas jornadas. Descreva aqui sua aparência, proteção ou efeitos."
+    },
+    {
+      name: "Frasco âmbar",
+      category: "consumables",
+      type: "Consumível",
+      rarity: "Comum",
+      icon: "⚗",
+      quantity: 2,
+      description: "Um pequeno frasco com conteúdo ainda não identificado. Informe aqui o efeito e as condições de uso."
+    },
+    {
+      name: "Relíquia lunar",
+      category: "relics",
+      type: "Relíquia",
+      rarity: "Raro",
+      icon: "☾",
+      quantity: 1,
+      description: "Uma relíquia que parece reagir à luz da lua. Acrescente aqui sua origem, poderes e possíveis consequências."
+    },
+    {
+      name: "Chave ornamentada",
+      category: "relics",
+      type: "Objeto-chave",
+      rarity: "Especial",
+      icon: "⚿",
+      quantity: 1,
+      description: "Uma chave de procedência desconhecida. Talvez abra uma porta; talvez seja importante por outro motivo."
+    },
+    {
+      name: "Kit de viagem",
+      category: "consumables",
+      type: "Suprimento",
+      rarity: "Comum",
+      icon: "✣",
+      quantity: 1,
+      description: "Um conjunto de itens úteis para a estrada. Edite para listar o conteúdo do kit."
+    }
+  ],
+
+  journalTitle: "Fragmentos de uma história",
+  journalQuote: "Toda lenda começa com algo que alguém preferiu esquecer.",
+  journalText: "Este espaço é destinado à história do personagem, anotações de campanha, relações importantes, objetivos e acontecimentos marcantes.\\n\\nVocê também pode separar o texto em parágrafos, registrar acontecimentos por data ou guardar informações que seu personagem ainda não compartilhou com o grupo."
+};
 
 // ========================================
 // 1. ELEMENTOS DA PÁGINA

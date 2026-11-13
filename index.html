@@ -12,173 +12,95 @@
 </head>
 
 <body>
-
+  <div class="grain" aria-hidden="true"></div>
     <!-- MENU LATERAL -->
     <aside class="side-menu" aria-label="Menu principal">
-        <a class="menu-emblem" href="#inicio" aria-label="Voltar ao início">
-            ✦
-        </a>
+        <a class="menu-emblem" href="#inicio" aria-label="Voltar ao início">✦</a>
         <div class="menu-caption">DOSSIÊ</div>
         <nav class="side-nav" aria-label="Seções do dossiê">
-            <button class="nav-link is-active"
-                    type="button"
-                    data-target="inicio"
-                    aria-label="Início"
-                    aria-current="page">
-                <span class="nav-number">00</span>
-                <span class="nav-label">Início</span>
+            <button class="nav-link is-active" type="button" data-target="inicio" aria-label="Início" aria-current="page">
+                <span class="nav-number">00</span><span class="nav-label">Início</span>
             </button>
-            <button class="nav-link"
-                    type="button"
-                    data-target="perfil"
-                    aria-label="Perfil"
-                    aria-current="false">
-                <span class="nav-number">01</span>
-                <span class="nav-label">Perfil</span>
+            <button class="nav-link" type="button" data-target="perfil" aria-label="Perfil" aria-current="false">
+                <span class="nav-number">01</span><span class="nav-label">Perfil</span>
             </button>
-            <button class="nav-link"
-                    type="button"
-                    data-target="inventario"
-                    aria-label="Inventário"
-                    aria-current="false">
-                <span class="nav-number">02</span>
-                <span class="nav-label">Inventário</span>
+            <button class="nav-link" type="button" data-target="inventario" aria-label="Inventário" aria-current="false">
+                <span class="nav-number">02</span><span class="nav-label">Inventário</span>
             </button>
-            <button class="nav-link"
-                    type="button"
-                    data-target="atributos"
-                    aria-label="Atributos"
-                    aria-current="false">
-                <span class="nav-number">03</span>
-                <span class="nav-label">Atributos</span>
+            <button class="nav-link" type="button" data-target="atributos" aria-label="Atributos" aria-current="false">
+                <span class="nav-number">03</span><span class="nav-label">Atributos</span>
             </button>
-            <button class="nav-link"
-                    type="button"
-                    data-target="diario"
-                    aria-label="Diário"
-                    aria-current="false">
-                <span class="nav-number">04</span>
-                <span class="nav-label">Diário</span>
+            <button class="nav-link" type="button" data-target="diario" aria-label="Diário" aria-current="false">
+                <span class="nav-number">04</span><span class="nav-label">Diário</span>
             </button>
-            <button class="nav-link"
-                    type="button"
-                    data-target="relacoes"
-                    aria-label="Relações"
-                    aria-current="false">
-                <span class="nav-number">05</span>
-                <span class="nav-label">Relações</span>
+            <button class="nav-link" type="button" data-target="relacoes" aria-label="Relações" aria-current="false">
+                <span class="nav-number">05</span><span class="nav-label">Relações</span>
             </button>
-            <button class="nav-link"
-                    type="button"
-                    data-target="playlist"
-                    aria-label="Playlist"
-                    aria-current="false">
-                <span class="nav-number">06</span>
-                <span class="nav-label">Playlist</span>
+            <button class="nav-link" type="button" data-target="playlist" aria-label="Playlist" aria-current="false">
+                <span class="nav-number">06</span><span class="nav-label">Playlist</span>
             </button>
         </nav>
         <div class="menu-bottom-mark" aria-hidden="true">✧</div>
-
     </aside>
 
     <!-- ÁREA PRINCIPAL -->
     <main class="world" id="world" tabindex="0" aria-label="Páginas do dossiê">
         <!-- PÁGINA 00: INÍCIO / CAPA -->
-        <section id="inicio"
-                 class="screen screen-cover"
-                 aria-labelledby="cover-title">
+        <section id="inicio" class="screen screen-cover" aria-labelledby="cover-title">
             <!-- Área da ilustração -->
             <div class="cover-art">
+                <div class="cover-ornament ornament-one">✧</div>
+                <div class="cover-ornament ornament-two">✦</div>
+                <div class="cover-moon"></div>
                 <div class="cover-art-frame">
-                    <div class="cover-moon"></div>
-                    <div class="cover-placeholder art-placeholder">
-                        <span class="placeholder-symbol">✦</span>
-                        <span>RETRATO DE BORIS</span>
-                        <small>Espaço reservado para ilustração</small>
+                    <img class="character-art" id="cover-art-image" alt="Arte principal do personagem" hidden>
+                    <div class="art-placeholder cover-placeholder" id="cover-art-placeholder">
+                        <span class="placeholder-symbol">✧</span>
+                        <span>ARTE DO PERSONAGEM</span>
+                        <small>adicione sua imagem em assets/personagem.png</small>
                     </div>
                 </div>
-                <span class="cover-ornament ornament-one">✧</span>
-                <span class="cover-ornament ornament-two">✦</span>
-                <span class="cover-side-note">
-                    STRENGTH OF THOUSANDS
-                </span>
                 <div class="cover-art-caption">
-                    <span>PERSONAGEM Nº 001</span>
-                    <span>PATHFINDER 2E</span>
+                    <span>FIG. 01</span>
+                    <span>BORIS LEUENAAR</span>
                 </div>
+                <div class="cover-side-note">STRENGTH OF THOUSANDS</div>
             </div>
 
             <!-- Informações da capa -->
             <div class="cover-info">
                 <div class="topline">
-                    <span class="topline-code">
-                        REGISTRO DE PERSONAGEM 
-                    </span>
-
-                    <span class="topline-code">
-                        RPG / DOSSIÊ
-                    </span>
+                    <span class="eyebrow">REGISTRO DE PERSONAGEM <i>✦</i> Cartomante endiabrado</span>
+                    <span class="topline-code">RPG / DOSSIÊ</span>
                 </div>
 
                 <div class="cover-title-block">
-                    <p class="cover-kicker">
-                        THE CHARACTER DOSSIER
-                    </p>
-                    <h1 id="cover-title">
-                        Boris Leuenaar
-                    </h1>
-                    <p class="cover-epithet">
-                        “Tudo pode ser descoberto lendo as cartas... Ou a pessoa que puxou elas.”
-                    </p>
-                    
-
+                    <p class="cover-kicker">THE CHARACTER DOSSIER</p>
+                    <h1 id="cover-title">Boris<br>Leuenaar</h1>
+                    <p class="cover-epithet" id="cover-epithet">O cartomante endiabrado</p>
                 </div>
-                <div class="ornamental-rule" aria-hidden="true">
-                    ✦
-                </div>
-                <p class="cover-intro">
-                    Entre estudos, descobertas e experiências na Magaambya, este arquivo reúne os registros de Boris e os caminhos percorridos ao longo de sua aventura na escola mágica no centro da Expansão Mwangi. Desde o diário do seu dia a dia, até as os relacionamentos criados.
+                <div class="ornamental-rule" aria-hidden="true"><span>✦</span></div>
+                <p class="cover-intro" id="cover-intro">
+                    Nem todo Tiefling é mau, mas Boris certamente é caótico. Escondendo
+                    suas verdadeiras intenções através de sorrisos fáceis e um olhar oblíquo,
+                    Boris chega em Magaambya, para a surpresa de todos os alunos dos
+                    Ramos Esmeraldas, financiado pelo mais bonzinho dos professores. 
+                    O que ele realmente quer provar é um mistério até para os mais observadores
+                    dos estudiosos, mas uma coisa é certa: ele vai espalhar o caos por onde passar.
                 </p>
+
                 <!-- Atalhos para as páginas -->
-                <p class="cover-menu-label">
-                    SELECIONE UMA SEÇÃO
-                </p>
-
+                <p class="cover-menu-label">SELECIONE UMA SEÇÃO</p>
                 <div class="cover-menu" aria-label="Atalhos do dossiê">
-                    <button type="button" data-target="perfil">
-                        <span>01</span>
-                        Perfil
-                        <b aria-hidden="true">↗</b>
-                    </button>
-                    <button type="button" data-target="inventario">
-                        <span>02</span>
-                        Inventário
-                        <b aria-hidden="true">↗</b>
-                    </button>
-                    <button type="button" data-target="atributos">
-                        <span>03</span>
-                        Atributos
-                        <b aria-hidden="true">↗</b>
-                    </button>
-                    <button type="button" data-target="diario">
-                        <span>04</span>
-                        Diário
-                        <b aria-hidden="true">↗</b>
-                    </button>
-                    <button type="button" data-target="relacoes">
-                        <span>05</span>
-                        Relações
-                        <b aria-hidden="true">↗</b>
-                    </button>
-                    <button type="button" data-target="playlist">
-                        <span>06</span>
-                        Playlist
-                        <b aria-hidden="true">↗</b>
-                    </button>
+                    <button type="button" data-target="perfil"><span>01</span>Perfil<b aria-hidden="true">↗</b></button>
+                    <button type="button" data-target="inventario"><span>02</span>Inventário<b aria-hidden="true">↗</b></button>
+                    <button type="button" data-target="atributos"><span>03</span>Atributos<b aria-hidden="true">↗</b></button>
+                    <button type="button" data-target="diario"><span>04</span>Diário<b aria-hidden="true">↗</b></button>
+                    <button type="button" data-target="relacoes"><span>05</span>Relações<b aria-hidden="true">↗</b>
+                    </button><button type="button" data-target="playlist"><span>06</span>Playlist<b aria-hidden="true">↗</b></button>
                 </div>
                 
                 <div class="cover-footer">
-                    
                     <span>CONFIDENCIAL · USO DO MESTRE E JOGADOR</span>
                     <span>STRENGTH OF THOUSANDS · JORNADA DE UM ESTUDANTE</span>
                 </div>
