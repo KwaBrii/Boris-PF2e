@@ -166,7 +166,6 @@ if (!world || screens.length === 0) {
         }
     });
 
-
     // ========================================
     // 7. ATUALIZAÇÃO AO DESLIZAR AS PÁGINAS
     // ========================================
@@ -174,7 +173,6 @@ if (!world || screens.length === 0) {
     world.addEventListener("scroll", () => {
         updateNavigation(getClosestPageIndex());
     });
-
 
     // Inicializa a navegação na primeira página
     updateNavigation(0);
