@@ -1,3 +1,4 @@
+
 /* ========================================
    1. DADOS DO PERSONAGEM
 ======================================== */
@@ -26,9 +27,9 @@ const character = {
         { label: "Alinhamento", value: "Chaotic Neutral" }
     ],
 
-    bio: `Boris é apenas mais uma das inúmeras crianças demônio que foi abandonada pelas crenças do povo de Mwangi. Cresceu pelas ruas de Bloodcove, onde foi abandonado durante uma viagem de barco dos seus pais. Ou pelo menos é nisso que acreditava. 
-    
-    Durante a infância, sobrevivia como um marginal com o restante das crianças. Se tornou especialmente próximo de outras três crianças: uma Nephlim como ele chamada Maalika, um Amurrun (catfolk) de pelagem castanha chamado Leper e um Iruxi (lizardfolk) chamado Param. Juntos, eles aprontavam e roubavam pelas ruas de Bloodcove.`,
+    bio: `Boris é apenas mais uma das inúmeras crianças demônio que foi abandonada pelas crenças do povo de Mwangi. Cresceu pelas ruas de Bloodcove, onde foi abandonado durante uma viagem de barco dos seus pais. Ou pelo menos é nisso que acreditava.
+
+Durante a infância, sobrevivia como um marginal com o restante das crianças. Se tornou especialmente próximo de outras três crianças: uma Nephlim como ele chamada Maalika, um Amurrun (catfolk) de pelagem castanha chamado Leper e um Iruxi (lizardfolk) chamado Param. Juntos, eles aprontavam e roubavam pelas ruas de Bloodcove.`,
 
     stats: [
         { abbreviation: "FOR", name: "Força", value: 0, max: 6 },
@@ -39,14 +40,91 @@ const character = {
         { abbreviation: "CAR", name: "Carisma", value: 4, max: 6 }
     ],
 
+    skills: [
+        { name: "Acrobacia", ability: "DES", rank: "trained" },
+        { name: "Arcanismo", ability: "INT", rank: "trained" },
+        { name: "Atletismo", ability: "FOR", rank: "untrained" },
+        { name: "Artesanato", ability: "INT", rank: "untrained" },
+        { name: "Enganação", ability: "CAR", rank: "trained" },
+        { name: "Diplomacia", ability: "CAR", rank: "trained" },
+        { name: "Intimidação", ability: "CAR", rank: "untrained" },
+        { name: "Conhecimento: Leitura de Sorte", ability: "INT", rank: "trained" },
+        { name: "Conhecimento: Leis", ability: "INT", rank: "trained" },
+        { name: "Conhecimento: Bloodcove", ability: "INT", rank: "trained" },
+        { name: "Medicina", ability: "SAB", rank: "untrained" },
+        { name: "Natureza", ability: "SAB", rank: "untrained" },
+        { name: "Ocultismo", ability: "INT", rank: "trained" },
+        { name: "Performance", ability: "CAR", rank: "trained" },
+        { name: "Religião", ability: "SAB", rank: "trained" },
+        { name: "Sociedade", ability: "INT", rank: "trained" },
+        { name: "Furtividade", ability: "DES", rank: "trained" },
+        { name: "Sobrevivência", ability: "SAB", rank: "untrained" },
+        { name: "Ladinagem", ability: "DES", rank: "trained" }
+    ],
+
     derivedStats: [
         { label: "PONTOS DE VIDA", value: "14 / 14", note: "PV atuais / máximos" },
         { label: "CLASSE DE ARMADURA", value: "17", note: "Defesa atual" }
     ],
 
-    carry: null,
+    carry: { current: 4, max: 10 },
 
-    inventory: [],
+    inventory: [
+        {
+            name: "Tesoura",
+            category: "equipment",
+            type: "Arma",
+            rarity: "Incomum",
+            icon: "✂",
+            quantity: 1,
+            description: "Uma tesoura para costura que fica sempre no cinto de Boris. Não é como se ele à escondesse, mas ela também não parece uma arma até ser sacada."
+        },
+        {
+            name: "Manto de viagem",
+            category: "equipment",
+            type: "Vestimenta",
+            rarity: "Comum",
+            icon: "♜",
+            quantity: 1,
+            description: "Um manto resistente, usado em longas jornadas. Descreva aqui sua aparência, proteção ou efeitos."
+        },
+        {
+            name: "Frasco âmbar",
+            category: "consumables",
+            type: "Consumível",
+            rarity: "Comum",
+            icon: "⚗",
+            quantity: 2,
+            description: "Um pequeno frasco com conteúdo ainda não identificado. Informe aqui o efeito e as condições de uso."
+        },
+        {
+            name: "Relíquia lunar",
+            category: "relics",
+            type: "Relíquia",
+            rarity: "Raro",
+            icon: "☾",
+            quantity: 1,
+            description: "Uma relíquia que parece reagir à luz da lua. Acrescente aqui sua origem, poderes e possíveis consequências."
+        },
+        {
+            name: "Chave ornamentada",
+            category: "relics",
+            type: "Objeto-chave",
+            rarity: "Especial",
+            icon: "⚿",
+            quantity: 1,
+            description: "Uma chave de procedência desconhecida. Talvez abra uma porta; talvez seja importante por outro motivo."
+        },
+        {
+            name: "Kit de viagem",
+            category: "consumables",
+            type: "Suprimento",
+            rarity: "Comum",
+            icon: "✣",
+            quantity: 1,
+            description: "Um conjunto de itens úteis para a estrada. Edite para listar o conteúdo do kit."
+        }
+    ],
 
     journalTitle: "",
 
@@ -84,30 +162,38 @@ function escapeHTML(value) {
     })[char]);
 }
 
+
 /* ========================================
    3. ELEMENTOS DA PÁGINA
 ======================================== */
 
 function initializeDossier() {
     const world = document.getElementById("world");
+
     const screens = Array.from(
         document.querySelectorAll(".screen")
     );
+
     const navButtons = Array.from(
         document.querySelectorAll(".nav-link")
     );
+
     const coverButtons = Array.from(
         document.querySelectorAll(".cover-menu [data-target]")
     );
+
     const currentPage = document.getElementById("current-page");
     const totalPages = document.getElementById("total-pages");
     const pageProgress = document.getElementById("page-progress");
+
     const previousButton =
         document.getElementById("previous-screen") ||
         document.getElementById("previous-page");
+
     const nextButton =
         document.getElementById("next-screen") ||
         document.getElementById("next-page");
+
     if (!world || screens.length === 0) {
         console.error(
             "Não foi possível iniciar o dossiê. Verifique o HTML."
@@ -117,6 +203,7 @@ function initializeDossier() {
 
     let activeIndex = 0;
     let activeFilter = "all";
+
 
     /* ========================================
        4. CAPA E PERFIL DO PERSONAGEM
@@ -129,6 +216,7 @@ function initializeDossier() {
         setTextIfProvided("profile-name", character.name);
         setTextIfProvided("profile-role", character.role);
         setTextIfProvided("profile-bio", character.bio);
+
         setTextIfProvided(
             "character-level",
             String(character.level).padStart(2, "0")
@@ -136,9 +224,8 @@ function initializeDossier() {
 
         setTextIfProvided("character-class", character.className);
 
-        // Preenche as informações do personagem.
-
         const facts = document.getElementById("profile-facts");
+
         if (facts && character.facts.length > 0) {
             facts.innerHTML = character.facts.map(fact => `
                 <div class="fact">
@@ -146,29 +233,36 @@ function initializeDossier() {
                     <strong>${escapeHTML(fact.value)}</strong>
                 </div>
             `).join("");
-
         }
 
         // Carrega a arte do personagem, caso exista.
+
         if (character.art && character.art.trim() !== "") {
             ["cover", "profile"].forEach(place => {
                 const image = document.getElementById(
                     `${place}-art-image`
                 );
+
                 const placeholder = document.getElementById(
                     `${place}-art-placeholder`
                 );
+
                 if (!image) return;
+
                 image.src = character.art;
                 image.hidden = false;
+
                 if (placeholder) {
                     placeholder.hidden = true;
                 }
+
                 image.addEventListener("error", () => {
                     image.hidden = true;
+
                     if (placeholder) {
                         placeholder.hidden = false;
                     }
+
                     console.error(
                         "Não foi possível carregar a imagem:",
                         character.art
@@ -177,6 +271,7 @@ function initializeDossier() {
             });
         }
     }
+
 
     /* ========================================
        5. ATRIBUTOS E ESTATÍSTICAS
@@ -201,25 +296,31 @@ function initializeDossier() {
                         1,
                         Number(stat.max) || 20
                     );
+
                     const value = Math.max(
                         0,
                         Math.min(max, Number(stat.value) || 0)
                     );
+
                     const percent = (value / max) * 100;
+
                     return `
                         <div class="stat-row">
                             <div class="stat-abbr">
                                 ${escapeHTML(stat.abbreviation)}
                             </div>
+
                             <div class="stat-info">
                                 <div class="stat-name">
                                     <span>${escapeHTML(stat.name)}</span>
                                     <span>${value}/${max}</span>
                                 </div>
+
                                 <div class="stat-track">
                                     <span style="width: ${percent}%"></span>
                                 </div>
                             </div>
+
                             <strong class="stat-value">
                                 ${value}
                             </strong>
@@ -250,13 +351,64 @@ function initializeDossier() {
         }
     }
 
+
     /* ========================================
-       6. INVENTÁRIO
+       6. PERÍCIAS
+    ======================================== */
+
+    function renderSkills() {
+        const grid = document.getElementById("skills-grid");
+
+        if (!grid) return;
+
+        const rankLabels = {
+            trained: "Treinado",
+            expert: "Especialista",
+            master: "Mestre",
+            legendary: "Lendário"
+        };
+
+        const validRanks = Object.keys(rankLabels);
+
+        const trainedSkills = (character.skills || []).filter(skill =>
+            validRanks.includes(skill.rank)
+        );
+
+        if (trainedSkills.length === 0) {
+            grid.innerHTML = `
+                <p class="skills-empty">
+                    Nenhuma perícia treinada cadastrada.
+                </p>
+            `;
+            return;
+        }
+
+        grid.innerHTML = trainedSkills.map(skill => `
+            <div class="skill-card">
+
+                <div class="skill-card-info">
+                    <strong>${escapeHTML(skill.name)}</strong>
+                    <small>${escapeHTML(skill.ability || "")}</small>
+                </div>
+
+                <span class="skill-rank skill-rank--${skill.rank}">
+                    ${rankLabels[skill.rank]}
+                </span>
+
+            </div>
+        `).join("");
+    }
+
+
+    /* ========================================
+       7. INVENTÁRIO
     ======================================== */
 
     function renderInventory(filter = activeFilter) {
         activeFilter = filter;
+
         const grid = document.getElementById("inventory-grid");
+
         if (!grid) return;
 
         // Filtra os itens pela categoria selecionada.
@@ -270,12 +422,13 @@ function initializeDossier() {
                 filter === "all" || item.category === filter
             );
 
-
         // Atualiza os botões de filtro.
 
         document.querySelectorAll(".filter-tab").forEach(button => {
             const selected = button.dataset.filter === filter;
+
             button.classList.toggle("is-selected", selected);
+
             button.setAttribute(
                 "aria-pressed",
                 String(selected)
@@ -283,10 +436,12 @@ function initializeDossier() {
         });
 
         // Atualiza os contadores.
+
         setText(
             "inventory-total",
             `${String(character.inventory.length).padStart(2, "0")} ITENS`
         );
+
         setText(
             "inventory-counter",
             `${items.length} ${
@@ -314,16 +469,20 @@ function initializeDossier() {
                     <span class="item-icon">
                         ${escapeHTML(item.icon || "✧")}
                     </span>
+
                     <span class="item-type">
                         ${escapeHTML(item.type)}
                     </span>
+
                     <span class="item-name">
                         ${escapeHTML(item.name)}
                     </span>
+
                     <span class="item-bottom">
                         <span class="item-rarity">
                             ${escapeHTML(item.rarity)}
                         </span>
+
                         <span>
                             × ${escapeHTML(item.quantity)}
                         </span>
@@ -332,22 +491,27 @@ function initializeDossier() {
             `).join("");
         }
 
-        // Atualiza a capacidade de carga, se estiver cadastrada.
+        // Atualiza a capacidade de carga.
+
         if (character.carry) {
             const current = Number(character.carry.current) || 0;
             const max = Number(character.carry.max) || 0;
+
             if (max > 0) {
                 const percentage = Math.min(
                     100,
                     (current / max) * 100
                 );
+
                 setText(
                     "capacity-value",
                     `${current} / ${max}`
                 );
+
                 const capacityFill = document.getElementById(
                     "capacity-fill"
                 );
+
                 if (capacityFill) {
                     capacityFill.style.width = `${percentage}%`;
                 }
@@ -355,36 +519,46 @@ function initializeDossier() {
         }
     }
 
+
     /* ========================================
-       7. DETALHES DOS ITENS
+       8. DETALHES DOS ITENS
     ======================================== */
 
     function showItem(index) {
         const item = character.inventory[index];
+
         if (!item) return;
+
         const dialog = document.getElementById("item-dialog");
+
         if (!dialog) return;
+
         setText("dialog-category", item.type);
         setText("dialog-icon", item.icon || "✧");
         setText("dialog-name", item.name);
         setText("dialog-rarity", item.rarity);
         setText("dialog-description", item.description);
+
         setText(
             "dialog-quantity",
             `Quantidade registrada: ${item.quantity}`
         );
+
         if (!dialog.open) {
             dialog.showModal();
         }
     }
 
+
     /* ========================================
-       8. NAVEGAÇÃO ENTRE AS SEÇÕES
+       9. NAVEGAÇÃO ENTRE AS SEÇÕES
     ======================================== */
 
     function goToScreen(id) {
         const target = document.getElementById(id);
+
         if (!target) return;
+
         world.scrollTo({
             left: target.offsetLeft,
             behavior: "smooth"
@@ -399,28 +573,35 @@ function initializeDossier() {
                 activeIndex + direction
             )
         );
+
         goToScreen(screens[nextIndex].id);
     }
 
+
     /* ========================================
-       9. ATUALIZAÇÃO DO MENU E HUD
+       10. ATUALIZAÇÃO DO MENU E HUD
     ======================================== */
 
     function updateNavigation() {
         const center = world.scrollLeft + world.clientWidth / 2;
+
         let closestIndex = 0;
         let closestDistance = Infinity;
 
         // Descobre qual seção está mais próxima do centro.
+
         screens.forEach((screen, index) => {
             const screenCenter =
                 screen.offsetLeft + screen.offsetWidth / 2;
+
             const distance = Math.abs(center - screenCenter);
+
             if (distance < closestDistance) {
                 closestDistance = distance;
                 closestIndex = index;
             }
         });
+
         activeIndex = closestIndex;
 
         // Atualiza os botões do menu lateral.
@@ -428,13 +609,14 @@ function initializeDossier() {
         navButtons.forEach(button => {
             const active =
                 button.dataset.target === screens[activeIndex].id;
+
             button.classList.toggle("is-active", active);
+
             button.setAttribute(
                 "aria-current",
                 active ? "page" : "false"
             );
         });
-
 
         // Atualiza o número da página.
 
@@ -458,19 +640,20 @@ function initializeDossier() {
             pageProgress.style.width = `${progress}%`;
         }
 
-
         // Habilita ou desabilita as setas.
 
         if (previousButton) {
             previousButton.disabled = activeIndex === 0;
         }
+
         if (nextButton) {
             nextButton.disabled = activeIndex === screens.length - 1;
         }
     }
 
+
     /* ========================================
-       10. CONFIGURAÇÃO DOS EVENTOS
+       11. CONFIGURAÇÃO DOS EVENTOS
     ======================================== */
 
     function setupEvents() {
@@ -479,6 +662,7 @@ function initializeDossier() {
         [...navButtons, ...coverButtons].forEach(button => {
             button.addEventListener("click", () => {
                 const target = button.dataset.target;
+
                 if (target) {
                     goToScreen(target);
                 }
@@ -490,6 +674,7 @@ function initializeDossier() {
         document.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener("click", event => {
                 const targetId = link.getAttribute("href").slice(1);
+
                 const targetScreen = screens.find(
                     screen => screen.id === targetId
                 );
@@ -512,9 +697,11 @@ function initializeDossier() {
         // Clique nos itens do inventário.
 
         const inventoryGrid = document.getElementById("inventory-grid");
+
         if (inventoryGrid) {
             inventoryGrid.addEventListener("click", event => {
                 const card = event.target.closest("[data-item-index]");
+
                 if (card) {
                     showItem(Number(card.dataset.itemIndex));
                 }
@@ -538,6 +725,7 @@ function initializeDossier() {
         // Fecha o diálogo ao clicar fora do conteúdo.
 
         const dialog = document.getElementById("item-dialog");
+
         if (dialog) {
             dialog.addEventListener("click", event => {
                 if (event.target === dialog) {
@@ -546,21 +734,17 @@ function initializeDossier() {
             });
         }
 
-        
         // Rodinha do mouse: navegação horizontal,
-        // exceto dentro do conteúdo rolável do perfil.
+        // exceto dentro das áreas com rolagem vertical.
 
         world.addEventListener("wheel", event => {
-
-            // Permite a rolagem vertical dentro do perfil.
             if (
                 event.target instanceof Element &&
-                event.target.closest(".profile-layout")
+                event.target.closest(".profile-layout, .stats-main")
             ) {
                 return;
             }
 
-            // Mantém a navegação horizontal nas outras seções.
             if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
                 event.preventDefault();
                 world.scrollLeft += event.deltaY;
@@ -579,18 +763,23 @@ function initializeDossier() {
 
         window.addEventListener("keydown", event => {
             const tag = document.activeElement?.tagName?.toLowerCase();
+
             const isTyping = [
                 "input",
                 "textarea",
                 "select"
             ].includes(tag);
+
             const dialog = document.getElementById("item-dialog");
+
             if (isTyping || document.activeElement?.isContentEditable) {
                 return;
             }
+
             if (dialog?.open) {
                 return;
             }
+
             if (event.key === "ArrowRight") {
                 event.preventDefault();
                 moveScreen(1);
@@ -601,20 +790,23 @@ function initializeDossier() {
         });
     }
 
+
     /* ========================================
-       11. INICIALIZAÇÃO
+       12. INICIALIZAÇÃO
     ======================================== */
 
     renderCharacter();
     renderStats();
+    renderSkills();
     renderInventory();
     setupEvents();
     updateNavigation();
 
 }
 
+
 /* ========================================
-   12. INICIA QUANDO O HTML ESTIVER PRONTO
+   13. INICIA QUANDO O HTML ESTIVER PRONTO
 ======================================== */
 
 if (document.readyState === "loading") {

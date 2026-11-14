@@ -2548,3 +2548,170 @@ img {
     overflow-x: hidden !important;
     overscroll-behavior-y: contain;
 }
+
+/* ========================================
+   PERÍCIAS — PATHFINDER 2E
+======================================== */
+
+.skills-section {
+    margin-top: 32px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(55, 85, 110, 0.22);
+}
+
+.skills-heading {
+    margin-bottom: 14px;
+}
+
+.skills-heading h4 {
+    margin: 5px 0 0;
+}
+
+.skills-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 14px 0 18px;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.skill-card {
+    min-width: 0;
+    min-height: 65px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid rgba(55, 85, 110, 0.22);
+    background: rgba(255, 255, 255, 0.24);
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.skill-card:hover {
+    background: rgba(255, 255, 255, 0.45);
+    border-color: rgba(55, 85, 110, 0.4);
+}
+
+.skill-card-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.skill-card-info strong {
+    color: var(--ink, #293644);
+    font: 13px var(--serif, Georgia, serif);
+}
+
+.skill-card-info small {
+    color: #82909d;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+}
+
+.skill-rank {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 9px;
+    border: 1px solid transparent;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* Destreinado */
+
+.skill-rank--untrained {
+    color: #777e85;
+    background: rgba(120, 130, 140, 0.08);
+    border-color: rgba(120, 130, 140, 0.22);
+}
+
+/* Treinado */
+
+.skill-rank--trained {
+    color: #526f89;
+    background: rgba(91, 125, 153, 0.12);
+    border-color: rgba(91, 125, 153, 0.28);
+}
+
+/* Especialista */
+
+.skill-rank--expert {
+    color: #46647b;
+    background: rgba(91, 125, 153, 0.19);
+    border-color: rgba(91, 125, 153, 0.38);
+}
+
+/* Mestre */
+
+.skill-rank--master {
+    color: #405a73;
+    background: rgba(76, 105, 135, 0.23);
+    border-color: rgba(76, 105, 135, 0.43);
+}
+
+/* Lendário */
+
+.skill-rank--legendary {
+    color: #384d68;
+    background: rgba(64, 89, 119, 0.28);
+    border-color: rgba(64, 89, 119, 0.52);
+}
+
+.skills-empty {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 22px;
+
+    color: #87909a;
+    text-align: center;
+    font: italic 13px Georgia, serif;
+
+    border: 1px dashed rgba(55, 85, 110, 0.28);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* Ajuste para telas menores */
+
+@media (max-width: 900px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   ROLAGEM INTERNA DOS ATRIBUTOS
+======================================== */
+
+.stats-screen {
+    min-height: 0;
+    overflow: hidden !important;
+}
+
+.stats-screen .stats-main {
+    min-height: 0;
+    min-width: 0;
+
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.stats-screen .stats-main::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
