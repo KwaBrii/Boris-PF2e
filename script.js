@@ -62,6 +62,27 @@ Durante a infância, sobrevivia como um marginal com o restante das crianças. S
         { name: "Ladinagem", ability: "DES", rank: "trained" }
     ],
 
+    speed: "30 ft",
+
+    defenses: [
+        {
+            name: "Vontade",
+            rank: "expert"
+        },
+        {
+            name: "Reflexos",
+            rank: "trained"
+        },
+        {
+            name: "Fortitude",
+            rank: "trained"
+        },
+        {
+            name: "Percepção",
+            rank: "trained"
+        }
+    ],
+
     derivedStats: [
         { label: "PONTOS DE VIDA", value: "14 / 14", note: "PV atuais / máximos" },
         { label: "CLASSE DE ARMADURA", value: "17", note: "Defesa atual" }
@@ -80,49 +101,40 @@ Durante a infância, sobrevivia como um marginal com o restante das crianças. S
             description: "Uma tesoura para costura que fica sempre no cinto de Boris. Não é como se ele à escondesse, mas ela também não parece uma arma até ser sacada."
         },
         {
-            name: "Manto de viagem",
+            name: "Armadura de Couro Reforçada",
             category: "equipment",
-            type: "Vestimenta",
+            type: "Armadura",
             rarity: "Comum",
-            icon: "♜",
+            icon: "⛉",
             quantity: 1,
-            description: "Um manto resistente, usado em longas jornadas. Descreva aqui sua aparência, proteção ou efeitos."
+            description: "Uma armadura leve de couro é reforçada com rebites de metal e, por vezes, pequenas placas metálicas, oferecendo a maior parte da flexibilidade de uma armadura de couro, porém com uma proteção mais robusta. É negra como a noite."
         },
         {
-            name: "Frasco âmbar",
-            category: "consumables",
-            type: "Consumível",
+            name: "Escudo de Aço",
+            category: "equipment",
+            type: "Escudo",
             rarity: "Comum",
-            icon: "⚗",
-            quantity: 2,
-            description: "Um pequeno frasco com conteúdo ainda não identificado. Informe aqui o efeito e as condições de uso."
-        },
-        {
-            name: "Relíquia lunar",
-            category: "relics",
-            type: "Relíquia",
-            rarity: "Raro",
-            icon: "☾",
+            icon: "⛊",
             quantity: 1,
-            description: "Uma relíquia que parece reagir à luz da lua. Acrescente aqui sua origem, poderes e possíveis consequências."
+            description: "Assim como os escudos de madeira, os escudos de aço apresentam uma variedade de formatos e tamanhos. Embora sejam mais caros que os de madeira, são muito mais duráveis. O escudo de Boris é de um aço azulado, e parece muito usado para ser de um mago."
         },
         {
-            name: "Chave ornamentada",
-            category: "relics",
-            type: "Objeto-chave",
-            rarity: "Especial",
-            icon: "⚿",
+            name: "Mochila",
+            category: "equipment",
+            type: "Mochila para Carga",
+            rarity: "Comum",
+            icon: "👜",
             quantity: 1,
-            description: "Uma chave de procedência desconhecida. Talvez abra uma porta; talvez seja importante por outro motivo."
+            description: "Uma mochila comporta até 4 unidades de Volume (Bulk) em itens, e as primeiras 2 unidades de Volume desses itens não contam para os seus limites de Volume. Se você estiver carregando ou guardando a mochila, em vez de usá-la nas costas, o Volume dela passa a ser leve (light) em vez de desprezível (negligible). Parece uma bolsa de carteiro lateral."
         },
         {
-            name: "Kit de viagem",
+            name: "Kit de Aventureiro",
             category: "consumables",
             type: "Suprimento",
             rarity: "Comum",
             icon: "✣",
             quantity: 1,
-            description: "Um conjunto de itens úteis para a estrada. Edite para listar o conteúdo do kit."
+            description: `Este item é o kit inicial para um aventureiro, contendo os itens essenciais para exploração e sobrevivência. O valor de volume (Bulk) refere-se ao conjunto completo; consulte as descrições de cada item individual, se necessário. O kit contém os seguintes itens: uma mochila, um saco de dormir (ou rolo de dormir), 10 pedaços de giz, pederneira (fogo e aço), 50 pés (aprox. 15 metros) de corda, rações para 2 semanas, sabão, 5 tochas e um odre.`
         }
     ],
 
@@ -352,67 +364,104 @@ function initializeDossier() {
     }
 
 
-    /* ========================================
+
+/* ========================================
        6. PERÍCIAS
-    ======================================== */
+======================================== */
 
     function renderSkills() {
         const grid = document.getElementById("skills-grid");
-
         if (!grid) return;
-
         const rankLabels = {
+            untrained: "Destreinado",
             trained: "Treinado",
             expert: "Especialista",
             master: "Mestre",
             legendary: "Lendário"
         };
 
-        const validRanks = Object.keys(rankLabels);
-
-        const trainedSkills = (character.skills || []).filter(skill =>
-            validRanks.includes(skill.rank)
-        );
-
-        if (trainedSkills.length === 0) {
+        const skills = character.skills || [];
+        if (skills.length === 0) {
             grid.innerHTML = `
                 <p class="skills-empty">
-                    Nenhuma perícia treinada cadastrada.
+                    Nenhuma perícia cadastrada.
                 </p>
             `;
             return;
         }
 
-        grid.innerHTML = trainedSkills.map(skill => `
-            <div class="skill-card">
-
-                <div class="skill-card-info">
-                    <strong>${escapeHTML(skill.name)}</strong>
-                    <small>${escapeHTML(skill.ability || "")}</small>
+        grid.innerHTML = skills.map(skill => {
+            const rank = rankLabels[skill.rank]
+                ? skill.rank
+                : "untrained";
+            return `
+                <div class="skill-card">
+                    <div class="skill-card-info">
+                        <strong>${escapeHTML(skill.name)}</strong>
+                        <small>${escapeHTML(skill.ability || "")}</small>
+                    </div>
+                    <span class="skill-rank skill-rank--${rank}">
+                        ${rankLabels[rank]}
+                    </span>
                 </div>
-
-                <span class="skill-rank skill-rank--${skill.rank}">
-                    ${rankLabels[skill.rank]}
-                </span>
-
-            </div>
-        `).join("");
+            `;
+        }).join("");
     }
 
+/* ========================================
+       7. SPEED E DEFESAS
+======================================== */
+
+    function renderDefenses() {
+        const speed = document.getElementById("character-speed");
+        const list = document.getElementById("defenses-list");
+
+        if (speed) {
+            speed.textContent = character.speed || "—";
+        }
+
+        if (!list) return;
+
+        const rankLabels = {
+            untrained: "Destreinado",
+            trained: "Treinado",
+            expert: "Especialista",
+            master: "Mestre",
+            legendary: "Lendário"
+        };
+
+        const defenses = character.defenses || [];
+
+        list.innerHTML = defenses.map(defense => {
+            const rank = rankLabels[defense.rank]
+                ? defense.rank
+                : "untrained";
+
+            return `
+                <div class="skill-card">
+
+                    <div class="skill-card-info">
+                        <strong>${escapeHTML(defense.name)}</strong>
+                    </div>
+
+                    <span class="skill-rank skill-rank--${rank}">
+                        ${rankLabels[rank]}
+                    </span>
+
+                </div>
+            `;
+        }).join("");
+    }
 
     /* ========================================
-       7. INVENTÁRIO
+       8. INVENTÁRIO
     ======================================== */
 
     function renderInventory(filter = activeFilter) {
         activeFilter = filter;
-
         const grid = document.getElementById("inventory-grid");
-
         if (!grid) return;
-
         // Filtra os itens pela categoria selecionada.
-
         const items = character.inventory
             .map((item, index) => ({
                 ...item,
@@ -423,7 +472,6 @@ function initializeDossier() {
             );
 
         // Atualiza os botões de filtro.
-
         document.querySelectorAll(".filter-tab").forEach(button => {
             const selected = button.dataset.filter === filter;
 
@@ -521,7 +569,7 @@ function initializeDossier() {
 
 
     /* ========================================
-       8. DETALHES DOS ITENS
+       9. DETALHES DOS ITENS
     ======================================== */
 
     function showItem(index) {
@@ -551,7 +599,7 @@ function initializeDossier() {
 
 
     /* ========================================
-       9. NAVEGAÇÃO ENTRE AS SEÇÕES
+       10. NAVEGAÇÃO ENTRE AS SEÇÕES
     ======================================== */
 
     function goToScreen(id) {
@@ -579,7 +627,7 @@ function initializeDossier() {
 
 
     /* ========================================
-       10. ATUALIZAÇÃO DO MENU E HUD
+       11. ATUALIZAÇÃO DO MENU E HUD
     ======================================== */
 
     function updateNavigation() {
@@ -653,7 +701,7 @@ function initializeDossier() {
 
 
     /* ========================================
-       11. CONFIGURAÇÃO DOS EVENTOS
+       12. CONFIGURAÇÃO DOS EVENTOS
     ======================================== */
 
     function setupEvents() {
@@ -740,7 +788,7 @@ function initializeDossier() {
         world.addEventListener("wheel", event => {
             if (
                 event.target instanceof Element &&
-                event.target.closest(".profile-layout, .stats-main")
+                event.target.closest(".profile-layout, .stats-main, .defenses-card")
             ) {
                 return;
             }
@@ -792,12 +840,13 @@ function initializeDossier() {
 
 
     /* ========================================
-       12. INICIALIZAÇÃO
+       13. INICIALIZAÇÃO
     ======================================== */
 
     renderCharacter();
     renderStats();
     renderSkills();
+    renderDefenses();
     renderInventory();
     setupEvents();
     updateNavigation();
@@ -806,7 +855,7 @@ function initializeDossier() {
 
 
 /* ========================================
-   13. INICIA QUANDO O HTML ESTIVER PRONTO
+   14. INICIA QUANDO O HTML ESTIVER PRONTO
 ======================================== */
 
 if (document.readyState === "loading") {

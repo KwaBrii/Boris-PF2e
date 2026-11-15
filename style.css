@@ -1152,7 +1152,7 @@ img {
 
 .stats-screen {
     display: grid;
-    grid-template-columns: minmax(230px, 0.7fr) minmax(0, 1.5fr);
+    grid-template-columns: minmax(210px, 0.7fr) minmax(0, 1.6fr);
     gap: clamp(30px, 5vw, 75px);
 }
 
@@ -1183,8 +1183,8 @@ img {
     align-items: center;
     justify-content: center;
     width: 180px;
-    min-height: 190px;
-    margin: 45px auto;
+    min-height: 160px;
+    margin: 28px auto 0;
     color: var(--blue-medium);
     background: rgba(174, 187, 199, 0.13);
     border: 1px solid var(--silver-dark);
@@ -2714,4 +2714,309 @@ img {
     display: none;
     width: 0;
     height: 0;
+}
+
+
+/* ========================================
+   SPEED E DEFESAS DO PERSONAGEM
+======================================== */
+
+.stats-side-details {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    margin-top: 24px;
+}
+
+/* SPEED */
+
+.speed-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.32);
+    border: 1px solid rgba(55, 85, 110, 0.22);
+    border-radius: 5px;
+}
+
+.stats-detail-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    color: var(--ink-muted, #687783);
+}
+
+.speed-card strong {
+    font-family: Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--ink, #344b5c);
+}
+
+/* DEFESAS E PERCEPÇÃO */
+
+.defenses-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.defenses-card h3 {
+    margin: 0;
+    padding-bottom: 9px;
+    border-bottom: 1px solid rgba(55, 85, 110, 0.22);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    color: var(--ink-muted, #687783);
+}
+
+.defenses-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* CADA PERÍCIA */
+
+.defense-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-width: 0;
+}
+
+.defense-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink, #344b5c);
+}
+
+/* ========================================
+   CORES DE PROFICIÊNCIA — TODAS AS PERÍCIAS
+======================================== */
+
+/* Destreinado — vermelho */
+.skill-rank--untrained,
+.defense-rank--untrained {
+    color: #a94343;
+    background: rgba(169, 67, 67, 0.10);
+    border-color: rgba(169, 67, 67, 0.25);
+}
+
+/* Treinado — verde */
+.skill-rank--trained,
+.defense-rank--trained {
+    color: #397b50;
+    background: rgba(57, 123, 80, 0.10);
+    border-color: rgba(57, 123, 80, 0.25);
+}
+
+/* Especialista — azul */
+.skill-rank--expert,
+.defense-rank--expert {
+    color: #3976ae;
+    background: rgba(57, 118, 174, 0.10);
+    border-color: rgba(57, 118, 174, 0.25);
+}
+
+/* Mestre — roxo */
+.skill-rank--master,
+.defense-rank--master {
+    color: #8054a3;
+    background: rgba(128, 84, 163, 0.10);
+    border-color: rgba(128, 84, 163, 0.25);
+}
+
+/* Lendário — laranja */
+.skill-rank--legendary,
+.defense-rank--legendary {
+    color: #bd702c;
+    background: rgba(189, 112, 44, 0.10);
+    border-color: rgba(189, 112, 44, 0.25);
+}
+
+
+/* ========================================
+   AJUSTES VISUAIS — SPEED E DEFESAS
+======================================== */
+
+.stats-side-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* SPEED */
+
+.speed-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    background: rgba(174, 187, 199, 0.13);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+}
+
+.stats-detail-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    color: var(--ink-soft);
+}
+
+.speed-card strong {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--ink);
+}
+
+/* DEFESAS E PERCEPÇÃO */
+
+.defenses-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.defenses-card h3 {
+    margin: 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--blue-medium);
+}
+
+.defenses-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* LINHAS DAS DEFESAS */
+
+.defense-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+}
+
+.defense-name {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    color: var(--ink);
+}
+
+/* ETIQUETAS DE PROFICIÊNCIA */
+
+.defense-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+/* ========================================
+   ORGANIZAÇÃO DA SPEED E DEFESAS
+======================================== */
+
+.stats-side-details {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.defenses-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.defenses-card h3 {
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    color: var(--blue-medium);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+}
+
+.defenses-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.speed-value {
+    color: var(--blue-medium);
+    background: rgba(174, 187, 199, 0.13);
+    border-color: var(--line);
+}
+
+/* ========================================
+   ROLAGEM INDEPENDENTE — DEFESAS
+======================================== */
+
+.stats-screen {
+    height: 100%;
+    min-height: 0;
+}
+
+.stats-sidebar {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.level-plaque,
+.speed-card {
+    flex-shrink: 0;
+}
+
+.stats-side-details {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.defenses-card {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.defenses-card::-webkit-scrollbar {
+    display: none;
+}
+
+.stats-side-note {
+    flex-shrink: 0;
 }
