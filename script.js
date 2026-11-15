@@ -29,7 +29,7 @@ const character = {
 
     bio: `Boris é apenas mais uma das inúmeras crianças demônio que foi abandonada pelas crenças do povo de Mwangi. Cresceu pelas ruas de Bloodcove, onde foi abandonado durante uma viagem de barco dos seus pais. Ou pelo menos é nisso que acreditava.
 
-Durante a infância, sobrevivia como um marginal com o restante das crianças. Se tornou especialmente próximo de outras três crianças: uma Nephlim como ele chamada Maalika, um Amurrun (catfolk) de pelagem castanha chamado Leper e um Iruxi (lizardfolk) chamado Param. Juntos, eles aprontavam e roubavam pelas ruas de Bloodcove.`,
+Durante a infância, sobrevivia como um marginal com o restante das crianças. Se tornou especialmente próximo de outras três crianças: uma Nephlim como ele chamada Amara, um Amurrun (catfolk) de pelagem castanha chamado Leper e uma Iruxi (lizardfolk) chamado Param. Juntos, eles aprontavam e roubavam pelas ruas de Bloodcove.`,
 
     stats: [
         { abbreviation: "FOR", name: "Força", value: 0, max: 6 },
@@ -80,6 +80,51 @@ Durante a infância, sobrevivia como um marginal com o restante das crianças. S
         {
             name: "Percepção",
             rank: "trained"
+        }
+    ],
+
+    relationships: [
+        {
+            name: "Takulu Ot",
+            role: "Professor/Mentor",
+            tone: "positive",
+            portrait: "assets/images/teacherot.jpg",
+            description: "O mais bonzinho dos professores parece ter um apreço por seu púpilo, e nem Boris entende o porquê direito, mas sua mentoria e seu cuidado fazem ele achar que realmente mereça mais do fizeram-no acreditar."
+        },
+        {
+            name: "Amara Saidi",
+            role: "Amiga de Infância",
+            tone: "positive",
+            portrait: "assets/images/amarasaidi.jpg",
+            description: "Escreva aqui a descrição do relacionamento."
+        },
+        {
+            name: "Leper Langa",
+            role: "Amigo de Infância",
+            tone: "positive",
+            portrait: "assets/images/leperlanga.jpg",
+            description: "Escreva aqui a descrição do relacionamento."
+        },
+        {
+            name: "Param Juma",
+            role: "Amiga de Infância",
+            tone: "positive",
+            portrait: "assets/images/paramjuma.jpg",
+            description: "Escreva aqui a descrição do relacionamento."
+        },
+        {
+            name: "Bantu Krasiv von Aaramong",
+            role: "Pai",
+            tone: "neutral",
+            portrait: "assets/images/bantu.jpg",
+            description: "Escreva aqui a descrição do relacionamento."
+        },
+        {
+            name: "Dandara Krasiv von Aaramong",
+            role: "Mãe",
+            tone: "negative",
+            portrait: "assets/images/dandara.jpg",
+            description: "Escreva aqui a descrição do relacionamento."
         }
     ],
 
@@ -415,11 +460,9 @@ function initializeDossier() {
     function renderDefenses() {
         const speed = document.getElementById("character-speed");
         const list = document.getElementById("defenses-list");
-
         if (speed) {
             speed.textContent = character.speed || "—";
         }
-
         if (!list) return;
 
         const rankLabels = {
@@ -431,24 +474,76 @@ function initializeDossier() {
         };
 
         const defenses = character.defenses || [];
-
         list.innerHTML = defenses.map(defense => {
             const rank = rankLabels[defense.rank]
                 ? defense.rank
                 : "untrained";
-
             return `
                 <div class="skill-card">
-
                     <div class="skill-card-info">
                         <strong>${escapeHTML(defense.name)}</strong>
                     </div>
-
                     <span class="skill-rank skill-rank--${rank}">
                         ${rankLabels[rank]}
                     </span>
-
                 </div>
+            `;
+        }).join("");
+    }
+
+/* ========================================
+       RELAÇÕES
+======================================== */
+
+    function renderRelationships() {
+        const grid = document.getElementById("relations-grid");
+        if (!grid) return;
+        const relationships = character.relationships || [];
+        if (relationships.length === 0) return;
+        const toneClasses = {
+            positive: "relationship-role--positive",
+            neutral: "relationship-role--neutral",
+            negative: "relationship-role--negative"
+        };
+
+        grid.innerHTML = relationships.map(person => {
+            const name = escapeHTML(person.name || "Sem nome");
+            const role = escapeHTML(person.role || "");
+            const description = escapeHTML(person.description || "");
+            const toneClass = toneClasses[person.tone] || "";
+            const portrait = person.portrait
+                ? `
+                    <img
+                        class="relationship-portrait"
+                        src="${escapeHTML(person.portrait)}"
+                        alt="Retrato de ${name}"
+                        loading="lazy"
+                    >
+                `
+                : `
+                    <div class="relationship-portrait relationship-portrait--empty">
+                        ✧
+                    </div>
+                `;
+
+            return `
+                <article class="relationship-card">
+                    <div class="relationship-portrait-frame">
+                        <div class="relationship-portrait-window">
+                            ${portrait}
+                        </div>
+                        <span class="portrait-ornament">✧</span>
+                    </div>
+                    <div class="relationship-card-content">
+                        ${role ? `
+                            <span class="relationship-role ${toneClass}">
+                                ${role}
+                            </span>
+                        ` : ""}
+                        <h3>${name}</h3>
+                        <p>${description}</p>
+                    </div>
+                </article>
             `;
         }).join("");
     }
@@ -788,7 +883,7 @@ function initializeDossier() {
         world.addEventListener("wheel", event => {
             if (
                 event.target instanceof Element &&
-                event.target.closest(".profile-layout, .stats-main, .defenses-card")
+                event.target.closest(".profile-layout, .stats-main, .defenses-card, .relations-grid")
             ) {
                 return;
             }
@@ -847,6 +942,7 @@ function initializeDossier() {
     renderStats();
     renderSkills();
     renderDefenses();
+    renderRelationships();
     renderInventory();
     setupEvents();
     updateNavigation();
