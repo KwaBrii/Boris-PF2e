@@ -29,7 +29,7 @@ const character = {
 
     bio: `Boris é apenas mais uma das inúmeras crianças demônio que foi abandonada pelas crenças do povo de Mwangi. Cresceu pelas ruas de Bloodcove, onde foi abandonado durante uma viagem de barco dos seus pais. Ou pelo menos é nisso que acreditava.
 
-Durante a infância, sobrevivia como um marginal com o restante das crianças. Se tornou especialmente próximo de outras três crianças: uma Nephlim como ele chamada Amara, um Amurrun (catfolk) de pelagem castanha chamado Leper e uma Iruxi (lizardfolk) chamado Param. Juntos, eles aprontavam e roubavam pelas ruas de Bloodcove.`,
+    Durante a infância, sobrevivia como um marginal com o restante das crianças. Se tornou especialmente próximo de outras três crianças: uma Nephlim como ele chamada Amara, um Amurrun (catfolk) de pelagem castanha chamado Leper e uma Iruxi (lizardfolk) chamado Param. Juntos, eles aprontavam e roubavam pelas ruas de Bloodcove.`,
 
     stats: [
         { abbreviation: "FOR", name: "Força", value: 0, max: 6 },
@@ -96,35 +96,42 @@ Durante a infância, sobrevivia como um marginal com o restante das crianças. S
             role: "Amiga de Infância",
             tone: "positive",
             portrait: "assets/images/amarasaidi.jpg",
-            description: "Escreva aqui a descrição do relacionamento."
+            description: "Amara, assim como Boris, é uma criança 'endiabrada' e a única do quarteto que conseguiu um trabalho digno como enfermeira local. Eles tem idades próximas. Cresceram juntos nas ruas de Bloodcove e formaram o Quarteto Lancinante junto de Leper e Param."
         },
         {
             name: "Leper Langa",
             role: "Amigo de Infância",
             tone: "positive",
             portrait: "assets/images/leperlanga.jpg",
-            description: "Escreva aqui a descrição do relacionamento."
+            description: "Como o mais novo deles, Leper sempre foi o mais agitado dos quatro, e talvez por isso tenha se dado tão bem na vida da pirataria quando cresceu. Cresceram juntos nas ruas de Bloodcove e formaram o Quarteto Lancinante junto de Param e Amara."
         },
         {
             name: "Param Juma",
             role: "Amiga de Infância",
             tone: "positive",
             portrait: "assets/images/paramjuma.jpg",
-            description: "Escreva aqui a descrição do relacionamento."
+            description: "A mais velha dos quatro. Com um olhar afiado, Param foi quem ensinou o grupo não a brigar, mas sim a matar. A vida mercenária chegou a ela como um convite irrecusável. Cresceram juntos nas ruas de Bloodcove e formaram o Quarteto Lancinante junto de Amara e Leper."
+        },
+        {
+            name: "Kamau Krasiv von Aaramong",
+            role: "Irmão",
+            tone: "negative",
+            portrait: "assets/images/kamau.jpg",
+            description: "Apesar de Boris não saber, Kamau foi quem jogou seu irmão do navio quando ambos eram bem novos. Ele é mais velho que Boris e também é um tiefling, mas raspa os próprios chifres para que não apareçam no cabelo volumoso."
         },
         {
             name: "Bantu Krasiv von Aaramong",
             role: "Pai",
             tone: "neutral",
             portrait: "assets/images/bantu.jpg",
-            description: "Escreva aqui a descrição do relacionamento."
+            description: "Um elfo da alta sociedade que acha ter perdido o filho mais novo em uma tempestade enquanto viajavam em uma embarcação. Se culpa muito pela 'morte' do filho e quase nunca saí de sua propriedade em Anthusis."
         },
         {
             name: "Dandara Krasiv von Aaramong",
             role: "Mãe",
-            tone: "negative",
+            tone: "neutral",
             portrait: "assets/images/dandara.jpg",
-            description: "Escreva aqui a descrição do relacionamento."
+            description: "Uma elfa nephlim da alta sociedade. Dandara é e sempre foi uma mãe amorosa, e apesar de perder o filho mais novo e do distanciamento do marido, ela fez o possível para se manter forte e cuidar de Kamau que ainda era bem jovem."
         }
     ],
 
