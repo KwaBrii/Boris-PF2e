@@ -3733,3 +3733,12 @@ img {
 .music-player.is-dragging .music-player-trigger {
     cursor: grabbing;
 }
+
+/* RETRATO FIXO DURANTE A LEITURA DA BIOGRAFIA */
+
+.profile-art-panel {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    height: fit-content;
+}

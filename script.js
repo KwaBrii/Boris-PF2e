@@ -29,7 +29,19 @@ const character = {
 
     bio: `Boris é apenas mais uma das inúmeras crianças demônio que foi abandonada pelas crenças do povo de Mwangi. Cresceu pelas ruas de Bloodcove, onde foi abandonado durante uma viagem de barco dos seus pais. Ou pelo menos é nisso que acreditava.
 
-    Durante a infância, sobrevivia como um marginal com o restante das crianças. Se tornou especialmente próximo de outras três crianças: uma Nephlim como ele chamada Amara, um Amurrun (catfolk) de pelagem castanha chamado Leper e uma Iruxi (lizardfolk) chamado Param. Juntos, eles aprontavam e roubavam pelas ruas de Bloodcove.`,
+    Durante a infância, sobrevivia como um marginal com o restante das crianças. Se tornou especialmente próximo de outras três crianças: uma Nephlim endiabrada como ele, chamada Amara; um Amurrun (catfolk) com pelagem de guepardo chamado Leper; e uma Iruxi (lizardfolk) chamada Param. Juntos se denominaram como 'O Quarteto Lancinante' e, durante sua infância e adolescência, aprontavam e roubavam pelas ruas de Bloodcove.
+
+    Com o avançar dos anos, cada um começou a seguir seu próprio caminho. Leper, o mais novo, se juntou à embarcação de um Capitão Livre que passou por BloodCove e agora raramente dá as caras na cidade. Amara se tornou uma curandeira (das bem bravas) e que, no tempo livre, tenta cuidar do maior número de crianças órfãs possível. Param, sendo pouco mais velha, continuou na vida do crime, mas agora como uma mercenária, viajando por toda Expansão Mwangi. 
+
+    Boris acabou ficando pela famosa Praça do Livre Comércio, com sua afinidade com magia e com seu charme natural, era fácil ser um cartomante para tirar dinheiro dos turistas e pobras desesperados por uma leitura de sorte. Ele só tinha que fugir, vez ou outra, de alguém que veio cobrar por suas leituras 'inconclusivas', mas regra de seu estabelecimento era clara: Nada de reembolsos!
+
+    Um dia porém, ele viu algo que não deveria ter visto enquanto lia suas cartas. Sentindo uma leve vertigem, acabou tendo uma visão do seu passado onde viu uma cidade grande que parecia a capital (Anthusis), uma embarcação e uma família. Nesse dia, com as fortes enxaquecas causadas pela visão, decidiu sair para beber sozinho.
+
+    Em uma famosa taverna, O Gancho do Pirata, se sentou no balcão e começou a beber. Em sua segunda ou terceira garrafa, um homem sorridente se aproximou, puxando conversa. O homem, que se identificou como Professor Ot, disse ter visto de longe a aura mágica de Boris e que via potencial no rapaz. Apesar de um pouco leve por conta do álcool, o tiefling rapidamente se empertigou na cadeira, achando que seria mais um humano que caçoaria dele por conta de sua herança, mas... A zombaria nunca veio. O tal professor Ot o tratou com um respeito que Boris nunca havia recebido. 
+
+    Confiando nas palavras daquele homem, o rapaz decidiu contar sobre o que lhe ocorreu, a visão, a dor de cabeça... E perguntou se ele tinha algum conselho. Ot examinou Boris e, com um sorriso gentil, convidou-o para Magaambya, como um de seus pupilos. Antes de ir embora, lhe deu um pequeno cartão para onde se dirigir caso decidisse se juntar à escola de magia.
+
+    Depois disso, Boris foi para sua casa e se deitou, esperando que fosse dormir rápido. Acabou rolando na cama durante toda a noite e, assim que o sol bateu em sua cara pela fresta da janela, decidiu ir até a Escola de Magia em Nantambu, determinado a descobrir mais sobre seu novo estranho poder e sobre seu passado.`,
 
     stats: [
         { abbreviation: "FOR", name: "Força", value: 0, max: 6 },
@@ -215,7 +227,6 @@ const character = {
         }
     ]
 };
-
 
 /* ========================================
    2. FUNÇÕES AUXILIARES
@@ -1372,7 +1383,7 @@ function initializeDossier() {
                 savePlayerPosition();
             });
         });
-        
+
         // Ajusta a posição caso o tamanho da janela mude.
         window.addEventListener("resize", () => {
             if (player.hidden || !player.style.left) return;
