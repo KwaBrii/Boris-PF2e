@@ -88,49 +88,49 @@ const character = {
             name: "Takulu Ot",
             role: "Professor/Mentor",
             tone: "positive",
-            portrait: "assets/images/teacherot.jpg",
+            portrait: "assets/images/characters/teacherot.jpg",
             description: "O mais bonzinho dos professores parece ter um apreço por seu púpilo, e nem Boris entende o porquê direito, mas sua mentoria e seu cuidado fazem ele achar que realmente mereça mais do fizeram-no acreditar."
         },
         {
             name: "Amara Saidi",
             role: "Amiga de Infância",
             tone: "positive",
-            portrait: "assets/images/amarasaidi.jpg",
+            portrait: "assets/images/characters/amarasaidi.jpg",
             description: "Amara, assim como Boris, é uma criança 'endiabrada' e a única do quarteto que conseguiu um trabalho digno como enfermeira local. Eles tem idades próximas. Cresceram juntos nas ruas de Bloodcove e formaram o Quarteto Lancinante junto de Leper e Param."
         },
         {
             name: "Leper Langa",
             role: "Amigo de Infância",
             tone: "positive",
-            portrait: "assets/images/leperlanga.jpg",
+            portrait: "assets/images/characters/leperlanga.jpg",
             description: "Como o mais novo deles, Leper sempre foi o mais agitado dos quatro, e talvez por isso tenha se dado tão bem na vida da pirataria quando cresceu. Cresceram juntos nas ruas de Bloodcove e formaram o Quarteto Lancinante junto de Param e Amara."
         },
         {
             name: "Param Juma",
             role: "Amiga de Infância",
             tone: "positive",
-            portrait: "assets/images/paramjuma.jpg",
+            portrait: "assets/images/characters/paramjuma.jpg",
             description: "A mais velha dos quatro. Com um olhar afiado, Param foi quem ensinou o grupo não a brigar, mas sim a matar. A vida mercenária chegou a ela como um convite irrecusável. Cresceram juntos nas ruas de Bloodcove e formaram o Quarteto Lancinante junto de Amara e Leper."
         },
         {
             name: "Kamau Krasiv von Aaramong",
             role: "Irmão",
             tone: "negative",
-            portrait: "assets/images/kamau.jpg",
+            portrait: "assets/images/characters/kamau.jpg",
             description: "Apesar de Boris não saber, Kamau foi quem jogou seu irmão do navio quando ambos eram bem novos. Ele é mais velho que Boris e também é um tiefling, mas raspa os próprios chifres para que não apareçam no cabelo volumoso."
         },
         {
             name: "Bantu Krasiv von Aaramong",
             role: "Pai",
             tone: "neutral",
-            portrait: "assets/images/bantu.jpg",
+            portrait: "assets/images/characters/bantu.jpg",
             description: "Um elfo da alta sociedade que acha ter perdido o filho mais novo em uma tempestade enquanto viajavam em uma embarcação. Se culpa muito pela 'morte' do filho e quase nunca saí de sua propriedade em Anthusis."
         },
         {
             name: "Dandara Krasiv von Aaramong",
             role: "Mãe",
             tone: "neutral",
-            portrait: "assets/images/dandara.jpg",
+            portrait: "assets/images/characters/dandara.jpg",
             description: "Uma elfa nephlim da alta sociedade. Dandara é e sempre foi uma mãe amorosa, e apesar de perder o filho mais novo e do distanciamento do marido, ela fez o possível para se manter forte e cuidar de Kamau que ainda era bem jovem."
         }
     ],
@@ -196,7 +196,24 @@ const character = {
 
     journalText: "",
 
-    playlist: []
+    playlist: [
+        {
+            title: "01 - The Spine (feat. Ashley Barrett)",
+            artist: "Darren Korb",
+            album: "Transistor Original Soundtrack",
+            audio: "assets/music/01-The Spine.mp3",
+            cover: "assets/images/covers/01.png",
+            description: ""
+        },
+        {
+            title: "02 - CHOSEN ANEW",
+            artist: "Toby Fox & Camellia",
+            album: "OFF Original Soundtrack (2025)",
+            audio: "assets/music/02-CHOSEN ANEW.mp3",
+            cover: "assets/images/covers/02.png",
+            description: ""
+        }
+    ]
 };
 
 
@@ -1184,6 +1201,190 @@ function initializeDossier() {
         updateMusicProgress();
     }
 
+    function setupMusicPlayerDrag() {
+        const player = document.getElementById("music-player");
+        const handle = document.getElementById("music-player-trigger");
+
+        if (!player || !handle) return;
+
+        const storageKey = "borisMusicPlayerPosition";
+
+        let pointerActive = false;
+        let isDragging = false;
+        let suppressNextClick = false;
+
+        let startX = 0;
+        let startY = 0;
+        let startLeft = 0;
+        let startTop = 0;
+
+        // Define a posição do player, mantendo-o dentro da tela.
+        function setPlayerPosition(left, top) {
+            const rect = player.getBoundingClientRect();
+
+            const maxLeft = Math.max(0, window.innerWidth - rect.width);
+            const maxTop = Math.max(0, window.innerHeight - rect.height);
+
+            const safeLeft = Math.min(Math.max(0, left), maxLeft);
+            const safeTop = Math.min(Math.max(0, top), maxTop);
+
+            player.style.left = `${safeLeft}px`;
+            player.style.top = `${safeTop}px`;
+            player.style.right = "auto";
+            player.style.bottom = "auto";
+        }
+
+        // Salva a posição escolhida pelo visitante.
+        function savePlayerPosition() {
+            const rect = player.getBoundingClientRect();
+
+            try {
+                localStorage.setItem(
+                    storageKey,
+                    JSON.stringify({
+                        left: rect.left,
+                        top: rect.top
+                    })
+                );
+            } catch (error) {
+                console.warn("Não foi possível salvar a posição do player.");
+            }
+        }
+
+        // Recupera a posição salva anteriormente.
+        try {
+            const savedPosition = JSON.parse(
+                localStorage.getItem(storageKey)
+            );
+
+            if (
+                savedPosition &&
+                Number.isFinite(savedPosition.left) &&
+                Number.isFinite(savedPosition.top)
+            ) {
+                setPlayerPosition(
+                    savedPosition.left,
+                    savedPosition.top
+                );
+            }
+        } catch (error) {
+            console.warn("Não foi possível recuperar a posição do player.");
+        }
+
+        // Inicia o movimento.
+        handle.addEventListener("pointerdown", event => {
+            if (event.button !== 0) return;
+
+            pointerActive = true;
+            isDragging = false;
+
+            startX = event.clientX;
+            startY = event.clientY;
+
+            const rect = player.getBoundingClientRect();
+
+            startLeft = rect.left;
+            startTop = rect.top;
+
+            handle.setPointerCapture(event.pointerId);
+        });
+
+        // Acompanha o movimento do mouse ou toque.
+        handle.addEventListener("pointermove", event => {
+            if (!pointerActive) return;
+
+            const deltaX = event.clientX - startX;
+            const deltaY = event.clientY - startY;
+
+            // Evita confundir um clique normal com movimento.
+            if (
+                !isDragging &&
+                Math.hypot(deltaX, deltaY) < 5
+            ) {
+                return;
+            }
+
+            isDragging = true;
+            player.classList.add("is-dragging");
+
+            setPlayerPosition(
+                startLeft + deltaX,
+                startTop + deltaY
+            );
+        });
+
+        // Finaliza o movimento.
+        function finishDrag(event) {
+            if (!pointerActive) return;
+
+            pointerActive = false;
+
+            if (isDragging) {
+                savePlayerPosition();
+
+                // Impede que o movimento também abra ou feche o player.
+                suppressNextClick = true;
+
+                setTimeout(() => {
+                    suppressNextClick = false;
+                }, 0);
+            }
+
+            isDragging = false;
+            player.classList.remove("is-dragging");
+
+            if (handle.hasPointerCapture(event.pointerId)) {
+                handle.releasePointerCapture(event.pointerId);
+            }
+        }
+
+        handle.addEventListener("pointerup", finishDrag);
+
+        handle.addEventListener("pointercancel", () => {
+            pointerActive = false;
+            isDragging = false;
+            player.classList.remove("is-dragging");
+        });
+
+        // Bloqueia o clique que seria disparado após arrastar.
+        handle.addEventListener("click", event => {
+            if (!suppressNextClick) return;
+
+            event.preventDefault();
+            event.stopImmediatePropagation();
+
+            suppressNextClick = false;
+        }, true);
+
+        // Reposiciona o player ao expandir ou recolher.
+        handle.addEventListener("click", () => {
+            requestAnimationFrame(() => {
+                const rect = player.getBoundingClientRect();
+
+                const maxTop = Math.max(
+                    0,
+                    window.innerHeight - rect.height
+                );
+
+                const adjustedTop = Math.min(rect.top, maxTop);
+
+                setPlayerPosition(rect.left, adjustedTop);
+                savePlayerPosition();
+            });
+        });
+        
+        // Ajusta a posição caso o tamanho da janela mude.
+        window.addEventListener("resize", () => {
+            if (player.hidden || !player.style.left) return;
+
+            const rect = player.getBoundingClientRect();
+
+            setPlayerPosition(rect.left, rect.top);
+            savePlayerPosition();
+        });
+    }
+
+
     /* ========================================
        10. DETALHES DOS ITENS
     ======================================== */
@@ -1468,6 +1669,7 @@ function initializeDossier() {
     renderPlaylist();
     setupEvents();
     setupMusicPlayerEvents();
+    setupMusicPlayerDrag();
     updateNavigation();
 
 }
