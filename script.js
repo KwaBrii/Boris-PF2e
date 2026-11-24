@@ -224,6 +224,14 @@ const character = {
             audio: "assets/music/02-CHOSEN ANEW.mp3",
             cover: "assets/images/covers/02.png",
             description: ""
+        },
+        {
+            title: "03 - Bewitching Eyes",
+            artist: "Supergiant Games",
+            album: "Hades II Original Soundtrack",
+            audio: "assets/music/03-Bewitching Eyes.mp3",
+            cover: "assets/images/covers/03.png",
+            description: ""
         }
     ]
 };
