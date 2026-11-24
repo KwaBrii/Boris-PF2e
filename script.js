@@ -194,7 +194,9 @@ const character = {
 
     journalQuote: "",
 
-    journalText: ""
+    journalText: "",
+
+    playlist: []
 };
 
 
@@ -670,8 +672,137 @@ function initializeDossier() {
     }
 
 
+/* ========================================
+   9. PLAYLIST
+======================================== */
+
+    function renderPlaylist() {
+        const grid = document.getElementById("playlist-grid");
+
+        if (!grid) return;
+
+        const tracks = Array.isArray(character.playlist)
+            ? character.playlist
+            : [];
+
+        // Atualiza a quantidade de músicas.
+        setText(
+            "playlist-total",
+            `${String(tracks.length).padStart(2, "0")} FAIXAS`
+        );
+
+        // Exibe o player somente quando houver músicas.
+        const player = document.getElementById("music-player");
+
+        if (player) {
+            player.hidden = tracks.length === 0;
+        }
+
+        // Mensagem exibida quando a playlist está vazia.
+        if (tracks.length === 0) {
+            grid.innerHTML = `
+                <div class="playlist-empty-state">
+                    <span class="placeholder-symbol">♫</span>
+
+                    <h3>Nenhuma faixa registrada</h3>
+
+                    <p>
+                        Este espaço será preenchido com músicas
+                        que representem Boris, sua personalidade,
+                        suas memórias e sua jornada.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+        // Cria os cartões das músicas.
+        grid.innerHTML = tracks.map((track, index) => {
+            const title = escapeHTML(
+                track.title || `Faixa ${index + 1}`
+            );
+
+            const artist = escapeHTML(
+                track.artist || "Artista não informado"
+            );
+
+            const album = escapeHTML(
+                track.album || "Álbum não informado"
+            );
+
+            const description = escapeHTML(
+                track.description || "Nenhuma descrição cadastrada."
+            );
+
+            const cover = track.cover
+                ? `
+                    <img
+                        class="playlist-track-cover"
+                        src="${escapeHTML(track.cover)}"
+                        alt="Capa de ${title}"
+                        loading="lazy"
+                    >
+                `
+                : `
+                    <div class="playlist-track-cover" aria-hidden="true">
+                        ♫
+                    </div>
+                `;
+
+            return `
+                <article class="playlist-track" data-track-card="${index}">
+
+                    <button
+                        type="button"
+                        class="playlist-track-header"
+                        data-track-toggle="${index}"
+                        aria-expanded="false"
+                        aria-controls="playlist-track-details-${index}"
+                    >
+                        ${cover}
+
+                        <span class="playlist-track-info">
+                            <h4>${title}</h4>
+                            <p>${artist}</p>
+                        </span>
+
+                        <span class="playlist-track-toggle" aria-hidden="true">
+                            ⌄
+                        </span>
+                    </button>
+
+                    <div
+                        class="playlist-track-details"
+                        id="playlist-track-details-${index}"
+                        hidden
+                    >
+                        <p class="playlist-track-album">
+                            ${album}
+                        </p>
+
+                        <p class="playlist-track-description">
+                            ${description}
+                        </p>
+
+                        <button
+                            type="button"
+                            class="playlist-track-play"
+                            data-play-track="${index}"
+                        >
+                            ▶ Reproduzir
+                        </button>
+                    </div>
+
+                </article>
+            `;
+        }).join("");
+    }
+
+
+
     /* ========================================
-       9. DETALHES DOS ITENS
+       10. DETALHES DOS ITENS
     ======================================== */
 
     function showItem(index) {
@@ -701,7 +832,7 @@ function initializeDossier() {
 
 
     /* ========================================
-       10. NAVEGAÇÃO ENTRE AS SEÇÕES
+       11. NAVEGAÇÃO ENTRE AS SEÇÕES
     ======================================== */
 
     function goToScreen(id) {
@@ -729,7 +860,7 @@ function initializeDossier() {
 
 
     /* ========================================
-       11. ATUALIZAÇÃO DO MENU E HUD
+       12. ATUALIZAÇÃO DO MENU E HUD
     ======================================== */
 
     function updateNavigation() {
@@ -803,7 +934,7 @@ function initializeDossier() {
 
 
     /* ========================================
-       12. CONFIGURAÇÃO DOS EVENTOS
+       13. CONFIGURAÇÃO DOS EVENTOS
     ======================================== */
 
     function setupEvents() {
@@ -942,7 +1073,7 @@ function initializeDossier() {
 
 
     /* ========================================
-       13. INICIALIZAÇÃO
+       14. INICIALIZAÇÃO
     ======================================== */
 
     renderCharacter();
@@ -951,14 +1082,14 @@ function initializeDossier() {
     renderDefenses();
     renderRelationships();
     renderInventory();
+    renderPlaylist();
     setupEvents();
     updateNavigation();
 
 }
 
-
 /* ========================================
-   14. INICIA QUANDO O HTML ESTIVER PRONTO
+   15. INICIA QUANDO O HTML ESTIVER PRONTO
 ======================================== */
 
 if (document.readyState === "loading") {
