@@ -235,6 +235,7 @@ function escapeHTML(value) {
 
 function initializeDossier() {
     const world = document.getElementById("world");
+    const musicAudio = document.getElementById("music-audio");
 
     const screens = Array.from(
         document.querySelectorAll(".screen")
@@ -269,7 +270,7 @@ function initializeDossier() {
 
     let activeIndex = 0;
     let activeFilter = "all";
-
+    let currentTrackIndex = -1;
 
     /* ========================================
        4. CAPA E PERFIL DO PERSONAGEM
@@ -799,7 +800,389 @@ function initializeDossier() {
         }).join("");
     }
 
+/* ========================================
+   CONTROLE DO PLAYER MUSICAL
+======================================== */
 
+    // Formata o tempo em minutos e segundos.
+    function formatMusicTime(seconds) {
+        if (!Number.isFinite(seconds)) {
+            return "0:00";
+        }
+
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = Math.floor(seconds % 60);
+
+        return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
+    }
+
+
+    // Atualiza as informações da música no player.
+    function updateMusicPlayerInfo(track) {
+        const player = document.getElementById("music-player");
+        const cover = document.getElementById("music-player-cover");
+
+        if (player) {
+            player.hidden = false;
+        }
+
+        setText("music-player-title", track.title || "Faixa sem título");
+        setText("music-player-artist", track.artist || "Artista desconhecido");
+
+        setText(
+            "music-player-panel-title",
+            track.title || "Faixa sem título"
+        );
+
+        setText(
+            "music-player-panel-artist",
+            track.artist || "Artista desconhecido"
+        );
+
+        if (cover) {
+            if (track.cover) {
+                cover.src = track.cover;
+                cover.alt = `Capa de ${track.title || "música"}`;
+                cover.hidden = false;
+            } else {
+                cover.removeAttribute("src");
+                cover.alt = "";
+                cover.hidden = true;
+            }
+        }
+    }
+
+
+    // Atualiza o botão de reprodução e os cartões.
+    function updateMusicPlayerButton() {
+        const button = document.getElementById("music-player-play");
+        const isPlaying = musicAudio && !musicAudio.paused;
+
+        if (button) {
+            button.textContent = isPlaying ? "Ⅱ" : "▶";
+
+            button.setAttribute(
+                "aria-label",
+                isPlaying ? "Pausar música" : "Reproduzir música"
+            );
+        }
+
+        document.querySelectorAll("[data-play-track]").forEach(trackButton => {
+            const isCurrent =
+                Number(trackButton.dataset.playTrack) === currentTrackIndex;
+
+            trackButton.textContent =
+                isCurrent && isPlaying
+                    ? "Ⅱ Pausar"
+                    : "▶ Reproduzir";
+        });
+    }
+
+
+    // Atualiza a barra de progresso e os horários.
+    function updateMusicProgress() {
+        const progress = document.getElementById("music-player-progress");
+
+        const currentTime = document.getElementById(
+            "music-player-current-time"
+        );
+
+        const duration = document.getElementById(
+            "music-player-duration"
+        );
+
+        if (!musicAudio) return;
+
+        const totalDuration = Number.isFinite(musicAudio.duration)
+            ? musicAudio.duration
+            : 0;
+
+        const percentage = totalDuration > 0
+            ? (musicAudio.currentTime / totalDuration) * 100
+            : 0;
+
+        if (progress) {
+            progress.value = percentage;
+        }
+
+        if (currentTime) {
+            currentTime.textContent = formatMusicTime(
+                musicAudio.currentTime
+            );
+        }
+
+        if (duration) {
+            duration.textContent = formatMusicTime(totalDuration);
+        }
+    }
+
+
+    // Reproduz uma música pelo índice.
+    function playMusicTrack(index) {
+        const tracks = character.playlist || [];
+        const track = tracks[index];
+
+        if (!track) return;
+
+        if (!track.audio) {
+            alert("Esta música ainda não possui um arquivo de áudio cadastrado.");
+            return;
+        }
+
+        if (!musicAudio) {
+            console.error("Elemento de áudio não encontrado no HTML.");
+            return;
+        }
+
+        currentTrackIndex = index;
+
+        updateMusicPlayerInfo(track);
+
+        document.querySelectorAll(".playlist-track").forEach(card => {
+            card.classList.toggle(
+                "is-active",
+                Number(card.dataset.trackCard) === index
+            );
+        });
+
+        musicAudio.src = track.audio;
+        musicAudio.load();
+
+        const playback = musicAudio.play();
+
+        if (playback) {
+            playback.catch(error => {
+                console.error("Não foi possível reproduzir a música:", error);
+                updateMusicPlayerButton();
+            });
+        }
+
+        updateMusicPlayerButton();
+    }
+
+
+    // Reproduz ou pausa a música atual.
+    function toggleMusicPlayback() {
+        if (!musicAudio) return;
+
+        if (currentTrackIndex === -1) {
+            playMusicTrack(0);
+            return;
+        }
+
+        if (musicAudio.paused) {
+            const playback = musicAudio.play();
+
+            if (playback) {
+                playback.catch(error => {
+                    console.error("Erro ao retomar a música:", error);
+                });
+            }
+        } else {
+            musicAudio.pause();
+        }
+
+        updateMusicPlayerButton();
+    }
+
+
+    // Avança ou retorna uma faixa.
+    function changeMusicTrack(direction) {
+        const tracks = character.playlist || [];
+
+        if (tracks.length === 0) return;
+
+        if (currentTrackIndex === -1) {
+            const firstIndex = direction > 0
+                ? 0
+                : tracks.length - 1;
+
+            playMusicTrack(firstIndex);
+            return;
+        }
+
+        const nextIndex =
+            (currentTrackIndex + direction + tracks.length) % tracks.length;
+
+        playMusicTrack(nextIndex);
+    }
+
+/* ========================================
+   EVENTOS DO PLAYER MUSICAL
+======================================== */
+
+    function setupMusicPlayerEvents() {
+        const grid = document.getElementById("playlist-grid");
+
+        const trigger = document.getElementById("music-player-trigger");
+        const panel = document.getElementById("music-player-panel");
+
+        const volume = document.getElementById("music-player-volume");
+        const progress = document.getElementById("music-player-progress");
+
+        const openPlaylist = document.getElementById(
+            "music-player-open-playlist"
+        );
+
+        // Expansão dos cartões e reprodução das faixas.
+        if (grid) {
+            grid.addEventListener("click", event => {
+                const playButton = event.target.closest("[data-play-track]");
+
+                if (playButton) {
+                    const index = Number(playButton.dataset.playTrack);
+
+                    if (currentTrackIndex === index && musicAudio && !musicAudio.paused) {
+                        musicAudio.pause();
+                    } else if (currentTrackIndex === index) {
+                        toggleMusicPlayback();
+                    } else {
+                        playMusicTrack(index);
+                    }
+
+                    return;
+                }
+
+                const toggleButton = event.target.closest("[data-track-toggle]");
+
+                if (!toggleButton) return;
+
+                const card = toggleButton.closest(".playlist-track");
+
+                if (!card) return;
+
+                const details = card.querySelector(".playlist-track-details");
+
+                if (!details) return;
+
+                const wasExpanded = !details.hidden;
+
+                // Fecha os outros cartões.
+                grid.querySelectorAll(".playlist-track").forEach(otherCard => {
+                    const otherDetails = otherCard.querySelector(
+                        ".playlist-track-details"
+                    );
+
+                    const otherButton = otherCard.querySelector(
+                        "[data-track-toggle]"
+                    );
+
+                    otherCard.classList.remove("is-expanded");
+
+                    if (otherDetails) {
+                        otherDetails.hidden = true;
+                    }
+
+                    if (otherButton) {
+                        otherButton.setAttribute("aria-expanded", "false");
+                    }
+                });
+
+                // Abre ou fecha o cartão selecionado.
+                if (!wasExpanded) {
+                    details.hidden = false;
+                    card.classList.add("is-expanded");
+
+                    toggleButton.setAttribute("aria-expanded", "true");
+                }
+            });
+        }
+
+        // Expande ou recolhe o player global.
+        if (trigger && panel) {
+            trigger.addEventListener("click", () => {
+                const isExpanded =
+                    trigger.getAttribute("aria-expanded") === "true";
+
+                panel.hidden = isExpanded;
+
+                trigger.setAttribute(
+                    "aria-expanded",
+                    String(!isExpanded)
+                );
+
+                const arrow = trigger.querySelector(
+                    ".music-player-trigger-arrow"
+                );
+
+                if (arrow) {
+                    arrow.textContent = isExpanded ? "⌃" : "⌄";
+                }
+            });
+        }
+
+        // Controles de reprodução.
+        document.querySelectorAll("[data-player-action]").forEach(button => {
+            button.addEventListener("click", () => {
+                const action = button.dataset.playerAction;
+
+                if (action === "toggle") {
+                    toggleMusicPlayback();
+                }
+
+                if (action === "previous") {
+                    changeMusicTrack(-1);
+                }
+
+                if (action === "next") {
+                    changeMusicTrack(1);
+                }
+            });
+        });
+
+        if (!musicAudio) return;
+
+        // Volume inicial e controle de volume.
+        if (volume) {
+            musicAudio.volume = Number(volume.value);
+
+            volume.addEventListener("input", () => {
+                musicAudio.volume = Number(volume.value);
+            });
+        }
+
+        // Atualização do progresso.
+        musicAudio.addEventListener("timeupdate", updateMusicProgress);
+        musicAudio.addEventListener("loadedmetadata", updateMusicProgress);
+        musicAudio.addEventListener("durationchange", updateMusicProgress);
+
+        // Busca por um ponto específico da música.
+        if (progress) {
+            progress.addEventListener("input", () => {
+                if (
+                    Number.isFinite(musicAudio.duration) &&
+                    musicAudio.duration > 0
+                ) {
+                    musicAudio.currentTime =
+                        (Number(progress.value) / 100) * musicAudio.duration;
+                }
+            });
+        }
+
+        // Atualiza o botão ao reproduzir ou pausar.
+        musicAudio.addEventListener("play", updateMusicPlayerButton);
+        musicAudio.addEventListener("pause", updateMusicPlayerButton);
+
+        // Quando uma música termina, passa para a próxima.
+        musicAudio.addEventListener("ended", () => {
+            if ((character.playlist || []).length > 1) {
+                changeMusicTrack(1);
+            } else {
+                updateMusicPlayerButton();
+            }
+        });
+
+        // Atalho para a seção da playlist.
+        if (openPlaylist) {
+            openPlaylist.addEventListener("click", () => {
+                goToScreen("playlist");
+            });
+        }
+
+        // Atualiza os controles na inicialização.
+        updateMusicPlayerButton();
+        updateMusicProgress();
+    }
 
     /* ========================================
        10. DETALHES DOS ITENS
@@ -1084,6 +1467,7 @@ function initializeDossier() {
     renderInventory();
     renderPlaylist();
     setupEvents();
+    setupMusicPlayerEvents();
     updateNavigation();
 
 }
