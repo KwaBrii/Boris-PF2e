@@ -344,6 +344,34 @@ img {
     color: var(--blue-medium);
 }
 
+/* ORNAMENTOS ARCANOS DOS TÍTULOS */
+
+.screen-heading {
+    position: relative;
+}
+
+.screen-heading::before,
+.screen-heading::after {
+    position: absolute;
+    bottom: -8px;
+    color: var(--blue-medium);
+    font-family: var(--serif);
+    font-size: 14px;
+    line-height: 1;
+    pointer-events: none;
+    text-shadow: 0 0 6px rgba(113, 134, 154, 0.25);
+}
+
+.screen-heading::before {
+    content: "✧";
+    left: 0;
+}
+
+.screen-heading::after {
+    content: "✧";
+    right: 0;
+}
+
 /* 8. PERFIL */
 .profile-screen {
     display: flex; flex-direction: column;
@@ -2252,7 +2280,13 @@ img {
 }
 
 .spell-details-divider span {
-    font-size: 0.8rem;
+    display: inline-block;
+    color: var(--blue-medium);
+    font-family: "Segoe UI Historic", "Noto Sans Runic", "Segoe UI Symbol", serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.18em;
+    white-space: nowrap;
+    text-shadow: 0 0 6px rgba(113, 134, 154, 0.25);
 }
 
 .spell-details-content > p {
@@ -2967,13 +3001,15 @@ img {
 .spell-granted {
     display: inline-flex;
     align-items: center;
+    width: fit-content;
+    font-size: 0.76rem;
     flex: 0 0 auto;
-    padding: 3px 8px;
+    padding: 3px 7px;
     border: 1px solid rgba(207, 139, 224, 0.3);
     border-radius: 20px;
     background: rgba(244, 184, 247, 0.26);
-    color: rgb(94, 9, 99);
-    font-size: 0.65rem;
+    color: rgba(94, 9, 99, 0.63);
+    font-family: var(--sans);
     font-weight: 600;
     letter-spacing: 0.04em;
     line-height: 1.3;
@@ -3028,4 +3064,136 @@ img {
 
 .spells-heading-bottom h2 {
     margin: 0;
+}
+
+/* SELO ARCANO DO GRIMÓRIO */
+
+.spells-title-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.spells-title-group h2 {
+    margin: 0;
+}
+
+.spell-arcane-seal {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    color: var(--blue-medium);
+}
+
+.spell-arcane-seal::before,
+.spell-arcane-seal::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(113, 134, 154, 0.55);
+}
+
+.spell-arcane-seal::before {
+    inset: 5px;
+    transform: rotate(45deg);
+}
+
+.spell-arcane-seal::after {
+    inset: 2px;
+    border-radius: 50%;
+}
+
+.spell-arcane-seal span {
+    position: relative;
+    z-index: 1;
+    font-size: 19px;
+    text-shadow: 0 0 8px rgba(113, 134, 154, 0.4);
+}
+
+/* ========================================
+   ORNAMENTOS ARCANOS — PAINEL DE MAGIAS
+======================================== */
+
+.spell-details-panel {
+    background-image:
+        linear-gradient(rgba(113, 134, 154, 0.55), rgba(113, 134, 154, 0.55)),
+        linear-gradient(rgba(113, 134, 154, 0.55), rgba(113, 134, 154, 0.55)),
+
+        linear-gradient(rgba(113, 134, 154, 0.55), rgba(113, 134, 154, 0.55)),
+        linear-gradient(rgba(113, 134, 154, 0.55), rgba(113, 134, 154, 0.55)),
+
+        linear-gradient(rgba(113, 134, 154, 0.55), rgba(113, 134, 154, 0.55)),
+        linear-gradient(rgba(113, 134, 154, 0.55), rgba(113, 134, 154, 0.55)),
+
+        linear-gradient(rgba(113, 134, 154, 0.55), rgba(113, 134, 154, 0.55)),
+        linear-gradient(rgba(113, 134, 154, 0.55), rgba(113, 134, 154, 0.55));
+
+    background-size:
+        16px 1px, 1px 16px,
+        16px 1px, 1px 16px,
+        16px 1px, 1px 16px,
+        16px 1px, 1px 16px;
+
+    background-position:
+        10px 10px, 10px 10px,
+        calc(100% - 26px) 10px, calc(100% - 11px) 10px,
+        10px calc(100% - 11px), 10px calc(100% - 26px),
+        calc(100% - 26px) calc(100% - 11px),
+        calc(100% - 11px) calc(100% - 26px);
+
+    background-repeat: no-repeat;
+}
+
+/* GLIFOS DA IDENTIFICAÇÃO DA MAGIA */
+
+#spell-details-category {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+}
+
+#spell-details-category::before,
+#spell-details-category::after {
+    content: "⟡";
+    display: inline-block;
+    color: var(--blue-medium);
+    font-size: 0.9em;
+    opacity: 0.8;
+    text-shadow: 0 0 6px rgba(113, 134, 154, 0.3);
+}
+
+/* BRILHO DAS INSCRIÇÕES RÚNICAS */
+
+#spell-details-runes {
+    animation: runicGlow 3.5s ease-in-out infinite;
+}
+
+@keyframes runicGlow {
+    0%, 100% {
+        opacity: 0.75;
+        text-shadow:
+            0 0 3px rgba(17, 72, 122, 0.2),
+            0 0 6px rgba(113, 134, 154, 0.15);
+    }
+
+    50% {
+        opacity: 1;
+        text-shadow:
+            0 0 5px rgba(30, 171, 196, 0.5),
+            0 0 12px rgba(113, 134, 154, 0.35),
+            0 0 18px rgba(28, 218, 231, 0.15);
+    }
+}
+
+/* Respeita a preferência por movimento reduzido */
+
+@media (prefers-reduced-motion: reduce) {
+    #spell-details-runes {
+        animation: none;
+        opacity: 1;
+        text-shadow: 0 0 6px rgba(113, 134, 154, 0.3);
+    }
 }

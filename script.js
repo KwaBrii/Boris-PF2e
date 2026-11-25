@@ -209,7 +209,7 @@ const character = {
         spells: {
             class: [
                 {
-                    name: "Haunting Hymn (Cantarolar Assombroso)",
+                    name: "Haunting Hymn (Cântico Assombroso)",
                     rank: "cantrip",
                     tradition: "divine",
                     actions: "2 ações",
@@ -218,7 +218,7 @@ const character = {
                     targets: "Criaturas na área que podem escutar",
                     duration: "",
                     savingThrow: "Fortitude",
-                    defense: "Basic",
+                    defense: "",
                     cost: "",
                     requirements: "",
                     trigger: "",
@@ -266,7 +266,7 @@ const character = {
                     targets: "1 criatura",
                     duration: "1 rodada",
                     savingThrow: "Vontade",
-                    defense: "basic",
+                    defense: "",
                     cost: "",
                     requirements: "",
                     trigger: "",
@@ -347,7 +347,7 @@ const character = {
                 },
                 {
                     name: "Heal (Curar)",
-                    rank: "1",
+                    rank: 1,
                     tradition: "divine",
                     actions: "1 ação",
                     range: "Vária",
@@ -355,7 +355,7 @@ const character = {
                     targets: "1 criatura viva disposta ou 1 criatura morta-viva",
                     duration: "",
                     savingThrow: "Fortitude (se morto-vivo)",
-                    defense: "Basic",
+                    defense: "",
                     cost: "",
                     requirements: "",
                     trigger: "",
@@ -413,6 +413,7 @@ const character = {
                     name: "Mindlink (Elo Mental)",
                     rank: 1,
                     tradition: "divine",
+                    granted: true,
                     actions: "2 ações",
                     range: "Toque",
                     area: "",
@@ -1203,9 +1204,30 @@ function initializeDossier() {
         return safeText.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
     }
 
+    function generateRunicInscription() {
+        const firstCodePoint = 0x16A0;
+        const lastCodePoint = 0x16F8;
+
+        const runicCharacters = Array.from(
+            { length: lastCodePoint - firstCodePoint + 1 },
+            (_, index) => String.fromCodePoint(firstCodePoint + index)
+        );
+
+        const inscriptionLength = 5;
+
+        return Array.from({ length: inscriptionLength }, () => {
+            const randomIndex = Math.floor(
+                Math.random() * runicCharacters.length
+            );
+
+            return runicCharacters[randomIndex];
+        }).join("");
+    }
+
     function showSpell(category, index) {
         const spells = character.spells?.[category];
         const spell = Array.isArray(spells) ? spells[index] : null;
+        setText("spell-details-runes", generateRunicInscription());
 
         if (!spell) return;
 
