@@ -248,6 +248,14 @@ const character = {
             audio: "assets/music/05-Aqua's Dance.mp3",
             cover: "assets/images/covers/05.png",
             description: ""
+        },
+        {
+            title: "06 - Playing In The Sun",
+            artist: "Beícoli",
+            album: "LAIKA: Aged Through Blood (Original Soundtrack)",
+            audio: "assets/music/06-Playing In The Sun.mp3",
+            cover: "assets/images/covers/06.png",
+            description: ""
         }
     ]
 };
