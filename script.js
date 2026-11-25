@@ -1,527 +1,108 @@
+/**
+ * ============================================================================
+ * DOSSIÊ DE BORIS LEUENAAR — LÓGICA DA PÁGINA
+ * ============================================================================
+ * Depende de `character-data.js`, que deve ser carregado ANTES deste arquivo
+ * e declarar a constante global `character`.
+ *
+ * Índice:
+ *   1. Constantes compartilhadas
+ *   2. Funções auxiliares (puras)
+ *   3. initializeDossier()
+ *        3.1  Estado e elementos
+ *        3.2  Capa e perfil
+ *        3.3  Atributos
+ *        3.4  Perícias e defesas
+ *        3.5  Relações
+ *        3.6  Inventário e itens
+ *        3.7  Magias
+ *        3.8  Playlist
+ *        3.9  Player musical (reprodução, eventos, arrastar)
+ *        3.10 Navegação e HUD
+ *        3.11 Eventos globais
+ *        3.12 Ornamentos
+ *        3.13 Inicialização
+ *   4. Ponto de entrada
+ * ============================================================================
+ */
+
 /* ========================================
-   1. DADOS DO PERSONAGEM
+   1. CONSTANTES COMPARTILHADAS
 ======================================== */
 
-const character = {
-    name: "Boris Leuenaar",
-
-    epithet: "Tudo pode ser descoberto lendo as cartas... Ou a pessoa que puxou elas.",
-
-    intro: "Nem todo Tiefling é mau, mas Boris certamente é caótico. Escondendo suas verdadeiras intenções através de sorrisos fáceis e um olhar oblíquo, ele chega em Magaambya, para a surpresa de todos os alunos dos Ramos Esmeraldas, financiado pelo mais bonzinho dos professores.",
-
-    role: "Oracle · Lore Mystery",
-
-    level: 1,
-
-    className: "Oracle",
-
-    spellcasting: {
-        ability: "CAR",
-        proficiency: "trained"
-    },
-
-    art: "",
-
-    facts: [
-        { label: "Ancestralidade", value: "Elfo" },
-        { label: "Herança", value: "Nephilim ✧ Hellspawn" },
-        { label: "Mistério", value: "Lore" },
-        { label: "Origem", value: "Sponsored by Teacher Ot" },
-        { label: "Idade", value: "27 anos" },
-        { label: "Alinhamento", value: "Chaotic Neutral" }
-    ],
-
-    bio: `Boris é apenas mais uma das inúmeras crianças demônio que foi abandonada pelas crenças do povo de Mwangi. Cresceu pelas ruas de Bloodcove, onde foi abandonado durante uma viagem de barco dos seus pais. Ou pelo menos é nisso que acreditava.
-
-    Durante a infância, sobrevivia como um marginal com o restante das crianças. Se tornou especialmente próximo de outras três crianças: uma Nephlim endiabrada como ele, chamada Amara; um Amurrun (catfolk) com pelagem de guepardo chamado Leper; e uma Iruxi (lizardfolk) chamada Param. Juntos se denominaram como 'O Quarteto Lancinante' e, durante sua infância e adolescência, aprontavam e roubavam pelas ruas de Bloodcove.
-
-    Com o avançar dos anos, cada um começou a seguir seu próprio caminho. Leper, o mais novo, se juntou à embarcação de um Capitão Livre que passou por BloodCove e agora raramente dá as caras na cidade. Amara se tornou uma curandeira (das bem bravas) e que, no tempo livre, tenta cuidar do maior número de crianças órfãs possível. Param, sendo pouco mais velha, continuou na vida do crime, mas agora como uma mercenária, viajando por toda Expansão Mwangi. 
-
-    Boris acabou ficando pela famosa Praça do Livre Comércio, com sua afinidade com magia e com seu charme natural, era fácil ser um cartomante para tirar dinheiro dos turistas e pobras desesperados por uma leitura de sorte. Ele só tinha que fugir, vez ou outra, de alguém que veio cobrar por suas leituras 'inconclusivas', mas regra de seu estabelecimento era clara: Nada de reembolsos!
-
-    Um dia porém, ele viu algo que não deveria ter visto enquanto lia suas cartas. Sentindo uma leve vertigem, acabou tendo uma visão do seu passado onde viu uma cidade grande que parecia a capital (Anthusis), uma embarcação e uma família, junto de seu verdadeiro nome: Boreas Krasiv von Aaramong. Nesse dia, com as fortes enxaquecas causadas pela visão, decidiu sair para beber sozinho.
-
-    Em uma famosa taverna, O Gancho do Pirata, se sentou no balcão e começou a beber. Em sua segunda ou terceira garrafa, um homem sorridente se aproximou, puxando conversa. O homem, que se identificou como Professor Ot, disse ter visto de longe a aura mágica de Boris e que via potencial no rapaz. Apesar de um pouco leve por conta do álcool, o tiefling rapidamente se empertigou na cadeira, achando que seria mais um humano que caçoaria dele por conta de sua herança, mas... A zombaria nunca veio. O tal professor Ot o tratou com um respeito que Boris nunca havia recebido. 
-
-    Confiando nas palavras daquele homem, o rapaz decidiu contar sobre o que lhe ocorreu, a visão, a dor de cabeça... E perguntou se ele tinha algum conselho. Ot examinou Boris e, com um sorriso gentil, convidou-o para Magaambya, como um de seus pupilos. Antes de ir embora, lhe deu um pequeno cartão para onde se dirigir caso decidisse se juntar à escola de magia.
-
-    Depois disso, Boris foi para sua casa e se deitou, esperando que fosse dormir rápido. Acabou rolando na cama durante toda a noite e, assim que o sol bateu em sua cara pela fresta da janela, decidiu ir até a Escola de Magia em Nantambu, determinado a descobrir mais sobre seu novo estranho poder e sobre seu passado.`,
-
-    stats: [
-        { abbreviation: "FOR", name: "Força", value: 0, max: 6 },
-        { abbreviation: "DES", name: "Destreza", value: 2, max: 6 },
-        { abbreviation: "CON", name: "Constituição", value: 0, max: 6 },
-        { abbreviation: "INT", name: "Inteligência", value: 3, max: 6 },
-        { abbreviation: "SAB", name: "Sabedoria", value: 0, max: 6 },
-        { abbreviation: "CAR", name: "Carisma", value: 4, max: 6 }
-    ],
-
-    skills: [
-        { name: "Acrobacia", ability: "DES", rank: "trained" },
-        { name: "Arcanismo", ability: "INT", rank: "trained" },
-        { name: "Atletismo", ability: "FOR", rank: "untrained" },
-        { name: "Artesanato", ability: "INT", rank: "untrained" },
-        { name: "Enganação", ability: "CAR", rank: "trained" },
-        { name: "Diplomacia", ability: "CAR", rank: "trained" },
-        { name: "Intimidação", ability: "CAR", rank: "untrained" },
-        { name: "Conhecimento: Leitura de Sorte", ability: "INT", rank: "trained" },
-        { name: "Conhecimento: Leis", ability: "INT", rank: "trained" },
-        { name: "Conhecimento: Bloodcove", ability: "INT", rank: "trained" },
-        { name: "Medicina", ability: "SAB", rank: "untrained" },
-        { name: "Natureza", ability: "SAB", rank: "untrained" },
-        { name: "Ocultismo", ability: "INT", rank: "trained" },
-        { name: "Performance", ability: "CAR", rank: "trained" },
-        { name: "Religião", ability: "SAB", rank: "trained" },
-        { name: "Sociedade", ability: "INT", rank: "trained" },
-        { name: "Furtividade", ability: "DES", rank: "trained" },
-        { name: "Sobrevivência", ability: "SAB", rank: "untrained" },
-        { name: "Ladinagem", ability: "DES", rank: "trained" }
-    ],
-
-    speed: "30 ft",
-
-    defenses: [
-        {
-            name: "Vontade",
-            rank: "expert"
-        },
-        {
-            name: "Reflexos",
-            rank: "trained"
-        },
-        {
-            name: "Fortitude",
-            rank: "trained"
-        },
-        {
-            name: "Percepção",
-            rank: "trained"
-        }
-    ],
-
-    relationships: [
-        {
-            name: "Takulu Ot",
-            role: "Professor/Mentor",
-            tone: "positive",
-            portrait: "assets/images/characters/teacherot.jpg",
-            description: "O mais bonzinho dos professores parece ter um apreço por seu púpilo, e nem Boris entende o porquê direito, mas sua mentoria e seu cuidado fazem ele achar que realmente mereça mais do fizeram-no acreditar."
-        },
-        {
-            name: "Amara Saidi",
-            role: "Amiga de Infância",
-            tone: "positive",
-            portrait: "assets/images/characters/amarasaidi.jpg",
-            description: "Amara, assim como Boris, é uma criança 'endiabrada' e a única do quarteto que conseguiu um trabalho digno como enfermeira local. Eles tem idades próximas. Cresceram juntos nas ruas de Bloodcove e formaram o Quarteto Lancinante junto de Leper e Param."
-        },
-        {
-            name: "Leper Langa",
-            role: "Amigo de Infância",
-            tone: "positive",
-            portrait: "assets/images/characters/leperlanga.jpg",
-            description: "Como o mais novo deles, Leper sempre foi o mais agitado dos quatro, e talvez por isso tenha se dado tão bem na vida da pirataria quando cresceu. Cresceram juntos nas ruas de Bloodcove e formaram o Quarteto Lancinante junto de Param e Amara."
-        },
-        {
-            name: "Param Juma",
-            role: "Amiga de Infância",
-            tone: "positive",
-            portrait: "assets/images/characters/paramjuma.jpg",
-            description: "A mais velha dos quatro. Com um olhar afiado, Param foi quem ensinou o grupo não a brigar, mas sim a matar. A vida mercenária chegou a ela como um convite irrecusável. Cresceram juntos nas ruas de Bloodcove e formaram o Quarteto Lancinante junto de Amara e Leper."
-        },
-        {
-            name: "Kamau Krasiv von Aaramong",
-            role: "Irmão",
-            tone: "negative",
-            portrait: "assets/images/characters/kamau.jpg",
-            description: "Apesar de Boris não saber, Kamau foi quem jogou seu irmão do navio quando ambos eram bem novos. Ele é mais velho que Boris e também é um tiefling, mas raspa os próprios chifres para que não apareçam no cabelo volumoso."
-        },
-        {
-            name: "Bantu Krasiv von Aaramong",
-            role: "Pai",
-            tone: "neutral",
-            portrait: "assets/images/characters/bantu.jpg",
-            description: "Um elfo da alta sociedade que acha ter perdido o filho mais novo em uma tempestade enquanto viajavam em uma embarcação. Se culpa muito pela 'morte' do filho e quase nunca saí de sua propriedade em Anthusis."
-        },
-        {
-            name: "Dandara Krasiv von Aaramong",
-            role: "Mãe",
-            tone: "neutral",
-            portrait: "assets/images/characters/dandara.jpg",
-            description: "Uma elfa nephlim da alta sociedade. Dandara é e sempre foi uma mãe amorosa, e apesar de perder o filho mais novo e do distanciamento do marido, ela fez o possível para se manter forte e cuidar de Kamau que ainda era bem jovem."
-        }
-    ],
-
-    derivedStats: [
-        { label: "PONTOS DE VIDA", value: "14 / 14", note: "PV atuais / máximos" },
-        { label: "CLASSE DE ARMADURA", value: "17", note: "Defesa atual" }
-    ],
-
-    carry: { current: 4, max: 10 },
-
-    inventory: [
-        {
-            name: "Tesoura",
-            category: "equipment",
-            type: "Arma",
-            rarity: "Incomum",
-            icon: "✂",
-            quantity: 1,
-            description: "Uma tesoura para costura que fica sempre no cinto de Boris. Não é como se ele à escondesse, mas ela também não parece uma arma até ser sacada."
-        },
-        {
-            name: "Armadura de Couro Reforçada",
-            category: "equipment",
-            type: "Armadura",
-            rarity: "Comum",
-            icon: "⛉",
-            quantity: 1,
-            description: "Uma armadura leve de couro é reforçada com rebites de metal e, por vezes, pequenas placas metálicas, oferecendo a maior parte da flexibilidade de uma armadura de couro, porém com uma proteção mais robusta. É negra como a noite."
-        },
-        {
-            name: "Escudo de Aço",
-            category: "equipment",
-            type: "Escudo",
-            rarity: "Comum",
-            icon: "⛊",
-            quantity: 1,
-            description: "Assim como os escudos de madeira, os escudos de aço apresentam uma variedade de formatos e tamanhos. Embora sejam mais caros que os de madeira, são muito mais duráveis. O escudo de Boris é de um aço azulado, e parece muito usado para ser de um mago."
-        },
-        {
-            name: "Mochila",
-            category: "equipment",
-            type: "Mochila para Carga",
-            rarity: "Comum",
-            icon: "👜",
-            quantity: 1,
-            description: "Uma mochila comporta até 4 unidades de Volume (Bulk) em itens, e as primeiras 2 unidades de Volume desses itens não contam para os seus limites de Volume. Se você estiver carregando ou guardando a mochila, em vez de usá-la nas costas, o Volume dela passa a ser leve (light) em vez de desprezível (negligible). Parece uma bolsa de carteiro lateral."
-        },
-        {
-            name: "Kit de Aventureiro",
-            category: "consumables",
-            type: "Suprimento",
-            rarity: "Comum",
-            icon: "✣",
-            quantity: 1,
-            description: `Este item é o kit inicial para um aventureiro, contendo os itens essenciais para exploração e sobrevivência. O valor de volume (Bulk) refere-se ao conjunto completo; consulte as descrições de cada item individual, se necessário. O kit contém os seguintes itens: uma mochila, um saco de dormir (ou rolo de dormir), 10 pedaços de giz, pederneira (fogo e aço), 50 pés (aprox. 15 metros) de corda, rações para 2 semanas, sabão, 5 tochas e um odre.`
-        }
-    ],
-
-        spells: {
-            class: [
-                {
-                    name: "Haunting Hymn (Cântico Assombroso)",
-                    rank: "cantrip",
-                    tradition: "divine",
-                    actions: "2 ações",
-                    range: "",
-                    area: "Cone de 3 quadrados",
-                    targets: "Criaturas na área que podem escutar",
-                    duration: "",
-                    savingThrow: "Fortitude",
-                    defense: "",
-                    cost: "",
-                    requirements: "",
-                    trigger: "",
-                    components: "",
-                    traits: "Auditory, Cantrip, Concentrate, Manipulate, Sonic",
-                    damage: "1d8",
-                    healing: "",
-                    heightened: "+2: O dano aumenta em 1d8.",
-                    description: "Você entoa um hino estridente que apenas as criaturas na área conseguem ouvir. O hino causa 1d8 de dano sônico, com um teste de Fortitude básico. Se um alvo falhar criticamente no teste, ele também fica surdo por 1 minuto.",
-                    signature: false
-                },
-                {
-                    name: "Prestidigitation (Prestidigitação)",
-                    rank: "cantrip",
-                    tradition: "divine",
-                    actions: "2 ações",
-                    range: "2 quadrados",
-                    area: "",
-                    targets: "Um objeto",
-                    duration: "Sustentada",
-                    savingThrow: "",
-                    defense: "",
-                    cost: "",
-                    requirements: "",
-                    trigger: "",
-                    components: "",
-                    traits: "Auditory, Cantrip, Concentrate, Manipulate, Sonic",
-                    damage: "",
-                    healing: "",
-                    heightened: "",
-                    description: `A magia mais simples atende aos seus comandos. Você pode realizar efeitos mágicos simples enquanto Mantiver a magia. Cada vez que você Mantiver a magia, pode escolher uma de quatro opções:
-                                    **• Cozinhar:** Esfriar, aquecer ou dar sabor a até 1 libra (aprox. 0,5 kg) de material inanimado.
-                                    **• Levantar:** Levantar lentamente um objeto sem dono, de volume leve ou menor, a 1 pé (aprox. 30 cm) do chão.
-                                    **• Criar:** Criar um objeto temporário de volume desprezível, feito de substância mágica solidificada. O objeto tem uma aparência grosseira e artificial, sendo extremamente frágil — ele não pode ser usado como ferramenta, arma, foco ou componente para uma magia.
-                                    **• ​​Organizar:** Colorir, limpar ou sujar um objeto de volume leve ou menor. Você pode afetar um objeto de volume 1 com 10 rodadas de concentração, e objetos maiores à taxa de 1 minuto por unidade de volume. Prestidigitação não pode causar dano nem condições adversas. Qualquer alteração real em um objeto (além das mencionadas acima) persiste apenas enquanto você Mantiver a magia.`,
-                    signature: false
-                },
-                {
-                    name: "Daze (Atordoar)",
-                    rank: "cantrip",
-                    tradition: "divine",
-                    actions: "2 ações",
-                    range: "12 quadrados",
-                    area: "",
-                    targets: "1 criatura",
-                    duration: "1 rodada",
-                    savingThrow: "Vontade",
-                    defense: "",
-                    cost: "",
-                    requirements: "",
-                    trigger: "",
-                    components: "",
-                    traits: "Cantrip, Concentrate, Manipulate, Mental, Nonlethal",
-                    damage: "1d6",
-                    healing: "",
-                    heightened: "+2: O dano aumenta em 1d6.",
-                    description: `Você invade a mente do alvo e o atordoa com um choque mental. O choque causa 1d6 de dano mental, sujeito a um teste de Vontade básico. Se o alvo falhar criticamente no teste, ele também fica atordoado 1.`,
-                    signature: false
-                },
-                {
-                    name: "Message (Mensagem)",
-                    rank: "cantrip",
-                    tradition: "divine",
-                    actions: "1 ação",
-                    range: "24 quadrados",
-                    area: "",
-                    targets: "1 criatura",
-                    duration: "",
-                    savingThrow: "",
-                    defense: "",
-                    cost: "",
-                    requirements: "",
-                    trigger: "",
-                    components: "",
-                    traits: "Auditory, Cantrip, Concentrate, Illusion, Linguistic, Mental, Subtle",
-                    damage: "1d6",
-                    healing: "",
-                    heightened: "+3: O alcance da magia aumenta para 100 quadrados.",
-                    description: `Você articula palavras silenciosamente, mas, em vez de saírem da sua boca, elas são transmitidas diretamente para os ouvidos do alvo. Embora outras pessoas não consigam ouvir suas palavras melhor do que se você as estivesse articulando normalmente, o alvo consegue ouvi-las como se estivesse ao seu lado. O alvo pode dar uma breve resposta como uma reação, ou como uma ação livre no seu próximo turno, caso deseje; no entanto, para isso, ele precisa ser capaz de vê-lo e estar dentro do alcance. Se o alvo responder, a resposta é transmitida diretamente ao seu ouvido, da mesma forma que a mensagem original.`,
-                    signature: false
-                },
-                {
-                    name: "Stabilize (Estabilizar)",
-                    rank: "cantrip",
-                    tradition: "divine",
-                    actions: "2 ações",
-                    range: "6 quadrados",
-                    area: "",
-                    targets: "1 criatura morrendo",
-                    duration: "",
-                    savingThrow: "",
-                    defense: "",
-                    cost: "",
-                    requirements: "",
-                    trigger: "",
-                    components: "",
-                    traits: "Cantrip, Concentrate, Healing, Manipulate, Vitality",
-                    damage: "",
-                    healing: "",
-                    heightened: "+3: O alcance da magia aumenta para 100 quadrados.",
-                    description: `A energia vital fecha a porta da morte. O alvo perde a condição de morrendo, embora permaneça inconsciente com 0 Pontos de Vida.`,
-                    signature: false
-                },
-                {
-                    name: "Read Aura (Ler Aura)",
-                    rank: "cantrip",
-                    tradition: "divine",
-                    granted: true,
-                    actions: "1 minute",
-                    range: "6 quadrados",
-                    area: "",
-                    targets: "1 objeto",
-                    duration: "",
-                    savingThrow: "",
-                    defense: "",
-                    cost: "",
-                    requirements: "",
-                    trigger: "",
-                    components: "",
-                    traits: "Cantrip, Concentrate, Detection, Manipulate",
-                    damage: "",
-                    healing: "",
-                    heightened: `+3: Você pode escolher como alvo até 10 objetos. +6: Você pode escolher como alvo qualquer quantidade de objetos.`,
-                    description: `Você se concentra no objeto-alvo, abrindo sua mente para perceber auras mágicas. Ao concluir a conjuração, você sabe se o item é mágico. Você, ou qualquer pessoa a quem você informe sobre a aura, recebe um bônus de circunstância de +2 em testes para Identificar Magia no item. Se o objeto for ilusório, você só detectará isso se o nível do efeito for inferior ao nível da sua magia Ler Aura.`,
-                    signature: false
-                },
-                {
-                    name: "Heal (Curar)",
-                    rank: 1,
-                    tradition: "divine",
-                    actions: "1 ação",
-                    range: "Vária",
-                    area: "",
-                    targets: "1 criatura viva disposta ou 1 criatura morta-viva",
-                    duration: "",
-                    savingThrow: "Fortitude (se morto-vivo)",
-                    defense: "",
-                    cost: "",
-                    requirements: "",
-                    trigger: "",
-                    components: "",
-                    traits: "Healing, Manipulate, Vitality",
-                    damage: "1d8",
-                    healing: "1d8",
-                    heightened: "+1: A quantidade de cura ou dano aumenta em 1d8, e a cura adicional para a versão de 2 ações aumenta em 8.",
-                    description: `Você canaliza energia vital para curar seres vivos ou causar dano a mortos-vivos. Se o alvo for uma criatura viva disposta, você restaura 1d8 Pontos de Vida. Se o alvo for uma criatura morta-viva, você causa a ela uma quantidade equivalente de dano de vitalidade, e ela tem direito a um teste básico de Fortitude. O número de ações que você gasta ao conjurar esta magia determina seus alvos, alcance, área e outros parâmetros.
-                        **1 ação:** A magia tem alcance de toque.
-                        **2 ações + trait concentrate:** A magia tem um alcance de 30 pés (aprox. 9 metros). Se você estiver curando uma criatura viva, aumente a quantidade de Pontos de Vida restaurados em 8.
-                        **3 ações + trait concentrate:** Você dispersa energia vital em uma emanação de 30 pés (aprox. 9 metros). Isso afeta todas as criaturas vivas e mortas-vivas dentro da área.`,
-                    signature: false
-                },
-                {
-                    name: "Command (Comandar)",
-                    rank: 1,
-                    tradition: "divine",
-                    traits: "Auditory, Concentrate, Linguistic, Manipulate, Mental",
-                    actions: "2 ações",
-                    range: "6 quadrados",
-                    targets: "1 criatura",
-                    duration: "Até o fim do próximo turno do alvo",
-                    savingThrow: "Vontade",
-                    heightened: "(+5): Você pode escolher como alvo até 10 criaturas.",
-                    description: `Você profere um comando difícil de ignorar. É possível ordenar que o alvo se aproxime de você, fuja (como se estivesse sob a condição de fuga), solte o que estiver segurando, caia no chão (ficando caído) ou permaneça onde está. O alvo não pode adiar sua ação nem realizar reações até que tenha obedecido ao seu comando. Os efeitos dependem do teste de Vontade do alvo.
-                                    **Sucesso:** A criatura não é afetada.
-                                    **Falha:** A criatura deve gastar a primeira ação de seu próximo turno para obedecer ao seu comando.
-                                    **Falha Crítica:** O alvo deve usar todas as suas ações em seu próximo turno para obedecer ao seu comando.`,
-                    signature: false
-                },
-                {
-                    name: "Benediction (Bênção)",
-                    rank: 1,
-                    tradition: "divine",
-                    actions: "2 ações",
-                    range: "Pessoal (emana de você)",
-                    area: "Emanação de 3 quadrados",
-                    targets: "Aliados na área",
-                    duration: "1 minuto",
-                    savingThrow: "",
-                    defense: "",
-                    cost: "",
-                    requirements: "",
-                    trigger: "",
-                    components: "",
-                    traits: "Aura, Concentrate, Manipulate, Mental",
-                    damage: "",
-                    healing: "",
-                    heightened: "",
-                    description: "Proteção divina ajuda a proteger seus companheiros. Você e seus aliados recebem um bônus de status de +1 na CA enquanto estiverem dentro da emanação. Uma vez por rodada, em turnos subsequentes, você pode manter o efeito da magia para aumentar o raio da emanação em 10 pés. A Bênção pode neutralizar a magia Maldição.",
-                    signature: false
-                },
-                {
-                    name: "Mindlink (Elo Mental)",
-                    rank: 1,
-                    tradition: "divine",
-                    granted: true,
-                    actions: "2 ações",
-                    range: "Toque",
-                    area: "",
-                    targets: "1 Criatura disposta",
-                    duration: "",
-                    savingThrow: "",
-                    defense: "",
-                    cost: "",
-                    requirements: "",
-                    trigger: "",
-                    components: "",
-                    traits: "Concentrate, Manipulate, Mental",
-                    damage: "",
-                    healing: "",
-                    heightened: "",
-                    description: "Você conecta sua mente à mente do alvo e, instantaneamente, transmite a ele uma quantidade de informações que, de outra forma, levaria 10 minutos para ser comunicada.",
-                    signature: false
-                }
-            ],
-            innate: [],
-            focus: [
-                {
-                    name: "Brain Drain (Dreno Mental)",
-                    rank: 1,
-                    tradition: "divine",
-                    actions: "2 ações",
-                    range: "6 quadrados",
-                    area: "",
-                    targets: "1 Criatura",
-                    duration: "",
-                    savingThrow: "Vontade",
-                    defense: "",
-                    cost: "",
-                    requirements: "",
-                    trigger: "",
-                    components: "",
-                    traits: "Uncommon, Concentrate, Focus, Manipulate, Mental, Oracle",
-                    damage: "1d8",
-                    healing: "",
-                    heightened: "+1: O dano mental aumenta em 1d8.",
-                    description: "Você sonda a mente do alvo para obter conhecimento. Isso causa 1d8 de dano mental, sujeito a um teste básico de Vontade. Se o alvo falhar no teste, você examina as memórias roubadas para tentar realizar um único teste de Recordar Conhecimento. Escolha uma perícia que possua a ação Recordar Conhecimento e utilize o modificador de perícia do alvo para esse teste.",
-                    signature: false
-                }
-            ]
-        },
-
-    journalTitle: "",
-
-    journalQuote: "",
-
-    journalText: "",
-
-    playlist: [
-        {
-            title: "01 - The Spine (feat. Ashley Barrett)",
-            artist: "Darren Korb",
-            album: "Transistor Original Soundtrack",
-            audio: "assets/music/01-The Spine.mp3",
-            cover: "assets/images/covers/01.png",
-            description: ""
-        },
-        {
-            title: "02 - CHOSEN ANEW",
-            artist: "Toby Fox & Camellia",
-            album: "OFF Original Soundtrack (2025)",
-            audio: "assets/music/02-CHOSEN ANEW.mp3",
-            cover: "assets/images/covers/02.png",
-            description: ""
-        },
-        {
-            title: "03 - Bewitching Eyes",
-            artist: "Supergiant Games",
-            album: "Hades II Original Soundtrack",
-            audio: "assets/music/03-Bewitching Eyes.mp3",
-            cover: "assets/images/covers/03.png",
-            description: ""
-        },
-        {
-            title: "04 - Why",
-            artist: "Nauts",
-            album: "Lies of P Original Soundtrack",
-            audio: "assets/music/04-Why.mp3",
-            cover: "assets/images/covers/04.png",
-            description: ""
-        },
-        {
-            title: "05 - Aqua's Dance (Nohr)",
-            artist: "Adriana Figueroa",
-            album: "Fire Emblem Conquest Cover",
-            audio: "assets/music/05-Aqua's Dance.mp3",
-            cover: "assets/images/covers/05.png",
-            description: ""
-        },
-        {
-            title: "06 - Playing In The Sun",
-            artist: "Beícoli",
-            album: "LAIKA: Aged Through Blood (Original Soundtrack)",
-            audio: "assets/music/06-Playing In The Sun.mp3",
-            cover: "assets/images/covers/06.png",
-            description: ""
-        }
-    ]
+/** Nomes dos graus de proficiência (perícias, defesas, conjuração). */
+const RANK_LABELS = {
+    untrained: "Destreinado",
+    trained: "Treinado",
+    expert: "Especialista",
+    master: "Mestre",
+    legendary: "Lendário"
 };
+
+/** Bônus de proficiência por grau (Pathfinder 2e). */
+const PROFICIENCY_BONUS = {
+    untrained: 0,
+    trained: 2,
+    expert: 4,
+    master: 6,
+    legendary: 8
+};
+
+/** Tradições mágicas reconhecidas (também usadas como sufixo de classe CSS). */
+const TRADITION_LABELS = {
+    divine: "Divine",
+    occult: "Occult",
+    primal: "Primal",
+    arcane: "Arcane"
+};
+
+/** Títulos exibidos no painel de detalhes, por categoria de magia. */
+const SPELL_CATEGORY_LABELS = {
+    class: "MAGIA DE CLASSE · ORACLE",
+    innate: "MAGIA INATA",
+    focus: "FOCUS SPELL"
+};
+
+/**
+ * Campos opcionais do painel de detalhes da magia.
+ * [propriedade em `character.spells`, sufixo do id no HTML]
+ * Ids resultantes: `spell-{sufixo}-row` e `spell-details-{sufixo}`.
+ */
+const SPELL_OPTIONAL_FIELDS = [
+    ["actions", "actions"],
+    ["range", "range"],
+    ["area", "area"],
+    ["targets", "targets"],
+    ["duration", "duration"],
+    ["savingThrow", "saving-throw"],
+    ["defense", "defense"],
+    ["cost", "cost"],
+    ["requirements", "requirements"],
+    ["trigger", "trigger"],
+    ["components", "components"],
+    ["traits", "traits"],
+    ["heightened", "heightened"]
+];
+
+/** Áreas com rolagem vertical própria: a roda do mouse não move as telas. */
+const VERTICAL_SCROLL_AREAS = [
+    ".profile-layout",
+    ".stats-main",
+    ".defenses-card",
+    ".relations-grid",
+    ".spells-list-column",
+    ".spell-details-panel"
+].join(", ");
+
+/** Chave do localStorage com a posição do player flutuante. */
+const PLAYER_POSITION_KEY = "borisMusicPlayerPosition";
+
 
 /* ========================================
    2. FUNÇÕES AUXILIARES
 ======================================== */
 
+/** Define o texto de um elemento pelo id (ignora ids inexistentes). */
 function setText(id, value) {
     const element = document.getElementById(id);
 
@@ -530,12 +111,14 @@ function setText(id, value) {
     }
 }
 
+/** Como `setText`, mas só altera se houver valor (preserva o texto do HTML). */
 function setTextIfProvided(id, value) {
     if (value !== undefined && value !== null && value !== "") {
         setText(id, value);
     }
 }
 
+/** Escapa caracteres especiais para uso seguro em innerHTML. */
 function escapeHTML(value) {
     return String(value ?? "").replace(/[&<>"']/g, char => ({
         "&": "&amp;",
@@ -546,43 +129,111 @@ function escapeHTML(value) {
     })[char]);
 }
 
+/** Informa se um valor opcional deve ser exibido. */
+function hasValue(value) {
+    return value !== undefined && value !== null && String(value).trim() !== "";
+}
+
+/** Retorna o grau de proficiência válido (ou "untrained"). */
+function normalizeRank(rank) {
+    return RANK_LABELS[rank] ? rank : "untrained";
+}
+
+/** Gera a etiqueta colorida de proficiência. */
+function rankBadgeHTML(rank) {
+    const key = normalizeRank(rank);
+
+    return `<span class="skill-rank skill-rank--${key}">${RANK_LABELS[key]}</span>`;
+}
+
+/** Texto do rank de uma magia: "CANTRIP", "SPELL RANK 1" etc. */
+function getSpellRankLabel(rank) {
+    const value = String(rank ?? "").toLowerCase();
+
+    if (value === "cantrip") return "CANTRIP";
+    if (/^\d+$/.test(value)) return `SPELL RANK ${value}`;
+
+    return "RANK NÃO INFORMADO";
+}
+
+/** Rótulo e modificador de classe CSS de uma tradição mágica. */
+function getTraditionInfo(tradition) {
+    const key = String(tradition || "").toLowerCase();
+    const known = Boolean(TRADITION_LABELS[key]);
+
+    return {
+        label: known ? TRADITION_LABELS[key] : "Tradição não informada",
+        modifier: known ? `spell-tradition--${key}` : ""
+    };
+}
+
+/** Escapa o texto e converte **negrito** em <strong>. */
+function formatSpellDescription(description) {
+    return escapeHTML(description).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
+
+/** Gera uma inscrição aleatória de 5 runas (U+16A0 a U+16F8). */
+function generateRunicInscription() {
+    const first = 0x16A0;
+    const last = 0x16F8;
+
+    return Array.from({ length: 5 }, () =>
+        String.fromCodePoint(first + Math.floor(Math.random() * (last - first + 1)))
+    ).join("");
+}
+
+/** Formata segundos como "m:ss". */
+function formatMusicTime(seconds) {
+    if (!Number.isFinite(seconds)) return "0:00";
+
+    const minutes = Math.floor(seconds / 60);
+    const remaining = Math.floor(seconds % 60);
+
+    return `${minutes}:${String(remaining).padStart(2, "0")}`;
+}
+
+/** Calcula a CD de magia: 10 + atributo + (nível + proficiência, se treinado). */
+function calculateSpellDC() {
+    const spellcasting = character.spellcasting || {};
+    const ability = character.stats.find(
+        stat => stat.abbreviation === spellcasting.ability
+    );
+
+    const rank = String(spellcasting.proficiency || "untrained").toLowerCase();
+    const rankBonus = PROFICIENCY_BONUS[rank];
+
+    if (rankBonus === undefined) {
+        console.error("Proficiência de conjuração inválida:", rank);
+        return "—";
+    }
+
+    const modifier = Number(ability?.value) || 0;
+    const level = Number(character.level) || 0;
+    const proficiency = rank === "untrained" ? 0 : level + rankBonus;
+
+    return 10 + modifier + proficiency;
+}
+
 
 /* ========================================
-   3. ELEMENTOS DA PÁGINA
+   3. DOSSIÊ
 ======================================== */
 
 function initializeDossier() {
+
+    /* ---- 3.1 Estado e elementos ---- */
+
     const world = document.getElementById("world");
     const musicAudio = document.getElementById("music-audio");
-
-    const screens = Array.from(
-        document.querySelectorAll(".screen")
-    );
-
-    const navButtons = Array.from(
-        document.querySelectorAll(".nav-link")
-    );
-
-    const coverButtons = Array.from(
-        document.querySelectorAll(".cover-menu [data-target]")
-    );
-
-    const currentPage = document.getElementById("current-page");
-    const totalPages = document.getElementById("total-pages");
+    const screens = Array.from(document.querySelectorAll(".screen"));
+    const navButtons = Array.from(document.querySelectorAll(".nav-link"));
+    const coverButtons = Array.from(document.querySelectorAll(".cover-menu [data-target]"));
     const pageProgress = document.getElementById("page-progress");
-
-    const previousButton =
-        document.getElementById("previous-screen") ||
-        document.getElementById("previous-page");
-
-    const nextButton =
-        document.getElementById("next-screen") ||
-        document.getElementById("next-page");
+    const previousButton = document.getElementById("previous-screen");
+    const nextButton = document.getElementById("next-screen");
 
     if (!world || screens.length === 0) {
-        console.error(
-            "Não foi possível iniciar o dossiê. Verifique o HTML."
-        );
+        console.error("Não foi possível iniciar o dossiê. Verifique o HTML.");
         return;
     }
 
@@ -590,9 +241,31 @@ function initializeDossier() {
     let activeFilter = "all";
     let currentTrackIndex = -1;
 
-    /* ========================================
-       4. CAPA E PERFIL DO PERSONAGEM
-    ======================================== */
+
+    /* ---- 3.2 Capa e perfil ---- */
+
+    /** Mostra a arte do personagem na capa e no perfil (se houver). */
+    function renderArt() {
+        if (!character.art || character.art.trim() === "") return;
+
+        ["cover", "profile"].forEach(place => {
+            const image = document.getElementById(`${place}-art-image`);
+            const placeholder = document.getElementById(`${place}-art-placeholder`);
+
+            if (!image) return;
+
+            image.src = character.art;
+            image.hidden = false;
+            if (placeholder) placeholder.hidden = true;
+
+            // Se a imagem falhar, volta ao placeholder.
+            image.addEventListener("error", () => {
+                image.hidden = true;
+                if (placeholder) placeholder.hidden = false;
+                console.error("Não foi possível carregar a imagem:", character.art);
+            }, { once: true });
+        });
+    }
 
     function renderCharacter() {
         setTextIfProvided("cover-title", character.name);
@@ -601,12 +274,7 @@ function initializeDossier() {
         setTextIfProvided("profile-name", character.name);
         setTextIfProvided("profile-role", character.role);
         setTextIfProvided("profile-bio", character.bio);
-
-        setTextIfProvided(
-            "character-level",
-            String(character.level).padStart(2, "0")
-        );
-
+        setTextIfProvided("character-level", String(character.level).padStart(2, "0"));
         setTextIfProvided("character-class", character.className);
 
         const facts = document.getElementById("profile-facts");
@@ -620,251 +288,125 @@ function initializeDossier() {
             `).join("");
         }
 
-        // Carrega a arte do personagem, caso exista.
-
-        if (character.art && character.art.trim() !== "") {
-            ["cover", "profile"].forEach(place => {
-                const image = document.getElementById(
-                    `${place}-art-image`
-                );
-
-                const placeholder = document.getElementById(
-                    `${place}-art-placeholder`
-                );
-
-                if (!image) return;
-
-                image.src = character.art;
-                image.hidden = false;
-
-                if (placeholder) {
-                    placeholder.hidden = true;
-                }
-
-                image.addEventListener("error", () => {
-                    image.hidden = true;
-
-                    if (placeholder) {
-                        placeholder.hidden = false;
-                    }
-
-                    console.error(
-                        "Não foi possível carregar a imagem:",
-                        character.art
-                    );
-                }, { once: true });
-            });
-        }
+        renderArt();
     }
 
-    /* ========================================
-       5. ATRIBUTOS E ESTATÍSTICAS
-    ======================================== */
+
+    /* ---- 3.3 Atributos ---- */
 
     function renderStats() {
         const list = document.getElementById("stat-list");
         const derived = document.getElementById("derived-grid");
 
-        // Preenche os atributos principais.
-
         if (list) {
-            if (character.stats.length === 0) {
-                list.innerHTML = `
-                    <p class="empty-inventory">
-                        Atributos ainda não cadastrados.
-                    </p>
-                `;
-            } else {
-                list.innerHTML = character.stats.map(stat => {
-                    const max = Math.max(
-                        1,
-                        Number(stat.max) || 20
-                    );
-
-                    const value = Math.max(
-                        0,
-                        Math.min(max, Number(stat.value) || 0)
-                    );
-
-                    const percent = (value / max) * 100;
+            list.innerHTML = character.stats.length === 0
+                ? `<p class="empty-inventory">Atributos ainda não cadastrados.</p>`
+                : character.stats.map(stat => {
+                    const max = Math.max(1, Number(stat.max) || 20);
+                    const value = Math.max(0, Math.min(max, Number(stat.value) || 0));
 
                     return `
                         <div class="stat-row">
-                            <div class="stat-abbr">
-                                ${escapeHTML(stat.abbreviation)}
-                            </div>
-
+                            <div class="stat-abbr">${escapeHTML(stat.abbreviation)}</div>
                             <div class="stat-info">
                                 <div class="stat-name">
                                     <span>${escapeHTML(stat.name)}</span>
                                     <span>${value}/${max}</span>
                                 </div>
-
                                 <div class="stat-track">
-                                    <span style="width: ${percent}%"></span>
+                                    <span style="width: ${(value / max) * 100}%"></span>
                                 </div>
                             </div>
-
-                            <strong class="stat-value">
-                                ${value}
-                            </strong>
+                            <strong class="stat-value">${value}</strong>
                         </div>
                     `;
                 }).join("");
-            }
         }
 
-        // Preenche os valores derivados.
-
         if (derived) {
-            if (character.derivedStats.length === 0) {
-                derived.innerHTML = `
-                    <p class="empty-inventory">
-                        Valores derivados ainda não cadastrados.
-                    </p>
-                `;
-            } else {
-                derived.innerHTML = character.derivedStats.map(stat => `
+            derived.innerHTML = character.derivedStats.length === 0
+                ? `<p class="empty-inventory">Valores derivados ainda não cadastrados.</p>`
+                : character.derivedStats.map(stat => `
                     <div class="derived-card">
                         <span>${escapeHTML(stat.label)}</span>
                         <strong>${escapeHTML(stat.value)}</strong>
                         <small>${escapeHTML(stat.note)}</small>
                     </div>
                 `).join("");
-            }
         }
     }
 
-/* ========================================
-       6. PERÍCIAS
-======================================== */
+
+    /* ---- 3.4 Perícias e defesas ---- */
 
     function renderSkills() {
         const grid = document.getElementById("skills-grid");
         if (!grid) return;
-        const rankLabels = {
-            untrained: "Destreinado",
-            trained: "Treinado",
-            expert: "Especialista",
-            master: "Mestre",
-            legendary: "Lendário"
-        };
 
         const skills = character.skills || [];
-        if (skills.length === 0) {
-            grid.innerHTML = `
-                <p class="skills-empty">
-                    Nenhuma perícia cadastrada.
-                </p>
-            `;
-            return;
-        }
 
-        grid.innerHTML = skills.map(skill => {
-            const rank = rankLabels[skill.rank]
-                ? skill.rank
-                : "untrained";
-            return `
+        grid.innerHTML = skills.length === 0
+            ? `<p class="skills-empty">Nenhuma perícia cadastrada.</p>`
+            : skills.map(skill => `
                 <div class="skill-card">
                     <div class="skill-card-info">
                         <strong>${escapeHTML(skill.name)}</strong>
                         <small>${escapeHTML(skill.ability || "")}</small>
                     </div>
-                    <span class="skill-rank skill-rank--${rank}">
-                        ${rankLabels[rank]}
-                    </span>
+                    ${rankBadgeHTML(skill.rank)}
                 </div>
-            `;
-        }).join("");
+            `).join("");
     }
 
-/* ========================================
-       7. SPEED E DEFESAS
-======================================== */
-
+    /** Speed e defesas (usam o mesmo cartão das perícias). */
     function renderDefenses() {
         const speed = document.getElementById("character-speed");
         const list = document.getElementById("defenses-list");
-        if (speed) {
-            speed.textContent = character.speed || "—";
-        }
+
+        if (speed) speed.textContent = character.speed || "—";
         if (!list) return;
 
-        const rankLabels = {
-            untrained: "Destreinado",
-            trained: "Treinado",
-            expert: "Especialista",
-            master: "Mestre",
-            legendary: "Lendário"
-        };
-
-        const defenses = character.defenses || [];
-        list.innerHTML = defenses.map(defense => {
-            const rank = rankLabels[defense.rank]
-                ? defense.rank
-                : "untrained";
-            return `
-                <div class="skill-card">
-                    <div class="skill-card-info">
-                        <strong>${escapeHTML(defense.name)}</strong>
-                    </div>
-                    <span class="skill-rank skill-rank--${rank}">
-                        ${rankLabels[rank]}
-                    </span>
+        list.innerHTML = (character.defenses || []).map(defense => `
+            <div class="skill-card">
+                <div class="skill-card-info">
+                    <strong>${escapeHTML(defense.name)}</strong>
                 </div>
-            `;
-        }).join("");
+                ${rankBadgeHTML(defense.rank)}
+            </div>
+        `).join("");
     }
 
-/* ========================================
-       RELAÇÕES
-======================================== */
+
+    /* ---- 3.5 Relações ---- */
 
     function renderRelationships() {
         const grid = document.getElementById("relations-grid");
-        if (!grid) return;
         const relationships = character.relationships || [];
-        if (relationships.length === 0) return;
-        const toneClasses = {
-            positive: "relationship-role--positive",
-            neutral: "relationship-role--neutral",
-            negative: "relationship-role--negative"
-        };
+
+        // Sem relações: mantém a mensagem vazia que já está no HTML.
+        if (!grid || relationships.length === 0) return;
 
         grid.innerHTML = relationships.map(person => {
             const name = escapeHTML(person.name || "Sem nome");
             const role = escapeHTML(person.role || "");
             const description = escapeHTML(person.description || "");
-            const toneClass = toneClasses[person.tone] || "";
+            const toneClass = ["positive", "neutral", "negative"].includes(person.tone)
+                ? `relationship-role--${person.tone}`
+                : "";
+
             const portrait = person.portrait
-                ? `
-                    <img
-                        class="relationship-portrait"
-                        src="${escapeHTML(person.portrait)}"
-                        alt="Retrato de ${name}"
-                        loading="lazy"
-                    >
-                `
-                : `
-                    <div class="relationship-portrait relationship-portrait--empty">
-                        ✧
-                    </div>
-                `;
+                ? `<img class="relationship-portrait" src="${escapeHTML(person.portrait)}"
+                        alt="Retrato de ${name}" loading="lazy">`
+                : `<div class="relationship-portrait relationship-portrait--empty">✧</div>`;
 
             return `
                 <article class="relationship-card">
                     <div class="relationship-portrait-frame">
-                        <div class="relationship-portrait-window">
-                            ${portrait}
-                        </div>
+                        <div class="relationship-portrait-window">${portrait}</div>
                         <span class="portrait-ornament">✧</span>
                     </div>
                     <div class="relationship-card-content">
-                        ${role ? `
-                            <span class="relationship-role ${toneClass}">
-                                ${role}
-                            </span>
-                        ` : ""}
+                        ${role ? `<span class="relationship-role ${toneClass}">${role}</span>` : ""}
                         <h3>${name}</h3>
                         <p>${description}</p>
                     </div>
@@ -873,831 +415,394 @@ function initializeDossier() {
         }).join("");
     }
 
-    /* ========================================
-       8. INVENTÁRIO
-    ======================================== */
+
+    /* ---- 3.6 Inventário e itens ---- */
 
     function renderInventory(filter = activeFilter) {
         activeFilter = filter;
+
         const grid = document.getElementById("inventory-grid");
         if (!grid) return;
-        // Filtra os itens pela categoria selecionada.
-        const items = character.inventory
-            .map((item, index) => ({
-                ...item,
-                originalIndex: index
-            }))
-            .filter(item =>
-                filter === "all" || item.category === filter
-            );
 
-        // Atualiza os botões de filtro.
+        // Guarda o índice original para abrir o item certo após filtrar.
+        const items = character.inventory
+            .map((item, index) => ({ ...item, originalIndex: index }))
+            .filter(item => filter === "all" || item.category === filter);
+
         document.querySelectorAll(".filter-tab").forEach(button => {
             const selected = button.dataset.filter === filter;
 
             button.classList.toggle("is-selected", selected);
-
-            button.setAttribute(
-                "aria-pressed",
-                String(selected)
-            );
+            button.setAttribute("aria-pressed", String(selected));
         });
 
-        // Atualiza os contadores.
-
-        setText(
-            "inventory-total",
-            `${String(character.inventory.length).padStart(2, "0")} ITENS`
-        );
-
+        setText("inventory-total", `${String(character.inventory.length).padStart(2, "0")} ITENS`);
         setText(
             "inventory-counter",
-            `${items.length} ${
-                items.length === 1
-                    ? "item encontrado"
-                    : "itens encontrados"
-            }`
+            `${items.length} ${items.length === 1 ? "item encontrado" : "itens encontrados"}`
         );
 
-        // Exibe os itens ou uma mensagem vazia.
-
-        if (items.length === 0) {
-            grid.innerHTML = `
-                <p class="empty-inventory">
-                    Nenhum item registrado nesta categoria.
-                </p>
-            `;
-        } else {
-            grid.innerHTML = items.map(item => `
-                <button
-                    class="item-card"
-                    type="button"
-                    data-item-index="${item.originalIndex}"
-                >
-                    <span class="item-icon">
-                        ${escapeHTML(item.icon || "✧")}
-                    </span>
-
-                    <span class="item-type">
-                        ${escapeHTML(item.type)}
-                    </span>
-
-                    <span class="item-name">
-                        ${escapeHTML(item.name)}
-                    </span>
-
+        grid.innerHTML = items.length === 0
+            ? `<p class="empty-inventory">Nenhum item registrado nesta categoria.</p>`
+            : items.map(item => `
+                <button class="item-card" type="button" data-item-index="${item.originalIndex}">
+                    <span class="item-icon">${escapeHTML(item.icon || "✧")}</span>
+                    <span class="item-type">${escapeHTML(item.type)}</span>
+                    <span class="item-name">${escapeHTML(item.name)}</span>
                     <span class="item-bottom">
-                        <span class="item-rarity">
-                            ${escapeHTML(item.rarity)}
-                        </span>
-
-                        <span>
-                            × ${escapeHTML(item.quantity)}
-                        </span>
+                        <span class="item-rarity">${escapeHTML(item.rarity)}</span>
+                        <span>× ${escapeHTML(item.quantity)}</span>
                     </span>
                 </button>
             `).join("");
-        }
 
-        // Atualiza a capacidade de carga.
+        renderCarryCapacity();
+    }
 
-        if (character.carry) {
-            const current = Number(character.carry.current) || 0;
-            const max = Number(character.carry.max) || 0;
+    /** Atualiza o texto e a barra de capacidade de carga. */
+    function renderCarryCapacity() {
+        if (!character.carry) return;
 
-            if (max > 0) {
-                const percentage = Math.min(
-                    100,
-                    (current / max) * 100
-                );
+        const current = Number(character.carry.current) || 0;
+        const max = Number(character.carry.max) || 0;
 
-                setText(
-                    "capacity-value",
-                    `${current} / ${max}`
-                );
+        if (max <= 0) return;
 
-                const capacityFill = document.getElementById(
-                    "capacity-fill"
-                );
+        setText("capacity-value", `${current} / ${max}`);
 
-                if (capacityFill) {
-                    capacityFill.style.width = `${percentage}%`;
-                }
-            }
+        const fill = document.getElementById("capacity-fill");
+
+        if (fill) {
+            fill.style.width = `${Math.min(100, (current / max) * 100)}%`;
         }
     }
 
-    function calculateSpellDC() {
-        const spellcasting = character.spellcasting || {};
+    /** Abre a janela de detalhes de um item. */
+    function showItem(index) {
+        const item = character.inventory[index];
+        const dialog = document.getElementById("item-dialog");
 
-        const ability = character.stats.find(
-            stat => stat.abbreviation === spellcasting.ability
-        );
+        if (!item || !dialog) return;
 
-        const abilityModifier = Number(ability?.value) || 0;
-        const level = Number(character.level) || 0;
+        setText("dialog-category", item.type);
+        setText("dialog-icon", item.icon || "✧");
+        setText("dialog-name", item.name);
+        setText("dialog-rarity", item.rarity);
+        setText("dialog-description", item.description);
+        setText("dialog-quantity", `Quantidade registrada: ${item.quantity}`);
 
-        const proficiencyRanks = {
-            untrained: 0,
-            trained: 2,
-            expert: 4,
-            master: 6,
-            legendary: 8
-        };
-
-        const rank = String(
-            spellcasting.proficiency || "untrained"
-        ).toLowerCase();
-
-        const rankBonus = proficiencyRanks[rank];
-
-        if (rankBonus === undefined) {
-            console.error("Proficiência de conjuração inválida:", rank);
-            return "—";
-        }
-
-        const proficiencyBonus = rank === "untrained"
-            ? 0
-            : level + rankBonus;
-
-        return 10 + abilityModifier + proficiencyBonus;
+        if (!dialog.open) dialog.showModal();
     }
 
-    /* ========================================
-   9. MAGIAS
-======================================== */
+
+    /* ---- 3.7 Magias ---- */
+
+    /** Monta o cartão de uma magia na lista. */
+    function spellCardHTML(spell, categoryKey, rankLabel) {
+        const tradition = getTraditionInfo(spell.tradition);
+        const isClass = categoryKey === "class";
+
+        return `
+            <button class="spell-card" type="button"
+                    data-spell-category="${categoryKey}"
+                    data-spell-index="${spell.originalIndex}">
+                <span class="spell-card-top">
+                    <span class="spell-tradition ${tradition.modifier}">${tradition.label}</span>
+                    <span class="spell-card-rank">${escapeHTML(rankLabel)}</span>
+                </span>
+                <span class="spell-card-title-row">
+                    <span class="spell-card-name">${escapeHTML(spell.name || "Magia sem nome")}</span>
+                    ${isClass && spell.signature === true
+                        ? `<span class="spell-signature" title="Signature Spell" aria-label="Signature Spell">★</span>`
+                        : ""}
+                    ${isClass && spell.granted === true
+                        ? `<span class="spell-granted">Granted Spell</span>`
+                        : ""}
+                    ${spell.damage ? `<span class="spell-damage">${escapeHTML(spell.damage)}</span>` : ""}
+                    ${spell.healing ? `<span class="spell-healing">${escapeHTML(spell.healing)}</span>` : ""}
+                </span>
+            </button>
+        `;
+    }
+
+    /** Agrupa as magias de uma categoria por rank (Cantrips primeiro). */
+    function groupSpellsByRank(spells) {
+        const groups = new Map();
+
+        spells.forEach((spell, index) => {
+            const rank = String(spell.rank ?? "unknown").toLowerCase();
+
+            if (!groups.has(rank)) groups.set(rank, []);
+            groups.get(rank).push({ ...spell, originalIndex: index });
+        });
+
+        const order = rank => (rank === "cantrip" ? 0 : Number(rank) || 99);
+
+        return [...groups.entries()].sort(([a], [b]) => order(a) - order(b));
+    }
 
     function renderSpells() {
         setText("spell-dc-value", calculateSpellDC());
-        const categories = [
-            {
-                key: "class",
-                sectionId: "class-spells-section",
-                listId: "class-spells-list"
-            },
-            {
-                key: "innate",
-                sectionId: "innate-spells-section",
-                listId: "innate-spells-list"
-            },
-            {
-                key: "focus",
-                sectionId: "focus-spells-section",
-                listId: "focus-spells-list"
-            }
-        ];
 
-        const traditionLabels = {
-            divine: "Divine",
-            occult: "Occult",
-            primal: "Primal",
-            arcane: "Arcane"
-        };
-
+        const categories = ["class", "innate", "focus"];
         let totalSpells = 0;
 
-        categories.forEach(category => {
-            const section = document.getElementById(category.sectionId);
-            const list = document.getElementById(category.listId);
+        categories.forEach(key => {
+            const section = document.getElementById(`${key}-spells-section`);
+            const list = document.getElementById(`${key}-spells-list`);
 
             if (!section || !list) return;
 
-            const spells = Array.isArray(character.spells?.[category.key])
-                ? character.spells[category.key]
-                : [];
+            const spells = Array.isArray(character.spells?.[key]) ? character.spells[key] : [];
 
             totalSpells += spells.length;
-
-            // Oculta categorias sem magias cadastradas.
             section.hidden = spells.length === 0;
 
-            if (spells.length === 0) {
-                list.innerHTML = "";
-                return;
-            }
-
-            // Agrupa as magias pelo rank.
-            const rankGroups = new Map();
-
-            spells.forEach((spell, index) => {
-                const rank = String(spell.rank ?? "unknown").toLowerCase();
-
-                if (!rankGroups.has(rank)) {
-                    rankGroups.set(rank, []);
-                }
-
-                rankGroups.get(rank).push({
-                    ...spell,
-                    originalIndex: index
-                });
-            });
-
-            // Ordena: Cantrips primeiro, depois ranks numéricos.
-            const sortedRanks = [...rankGroups.keys()].sort((a, b) => {
-                const rankA = a === "cantrip" ? 0 : Number(a) || 99;
-                const rankB = b === "cantrip" ? 0 : Number(b) || 99;
-
-                return rankA - rankB;
-            });
-
-            list.innerHTML = sortedRanks.map(rank => {
-                const rankSpells = rankGroups.get(rank);
-
-                const rankLabel = rank === "cantrip"
-                    ? "CANTRIP"
-                    : /^\d+$/.test(rank)
-                        ? `SPELL RANK ${rank}`
-                        : "RANK NÃO INFORMADO";
-
-                const cards = rankSpells.map(spell => {
-                    const tradition = String(spell.tradition || "").toLowerCase();
-
-                    const traditionClass = traditionLabels[tradition]
-                        ? `spell-tradition--${tradition}`
-                        : "";
-
-                    const traditionLabel = traditionLabels[tradition]
-                        || "Tradição não informada";
-
-                    const damage = spell.damage
-                        ? `<span class="spell-damage">${escapeHTML(spell.damage)}</span>`
-                        : "";
-
-                    const healing = spell.healing
-                        ? `<span class="spell-healing">${escapeHTML(spell.healing)}</span>`
-                        : "";
-
-                    const signature = category.key === "class" && spell.signature === true
-                        ? `<span class="spell-signature" title="Signature Spell" aria-label="Signature Spell">★</span>`
-                        : "";
-
-                    const granted = category.key === "class" && spell.granted === true
-                        ? `<span class="spell-granted">Granted Spell</span>`
-                        : "";
-
-                    return `
-                        <button
-                            class="spell-card"
-                            type="button"
-                            data-spell-category="${category.key}"
-                            data-spell-index="${spell.originalIndex}"
-                        >
-                            <span class="spell-card-top">
-                                <span class="spell-tradition ${traditionClass}">
-                                    ${traditionLabel}
-                                </span>
-
-                                <span class="spell-card-rank">
-                                    ${escapeHTML(rankLabel)}
-                                </span>
-                            </span>
-
-                            <span class="spell-card-title-row">
-                                <span class="spell-card-name">${escapeHTML(spell.name || "Magia sem nome")}</span>
-                                ${signature}
-                                ${granted}
-                                ${damage}
-                                ${healing}
-                            </span>
-                        </button>
-                    `;
-                }).join("");
+            list.innerHTML = groupSpellsByRank(spells).map(([rank, rankSpells]) => {
+                const rankLabel = getSpellRankLabel(rank);
 
                 return `
                     <div class="spell-rank-group">
                         <div class="spell-rank-heading">
                             <h4>${escapeHTML(rankLabel)}</h4>
-                            <span>
-                                ${rankSpells.length}
-                                ${rankSpells.length === 1 ? "MAGIA" : "MAGIAS"}
-                            </span>
+                            <span>${rankSpells.length} ${rankSpells.length === 1 ? "MAGIA" : "MAGIAS"}</span>
                         </div>
-
                         <div class="spell-grid">
-                            ${cards}
+                            ${rankSpells.map(spell => spellCardHTML(spell, key, rankLabel)).join("")}
                         </div>
                     </div>
                 `;
             }).join("");
         });
 
-        // Oculta a mensagem inicial quando houver alguma magia.
         const emptyState = document.getElementById("spells-empty-state");
-
-        if (emptyState) {
-            emptyState.hidden = totalSpells > 0;
-        }
+        if (emptyState) emptyState.hidden = totalSpells > 0;
     }
 
+    /** Preenche um campo opcional e oculta a linha se estiver vazio. */
+    function updateOptionalField(slug, value) {
+        const row = document.getElementById(`spell-${slug}-row`);
+        const element = document.getElementById(`spell-details-${slug}`);
+        const visible = hasValue(value);
 
-/* ========================================
-   DETALHES DAS MAGIAS
-======================================== */
-    function formatSpellDescription(description) {
-        const safeText = String(description)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#39;");
-
-        return safeText.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+        if (element) element.textContent = visible ? value : "";
+        if (row) row.hidden = !visible;
     }
 
-    function generateRunicInscription() {
-        const firstCodePoint = 0x16A0;
-        const lastCodePoint = 0x16F8;
+    /** Preenche uma etiqueta (dano/cura) e a oculta se não houver valor. */
+    function updateTag(id, prefix, value) {
+        const element = document.getElementById(id);
+        if (!element) return;
 
-        const runicCharacters = Array.from(
-            { length: lastCodePoint - firstCodePoint + 1 },
-            (_, index) => String.fromCodePoint(firstCodePoint + index)
-        );
-
-        const inscriptionLength = 5;
-
-        return Array.from({ length: inscriptionLength }, () => {
-            const randomIndex = Math.floor(
-                Math.random() * runicCharacters.length
-            );
-
-            return runicCharacters[randomIndex];
-        }).join("");
+        element.textContent = value ? `${prefix}: ${value}` : "";
+        element.hidden = !value;
     }
 
+    /** Mostra os detalhes da magia selecionada. */
     function showSpell(category, index) {
         const spells = character.spells?.[category];
         const spell = Array.isArray(spells) ? spells[index] : null;
+
         setText("spell-details-runes", generateRunicInscription());
 
         if (!spell) return;
 
-        const categoryLabels = {
-            class: "MAGIA DE CLASSE · ORACLE",
-            innate: "MAGIA INATA",
-            focus: "FOCUS SPELL"
-        };
-
-        const traditionLabels = {
-            divine: "Divine",
-            occult: "Occult",
-            primal: "Primal",
-            arcane: "Arcane"
-        };
-
-        // Categoria e rank.
-        setText(
-            "spell-details-category",
-            categoryLabels[category] || "MAGIA"
-        );
-
-        const rank = String(spell.rank ?? "").toLowerCase();
-
-        const rankLabel = rank === "cantrip"
-            ? "CANTRIP"
-            : /^\d+$/.test(rank)
-                ? `SPELL RANK ${rank}`
-                : "RANK NÃO INFORMADO";
-
-        setText("spell-details-rank", rankLabel);
-
-        // Nome e descrição.
+        setText("spell-details-category", SPELL_CATEGORY_LABELS[category] || "MAGIA");
+        setText("spell-details-rank", getSpellRankLabel(spell.rank));
         setText("spell-details-name", spell.name || "Magia sem nome");
 
         document.getElementById("spell-details-description").innerHTML =
             formatSpellDescription(spell.description || "Descrição não cadastrada.");
 
-        // Tradição mágica.
-        const traditionElement = document.getElementById(
-            "spell-details-tradition"
-        );
+        const traditionElement = document.getElementById("spell-details-tradition");
 
         if (traditionElement) {
-            const tradition = String(spell.tradition || "").toLowerCase();
+            const tradition = getTraditionInfo(spell.tradition);
 
-            traditionElement.textContent =
-                traditionLabels[tradition] || "Tradição não informada";
-
-            traditionElement.className = "spell-tradition";
-
-            if (traditionLabels[tradition]) {
-                traditionElement.classList.add(
-                    `spell-tradition--${tradition}`
-                );
-            }
+            traditionElement.textContent = tradition.label;
+            traditionElement.className = `spell-tradition ${tradition.modifier}`.trim();
         }
 
-        // Exibe ou oculta campos opcionais.
-        function updateOptionalField(rowId, valueId, value) {
-            const row = document.getElementById(rowId);
-            const element = document.getElementById(valueId);
+        SPELL_OPTIONAL_FIELDS.forEach(([field, slug]) => {
+            updateOptionalField(slug, spell[field]);
+        });
 
-            const hasValue =
-                value !== undefined &&
-                value !== null &&
-                String(value).trim() !== "";
-
-            if (element) {
-                element.textContent = hasValue ? value : "";
-            }
-
-            if (row) {
-                row.hidden = !hasValue;
-            }
-        }
-
-        // Especificações da magia.
-        updateOptionalField(
-            "spell-actions-row",
-            "spell-details-actions",
-            spell.actions
-        );
-
-        updateOptionalField(
-            "spell-range-row",
-            "spell-details-range",
-            spell.range
-        );
-
-        updateOptionalField(
-            "spell-area-row",
-            "spell-details-area",
-            spell.area
-        );
-
-        updateOptionalField(
-            "spell-targets-row",
-            "spell-details-targets",
-            spell.targets
-        );
-
-        updateOptionalField(
-            "spell-duration-row",
-            "spell-details-duration",
-            spell.duration
-        );
-
-        updateOptionalField(
-            "spell-saving-throw-row",
-            "spell-details-saving-throw",
-            spell.savingThrow
-        );
-
-        updateOptionalField(
-            "spell-defense-row",
-            "spell-details-defense",
-            spell.defense
-        );
-
-        updateOptionalField(
-            "spell-cost-row",
-            "spell-details-cost",
-            spell.cost
-        );
-
-        updateOptionalField(
-            "spell-requirements-row",
-            "spell-details-requirements",
-            spell.requirements
-        );
-
-        updateOptionalField(
-            "spell-trigger-row",
-            "spell-details-trigger",
-            spell.trigger
-        );
-
-        updateOptionalField(
-            "spell-components-row",
-            "spell-details-components",
-            spell.components
-        );
-
-        updateOptionalField(
-            "spell-traits-row",
-            "spell-details-traits",
-            spell.traits
-        );
-
-        updateOptionalField(
-            "spell-heightened-row",
-            "spell-details-heightened",
-            spell.heightened
-        );
-
-        // Dano.
-        const damageElement = document.getElementById(
-            "spell-details-damage"
-        );
-
-        if (damageElement) {
-            const hasDamage = Boolean(spell.damage);
-
-            damageElement.textContent = hasDamage
-                ? `Dano: ${spell.damage}`
-                : "";
-
-            damageElement.hidden = !hasDamage;
-        }
-
-        // Cura.
-        const healingElement = document.getElementById(
-            "spell-details-healing"
-        );
-
-        if (healingElement) {
-            const hasHealing = Boolean(spell.healing);
-
-            healingElement.textContent = hasHealing
-                ? `Cura: ${spell.healing}`
-                : "";
-
-            healingElement.hidden = !hasHealing;
-        }
+        updateTag("spell-details-damage", "Dano", spell.damage);
+        updateTag("spell-details-healing", "Cura", spell.healing);
 
         // Signature: somente para magias de classe.
-        const signatureElement = document.getElementById(
-            "spell-details-signature"
-        );
+        const signature = document.getElementById("spell-details-signature");
+        if (signature) signature.hidden = !(category === "class" && spell.signature === true);
 
-        if (signatureElement) {
-            signatureElement.hidden = !(
-                category === "class" && spell.signature === true
-            );
-        }
-
-        // Alterna a mensagem inicial pelo painel de detalhes.
-        const emptyPanel = document.getElementById(
-            "spell-details-empty"
-        );
-
-        const detailsPanel = document.getElementById(
-            "spell-details-content"
-        );
+        const emptyPanel = document.getElementById("spell-details-empty");
+        const content = document.getElementById("spell-details-content");
 
         if (emptyPanel) emptyPanel.hidden = true;
-        if (detailsPanel) detailsPanel.hidden = false;
+        if (content) content.hidden = false;
 
-        // Destaca o cartão selecionado.
         document.querySelectorAll(".spell-card").forEach(card => {
-            const selected =
+            card.classList.toggle(
+                "is-selected",
                 card.dataset.spellCategory === category &&
-                Number(card.dataset.spellIndex) === index;
-
-            card.classList.toggle("is-selected", selected);
+                Number(card.dataset.spellIndex) === index
+            );
         });
     }
 
 
+    /* ---- 3.8 Playlist ---- */
 
+    /** Monta o cartão expansível de uma faixa. */
+    function trackCardHTML(track, index) {
+        const title = escapeHTML(track.title || `Faixa ${index + 1}`);
+        const artist = escapeHTML(track.artist || "Artista não informado");
+        const album = escapeHTML(track.album || "Álbum não informado");
+        const description = escapeHTML(track.description || "Nenhuma descrição cadastrada.");
 
-/* ========================================
-   10. PLAYLIST
-======================================== */
+        const cover = track.cover
+            ? `<img class="playlist-track-cover" src="${escapeHTML(track.cover)}"
+                    alt="Capa de ${title}" loading="lazy">`
+            : `<div class="playlist-track-cover" aria-hidden="true">♫</div>`;
+
+        return `
+            <article class="playlist-track" data-track-card="${index}">
+                <button type="button" class="playlist-track-header"
+                        data-track-toggle="${index}"
+                        aria-expanded="false"
+                        aria-controls="playlist-track-details-${index}">
+                    ${cover}
+                    <span class="playlist-track-info">
+                        <h4>${title}</h4>
+                        <p>${artist}</p>
+                    </span>
+                    <span class="playlist-track-toggle" aria-hidden="true">⌄</span>
+                </button>
+
+                <div class="playlist-track-details" id="playlist-track-details-${index}" hidden>
+                    <p class="playlist-track-album">${album}</p>
+                    <p class="playlist-track-description">${description}</p>
+                    <button type="button" class="playlist-track-play" data-play-track="${index}">
+                        ▶ Reproduzir
+                    </button>
+                </div>
+            </article>
+        `;
+    }
 
     function renderPlaylist() {
         const grid = document.getElementById("playlist-grid");
-
         if (!grid) return;
 
-        const tracks = Array.isArray(character.playlist)
-            ? character.playlist
-            : [];
+        const tracks = Array.isArray(character.playlist) ? character.playlist : [];
 
-        // Atualiza a quantidade de músicas.
-        setText(
-            "playlist-total",
-            `${String(tracks.length).padStart(2, "0")} FAIXAS`
-        );
+        setText("playlist-total", `${String(tracks.length).padStart(2, "0")} FAIXAS`);
 
-        // Exibe o player somente quando houver músicas.
+        // O player global só aparece quando há músicas.
         const player = document.getElementById("music-player");
+        if (player) player.hidden = tracks.length === 0;
 
-        if (player) {
-            player.hidden = tracks.length === 0;
-        }
-
-        // Mensagem exibida quando a playlist está vazia.
-        if (tracks.length === 0) {
-            grid.innerHTML = `
+        grid.innerHTML = tracks.length === 0
+            ? `
                 <div class="playlist-empty-state">
                     <span class="placeholder-symbol">♫</span>
-
                     <h3>Nenhuma faixa registrada</h3>
-
                     <p>
                         Este espaço será preenchido com músicas
                         que representem Boris, sua personalidade,
                         suas memórias e sua jornada.
                     </p>
                 </div>
-            `;
-
-            return;
-        }
-
-        // Cria os cartões das músicas.
-        grid.innerHTML = tracks.map((track, index) => {
-            const title = escapeHTML(
-                track.title || `Faixa ${index + 1}`
-            );
-
-            const artist = escapeHTML(
-                track.artist || "Artista não informado"
-            );
-
-            const album = escapeHTML(
-                track.album || "Álbum não informado"
-            );
-
-            const description = escapeHTML(
-                track.description || "Nenhuma descrição cadastrada."
-            );
-
-            const cover = track.cover
-                ? `
-                    <img
-                        class="playlist-track-cover"
-                        src="${escapeHTML(track.cover)}"
-                        alt="Capa de ${title}"
-                        loading="lazy"
-                    >
-                `
-                : `
-                    <div class="playlist-track-cover" aria-hidden="true">
-                        ♫
-                    </div>
-                `;
-
-            return `
-                <article class="playlist-track" data-track-card="${index}">
-
-                    <button
-                        type="button"
-                        class="playlist-track-header"
-                        data-track-toggle="${index}"
-                        aria-expanded="false"
-                        aria-controls="playlist-track-details-${index}"
-                    >
-                        ${cover}
-
-                        <span class="playlist-track-info">
-                            <h4>${title}</h4>
-                            <p>${artist}</p>
-                        </span>
-
-                        <span class="playlist-track-toggle" aria-hidden="true">
-                            ⌄
-                        </span>
-                    </button>
-
-                    <div
-                        class="playlist-track-details"
-                        id="playlist-track-details-${index}"
-                        hidden
-                    >
-                        <p class="playlist-track-album">
-                            ${album}
-                        </p>
-
-                        <p class="playlist-track-description">
-                            ${description}
-                        </p>
-
-                        <button
-                            type="button"
-                            class="playlist-track-play"
-                            data-play-track="${index}"
-                        >
-                            ▶ Reproduzir
-                        </button>
-                    </div>
-
-                </article>
-            `;
-        }).join("");
+            `
+            : tracks.map(trackCardHTML).join("");
     }
 
-/* ========================================
-   CONTROLE DO PLAYER MUSICAL
-======================================== */
+    /** Expande um cartão da playlist (fechando os outros) ou o recolhe. */
+    function toggleTrackCard(toggleButton, grid) {
+        const card = toggleButton.closest(".playlist-track");
+        const details = card?.querySelector(".playlist-track-details");
 
-    // Formata o tempo em minutos e segundos.
-    function formatMusicTime(seconds) {
-        if (!Number.isFinite(seconds)) {
-            return "0:00";
+        if (!card || !details) return;
+
+        const wasExpanded = !details.hidden;
+
+        grid.querySelectorAll(".playlist-track").forEach(other => {
+            other.classList.remove("is-expanded");
+            other.querySelector(".playlist-track-details").hidden = true;
+            other.querySelector("[data-track-toggle]").setAttribute("aria-expanded", "false");
+        });
+
+        if (!wasExpanded) {
+            details.hidden = false;
+            card.classList.add("is-expanded");
+            toggleButton.setAttribute("aria-expanded", "true");
         }
-
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = Math.floor(seconds % 60);
-
-        return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
     }
 
 
-    // Atualiza as informações da música no player.
+    /* ---- 3.9 Player musical ---- */
+
+    /** Atualiza título, artista e capa no player global. */
     function updateMusicPlayerInfo(track) {
         const player = document.getElementById("music-player");
         const cover = document.getElementById("music-player-cover");
+        const title = track.title || "Faixa sem título";
+        const artist = track.artist || "Artista desconhecido";
 
-        if (player) {
-            player.hidden = false;
-        }
+        if (player) player.hidden = false;
 
-        setText("music-player-title", track.title || "Faixa sem título");
-        setText("music-player-artist", track.artist || "Artista desconhecido");
+        setText("music-player-title", title);
+        setText("music-player-artist", artist);
+        setText("music-player-panel-title", title);
+        setText("music-player-panel-artist", artist);
 
-        setText(
-            "music-player-panel-title",
-            track.title || "Faixa sem título"
-        );
+        if (!cover) return;
 
-        setText(
-            "music-player-panel-artist",
-            track.artist || "Artista desconhecido"
-        );
-
-        if (cover) {
-            if (track.cover) {
-                cover.src = track.cover;
-                cover.alt = `Capa de ${track.title || "música"}`;
-                cover.hidden = false;
-            } else {
-                cover.removeAttribute("src");
-                cover.alt = "";
-                cover.hidden = true;
-            }
+        if (track.cover) {
+            cover.src = track.cover;
+            cover.alt = `Capa de ${track.title || "música"}`;
+            cover.hidden = false;
+        } else {
+            cover.removeAttribute("src");
+            cover.alt = "";
+            cover.hidden = true;
         }
     }
 
-
-    // Atualiza o botão de reprodução e os cartões.
+    /** Atualiza o botão play/pause do player e os botões dos cartões. */
     function updateMusicPlayerButton() {
         const button = document.getElementById("music-player-play");
-        const isPlaying = musicAudio && !musicAudio.paused;
+        const isPlaying = Boolean(musicAudio) && !musicAudio.paused;
 
         if (button) {
             button.textContent = isPlaying ? "Ⅱ" : "▶";
-
-            button.setAttribute(
-                "aria-label",
-                isPlaying ? "Pausar música" : "Reproduzir música"
-            );
+            button.setAttribute("aria-label", isPlaying ? "Pausar música" : "Reproduzir música");
         }
 
         document.querySelectorAll("[data-play-track]").forEach(trackButton => {
-            const isCurrent =
-                Number(trackButton.dataset.playTrack) === currentTrackIndex;
+            const isCurrent = Number(trackButton.dataset.playTrack) === currentTrackIndex;
 
-            trackButton.textContent =
-                isCurrent && isPlaying
-                    ? "Ⅱ Pausar"
-                    : "▶ Reproduzir";
+            trackButton.textContent = isCurrent && isPlaying ? "Ⅱ Pausar" : "▶ Reproduzir";
         });
     }
 
-
-    // Atualiza a barra de progresso e os horários.
+    /** Atualiza a barra de progresso e os tempos. */
     function updateMusicProgress() {
-        const progress = document.getElementById("music-player-progress");
-
-        const currentTime = document.getElementById(
-            "music-player-current-time"
-        );
-
-        const duration = document.getElementById(
-            "music-player-duration"
-        );
-
         if (!musicAudio) return;
 
-        const totalDuration = Number.isFinite(musicAudio.duration)
-            ? musicAudio.duration
-            : 0;
-
-        const percentage = totalDuration > 0
-            ? (musicAudio.currentTime / totalDuration) * 100
-            : 0;
+        const progress = document.getElementById("music-player-progress");
+        const total = Number.isFinite(musicAudio.duration) ? musicAudio.duration : 0;
 
         if (progress) {
-            progress.value = percentage;
+            progress.value = total > 0 ? (musicAudio.currentTime / total) * 100 : 0;
         }
 
-        if (currentTime) {
-            currentTime.textContent = formatMusicTime(
-                musicAudio.currentTime
-            );
-        }
-
-        if (duration) {
-            duration.textContent = formatMusicTime(totalDuration);
-        }
+        setText("music-player-current-time", formatMusicTime(musicAudio.currentTime));
+        setText("music-player-duration", formatMusicTime(total));
     }
 
-
-    // Reproduz uma música pelo índice.
+    /** Reproduz a faixa de índice `index`. */
     function playMusicTrack(index) {
-        const tracks = character.playlist || [];
-        const track = tracks[index];
+        const track = (character.playlist || [])[index];
 
         if (!track) return;
 
@@ -1712,33 +817,24 @@ function initializeDossier() {
         }
 
         currentTrackIndex = index;
-
         updateMusicPlayerInfo(track);
 
         document.querySelectorAll(".playlist-track").forEach(card => {
-            card.classList.toggle(
-                "is-active",
-                Number(card.dataset.trackCard) === index
-            );
+            card.classList.toggle("is-active", Number(card.dataset.trackCard) === index);
         });
 
         musicAudio.src = track.audio;
         musicAudio.load();
 
-        const playback = musicAudio.play();
-
-        if (playback) {
-            playback.catch(error => {
-                console.error("Não foi possível reproduzir a música:", error);
-                updateMusicPlayerButton();
-            });
-        }
+        musicAudio.play()?.catch(error => {
+            console.error("Não foi possível reproduzir a música:", error);
+            updateMusicPlayerButton();
+        });
 
         updateMusicPlayerButton();
     }
 
-
-    // Reproduz ou pausa a música atual.
+    /** Alterna entre reproduzir e pausar a faixa atual. */
     function toggleMusicPlayback() {
         if (!musicAudio) return;
 
@@ -1748,13 +844,9 @@ function initializeDossier() {
         }
 
         if (musicAudio.paused) {
-            const playback = musicAudio.play();
-
-            if (playback) {
-                playback.catch(error => {
-                    console.error("Erro ao retomar a música:", error);
-                });
-            }
+            musicAudio.play()?.catch(error => {
+                console.error("Erro ao retomar a música:", error);
+            });
         } else {
             musicAudio.pause();
         }
@@ -1762,185 +854,97 @@ function initializeDossier() {
         updateMusicPlayerButton();
     }
 
-
-    // Avança ou retorna uma faixa.
+    /** Avança (+1) ou volta (-1) uma faixa, de forma circular. */
     function changeMusicTrack(direction) {
         const tracks = character.playlist || [];
 
         if (tracks.length === 0) return;
 
         if (currentTrackIndex === -1) {
-            const firstIndex = direction > 0
-                ? 0
-                : tracks.length - 1;
-
-            playMusicTrack(firstIndex);
+            playMusicTrack(direction > 0 ? 0 : tracks.length - 1);
             return;
         }
 
-        const nextIndex =
-            (currentTrackIndex + direction + tracks.length) % tracks.length;
-
-        playMusicTrack(nextIndex);
+        playMusicTrack((currentTrackIndex + direction + tracks.length) % tracks.length);
     }
-
-/* ========================================
-   EVENTOS DO PLAYER MUSICAL
-======================================== */
 
     function setupMusicPlayerEvents() {
         const grid = document.getElementById("playlist-grid");
-
         const trigger = document.getElementById("music-player-trigger");
         const panel = document.getElementById("music-player-panel");
-
         const volume = document.getElementById("music-player-volume");
         const progress = document.getElementById("music-player-progress");
+        const openPlaylist = document.getElementById("music-player-open-playlist");
 
-        const openPlaylist = document.getElementById(
-            "music-player-open-playlist"
-        );
+        // Cartões da playlist: reproduzir ou expandir.
+        grid?.addEventListener("click", event => {
+            const playButton = event.target.closest("[data-play-track]");
 
-        // Expansão dos cartões e reprodução das faixas.
-        if (grid) {
-            grid.addEventListener("click", event => {
-                const playButton = event.target.closest("[data-play-track]");
+            if (playButton) {
+                const index = Number(playButton.dataset.playTrack);
 
-                if (playButton) {
-                    const index = Number(playButton.dataset.playTrack);
-
-                    if (currentTrackIndex === index && musicAudio && !musicAudio.paused) {
-                        musicAudio.pause();
-                    } else if (currentTrackIndex === index) {
-                        toggleMusicPlayback();
-                    } else {
-                        playMusicTrack(index);
-                    }
-
-                    return;
+                if (currentTrackIndex === index) {
+                    toggleMusicPlayback();
+                } else {
+                    playMusicTrack(index);
                 }
+                return;
+            }
 
-                const toggleButton = event.target.closest("[data-track-toggle]");
+            const toggleButton = event.target.closest("[data-track-toggle]");
 
-                if (!toggleButton) return;
+            if (toggleButton) toggleTrackCard(toggleButton, grid);
+        });
 
-                const card = toggleButton.closest(".playlist-track");
-
-                if (!card) return;
-
-                const details = card.querySelector(".playlist-track-details");
-
-                if (!details) return;
-
-                const wasExpanded = !details.hidden;
-
-                // Fecha os outros cartões.
-                grid.querySelectorAll(".playlist-track").forEach(otherCard => {
-                    const otherDetails = otherCard.querySelector(
-                        ".playlist-track-details"
-                    );
-
-                    const otherButton = otherCard.querySelector(
-                        "[data-track-toggle]"
-                    );
-
-                    otherCard.classList.remove("is-expanded");
-
-                    if (otherDetails) {
-                        otherDetails.hidden = true;
-                    }
-
-                    if (otherButton) {
-                        otherButton.setAttribute("aria-expanded", "false");
-                    }
-                });
-
-                // Abre ou fecha o cartão selecionado.
-                if (!wasExpanded) {
-                    details.hidden = false;
-                    card.classList.add("is-expanded");
-
-                    toggleButton.setAttribute("aria-expanded", "true");
-                }
-            });
-        }
-
-        // Expande ou recolhe o player global.
+        // Expande/recolhe o painel do player global.
         if (trigger && panel) {
             trigger.addEventListener("click", () => {
-                const isExpanded =
-                    trigger.getAttribute("aria-expanded") === "true";
+                const isExpanded = trigger.getAttribute("aria-expanded") === "true";
+                const arrow = trigger.querySelector(".music-player-trigger-arrow");
 
                 panel.hidden = isExpanded;
-
-                trigger.setAttribute(
-                    "aria-expanded",
-                    String(!isExpanded)
-                );
-
-                const arrow = trigger.querySelector(
-                    ".music-player-trigger-arrow"
-                );
-
-                if (arrow) {
-                    arrow.textContent = isExpanded ? "⌃" : "⌄";
-                }
+                trigger.setAttribute("aria-expanded", String(!isExpanded));
+                if (arrow) arrow.textContent = isExpanded ? "⌃" : "⌄";
             });
         }
 
-        // Controles de reprodução.
+        // Botões anterior / play-pause / próxima.
+        const playerActions = {
+            toggle: toggleMusicPlayback,
+            previous: () => changeMusicTrack(-1),
+            next: () => changeMusicTrack(1)
+        };
+
         document.querySelectorAll("[data-player-action]").forEach(button => {
             button.addEventListener("click", () => {
-                const action = button.dataset.playerAction;
-
-                if (action === "toggle") {
-                    toggleMusicPlayback();
-                }
-
-                if (action === "previous") {
-                    changeMusicTrack(-1);
-                }
-
-                if (action === "next") {
-                    changeMusicTrack(1);
-                }
+                playerActions[button.dataset.playerAction]?.();
             });
         });
 
         if (!musicAudio) return;
 
-        // Volume inicial e controle de volume.
         if (volume) {
             musicAudio.volume = Number(volume.value);
-
             volume.addEventListener("input", () => {
                 musicAudio.volume = Number(volume.value);
             });
         }
 
-        // Atualização do progresso.
-        musicAudio.addEventListener("timeupdate", updateMusicProgress);
-        musicAudio.addEventListener("loadedmetadata", updateMusicProgress);
-        musicAudio.addEventListener("durationchange", updateMusicProgress);
+        ["timeupdate", "loadedmetadata", "durationchange"].forEach(name => {
+            musicAudio.addEventListener(name, updateMusicProgress);
+        });
 
-        // Busca por um ponto específico da música.
-        if (progress) {
-            progress.addEventListener("input", () => {
-                if (
-                    Number.isFinite(musicAudio.duration) &&
-                    musicAudio.duration > 0
-                ) {
-                    musicAudio.currentTime =
-                        (Number(progress.value) / 100) * musicAudio.duration;
-                }
-            });
-        }
+        // Busca por um ponto da música.
+        progress?.addEventListener("input", () => {
+            if (Number.isFinite(musicAudio.duration) && musicAudio.duration > 0) {
+                musicAudio.currentTime = (Number(progress.value) / 100) * musicAudio.duration;
+            }
+        });
 
-        // Atualiza o botão ao reproduzir ou pausar.
         musicAudio.addEventListener("play", updateMusicPlayerButton);
         musicAudio.addEventListener("pause", updateMusicPlayerButton);
 
-        // Quando uma música termina, passa para a próxima.
+        // Ao terminar, passa para a próxima faixa.
         musicAudio.addEventListener("ended", () => {
             if ((character.playlist || []).length > 1) {
                 changeMusicTrack(1);
@@ -1949,132 +953,93 @@ function initializeDossier() {
             }
         });
 
-        // Atalho para a seção da playlist.
-        if (openPlaylist) {
-            openPlaylist.addEventListener("click", () => {
-                goToScreen("playlist");
-            });
-        }
+        openPlaylist?.addEventListener("click", () => goToScreen("playlist"));
 
-        // Atualiza os controles na inicialização.
         updateMusicPlayerButton();
         updateMusicProgress();
     }
 
+    /** Permite arrastar o player flutuante e lembra a última posição. */
     function setupMusicPlayerDrag() {
         const player = document.getElementById("music-player");
         const handle = document.getElementById("music-player-trigger");
 
         if (!player || !handle) return;
 
-        const storageKey = "borisMusicPlayerPosition";
-
         let pointerActive = false;
         let isDragging = false;
         let suppressNextClick = false;
-
         let startX = 0;
         let startY = 0;
         let startLeft = 0;
         let startTop = 0;
 
-        // Define a posição do player, mantendo-o dentro da tela.
+        /** Posiciona o player mantendo-o dentro da janela. */
         function setPlayerPosition(left, top) {
             const rect = player.getBoundingClientRect();
-
             const maxLeft = Math.max(0, window.innerWidth - rect.width);
             const maxTop = Math.max(0, window.innerHeight - rect.height);
 
-            const safeLeft = Math.min(Math.max(0, left), maxLeft);
-            const safeTop = Math.min(Math.max(0, top), maxTop);
-
-            player.style.left = `${safeLeft}px`;
-            player.style.top = `${safeTop}px`;
+            player.style.left = `${Math.min(Math.max(0, left), maxLeft)}px`;
+            player.style.top = `${Math.min(Math.max(0, top), maxTop)}px`;
             player.style.right = "auto";
             player.style.bottom = "auto";
         }
 
-        // Salva a posição escolhida pelo visitante.
         function savePlayerPosition() {
             const rect = player.getBoundingClientRect();
 
             try {
                 localStorage.setItem(
-                    storageKey,
-                    JSON.stringify({
-                        left: rect.left,
-                        top: rect.top
-                    })
+                    PLAYER_POSITION_KEY,
+                    JSON.stringify({ left: rect.left, top: rect.top })
                 );
             } catch (error) {
                 console.warn("Não foi possível salvar a posição do player.");
             }
         }
 
-        // Recupera a posição salva anteriormente.
+        // Restaura a posição salva.
         try {
-            const savedPosition = JSON.parse(
-                localStorage.getItem(storageKey)
-            );
+            const saved = JSON.parse(localStorage.getItem(PLAYER_POSITION_KEY));
 
-            if (
-                savedPosition &&
-                Number.isFinite(savedPosition.left) &&
-                Number.isFinite(savedPosition.top)
-            ) {
-                setPlayerPosition(
-                    savedPosition.left,
-                    savedPosition.top
-                );
+            if (saved && Number.isFinite(saved.left) && Number.isFinite(saved.top)) {
+                setPlayerPosition(saved.left, saved.top);
             }
         } catch (error) {
             console.warn("Não foi possível recuperar a posição do player.");
         }
 
-        // Inicia o movimento.
         handle.addEventListener("pointerdown", event => {
             if (event.button !== 0) return;
 
-            pointerActive = true;
-            isDragging = false;
-
-            startX = event.clientX;
-            startY = event.clientY;
-
             const rect = player.getBoundingClientRect();
 
+            pointerActive = true;
+            isDragging = false;
+            startX = event.clientX;
+            startY = event.clientY;
             startLeft = rect.left;
             startTop = rect.top;
 
             handle.setPointerCapture(event.pointerId);
         });
 
-        // Acompanha o movimento do mouse ou toque.
         handle.addEventListener("pointermove", event => {
             if (!pointerActive) return;
 
             const deltaX = event.clientX - startX;
             const deltaY = event.clientY - startY;
 
-            // Evita confundir um clique normal com movimento.
-            if (
-                !isDragging &&
-                Math.hypot(deltaX, deltaY) < 5
-            ) {
-                return;
-            }
+            // Movimentos pequenos continuam sendo um clique.
+            if (!isDragging && Math.hypot(deltaX, deltaY) < 5) return;
 
             isDragging = true;
             player.classList.add("is-dragging");
-
-            setPlayerPosition(
-                startLeft + deltaX,
-                startTop + deltaY
-            );
+            setPlayerPosition(startLeft + deltaX, startTop + deltaY);
         });
 
-        // Finaliza o movimento.
-        function finishDrag(event) {
+        handle.addEventListener("pointerup", event => {
             if (!pointerActive) return;
 
             pointerActive = false;
@@ -2082,12 +1047,9 @@ function initializeDossier() {
             if (isDragging) {
                 savePlayerPosition();
 
-                // Impede que o movimento também abra ou feche o player.
+                // Impede que o fim do arraste também abra/feche o player.
                 suppressNextClick = true;
-
-                setTimeout(() => {
-                    suppressNextClick = false;
-                }, 0);
+                setTimeout(() => { suppressNextClick = false; }, 0);
             }
 
             isDragging = false;
@@ -2096,9 +1058,7 @@ function initializeDossier() {
             if (handle.hasPointerCapture(event.pointerId)) {
                 handle.releasePointerCapture(event.pointerId);
             }
-        }
-
-        handle.addEventListener("pointerup", finishDrag);
+        });
 
         handle.addEventListener("pointercancel", () => {
             pointerActive = false;
@@ -2106,34 +1066,26 @@ function initializeDossier() {
             player.classList.remove("is-dragging");
         });
 
-        // Bloqueia o clique que seria disparado após arrastar.
+        // Captura o clique gerado após arrastar e o descarta.
         handle.addEventListener("click", event => {
             if (!suppressNextClick) return;
 
             event.preventDefault();
             event.stopImmediatePropagation();
-
             suppressNextClick = false;
         }, true);
 
-        // Reposiciona o player ao expandir ou recolher.
+        // Reajusta a posição ao expandir/recolher o painel.
         handle.addEventListener("click", () => {
             requestAnimationFrame(() => {
                 const rect = player.getBoundingClientRect();
 
-                const maxTop = Math.max(
-                    0,
-                    window.innerHeight - rect.height
-                );
-
-                const adjustedTop = Math.min(rect.top, maxTop);
-
-                setPlayerPosition(rect.left, adjustedTop);
+                setPlayerPosition(rect.left, rect.top);
                 savePlayerPosition();
             });
         });
 
-        // Ajusta a posição caso o tamanho da janela mude.
+        // Mantém o player visível se a janela mudar de tamanho.
         window.addEventListener("resize", () => {
             if (player.hidden || !player.style.left) return;
 
@@ -2144,167 +1096,75 @@ function initializeDossier() {
         });
     }
 
+    /* ---- 3.10 Navegação e HUD ---- */
 
-    /* ========================================
-       11. DETALHES DOS ITENS
-    ======================================== */
-
-    function showItem(index) {
-        const item = character.inventory[index];
-
-        if (!item) return;
-
-        const dialog = document.getElementById("item-dialog");
-
-        if (!dialog) return;
-
-        setText("dialog-category", item.type);
-        setText("dialog-icon", item.icon || "✧");
-        setText("dialog-name", item.name);
-        setText("dialog-rarity", item.rarity);
-        setText("dialog-description", item.description);
-
-        setText(
-            "dialog-quantity",
-            `Quantidade registrada: ${item.quantity}`
-        );
-
-        if (!dialog.open) {
-            dialog.showModal();
-        }
-    }
-
-
-    /* ========================================
-       12. NAVEGAÇÃO ENTRE AS SEÇÕES
-    ======================================== */
-
+    /** Rola horizontalmente até a seção com o id informado. */
     function goToScreen(id) {
         const target = document.getElementById(id);
 
-        if (!target) return;
-
-        world.scrollTo({
-            left: target.offsetLeft,
-            behavior: "smooth"
-        });
+        if (target) {
+            world.scrollTo({ left: target.offsetLeft, behavior: "smooth" });
+        }
     }
 
+    /** Move uma seção para frente (+1) ou para trás (-1). */
     function moveScreen(direction) {
-        const nextIndex = Math.max(
-            0,
-            Math.min(
-                screens.length - 1,
-                activeIndex + direction
-            )
-        );
+        const nextIndex = Math.max(0, Math.min(screens.length - 1, activeIndex + direction));
 
         goToScreen(screens[nextIndex].id);
     }
 
-
-    /* ========================================
-       13. ATUALIZAÇÃO DO MENU E HUD
-    ======================================== */
-
+    /** Sincroniza menu lateral, contador, barra e setas com a seção visível. */
     function updateNavigation() {
         const center = world.scrollLeft + world.clientWidth / 2;
-
-        let closestIndex = 0;
         let closestDistance = Infinity;
 
-        // Descobre qual seção está mais próxima do centro.
-
+        // A seção ativa é a mais próxima do centro da área visível.
         screens.forEach((screen, index) => {
-            const screenCenter =
-                screen.offsetLeft + screen.offsetWidth / 2;
-
-            const distance = Math.abs(center - screenCenter);
+            const distance = Math.abs(center - (screen.offsetLeft + screen.offsetWidth / 2));
 
             if (distance < closestDistance) {
                 closestDistance = distance;
-                closestIndex = index;
+                activeIndex = index;
             }
         });
 
-        activeIndex = closestIndex;
-
-        // Atualiza os botões do menu lateral.
-
         navButtons.forEach(button => {
-            const active =
-                button.dataset.target === screens[activeIndex].id;
+            const active = button.dataset.target === screens[activeIndex].id;
 
             button.classList.toggle("is-active", active);
-
-            button.setAttribute(
-                "aria-current",
-                active ? "page" : "false"
-            );
+            button.setAttribute("aria-current", active ? "page" : "false");
         });
 
-        // Atualiza o número da página.
-
-        setText(
-            "current-page",
-            String(activeIndex).padStart(2, "0")
-        );
-
-        setText(
-            "total-pages",
-            String(screens.length - 1).padStart(2, "0")
-        );
-
-        // Atualiza a barra de progresso.
-
-        const progress = screens.length > 1
-            ? (activeIndex / (screens.length - 1)) * 100
-            : 100;
+        setText("current-page", String(activeIndex).padStart(2, "0"));
+        setText("total-pages", String(screens.length - 1).padStart(2, "0"));
 
         if (pageProgress) {
+            const progress = screens.length > 1 ? (activeIndex / (screens.length - 1)) * 100 : 100;
+
             pageProgress.style.width = `${progress}%`;
         }
 
-        // Habilita ou desabilita as setas.
-
-        if (previousButton) {
-            previousButton.disabled = activeIndex === 0;
-        }
-
-        if (nextButton) {
-            nextButton.disabled = activeIndex === screens.length - 1;
-        }
+        if (previousButton) previousButton.disabled = activeIndex === 0;
+        if (nextButton) nextButton.disabled = activeIndex === screens.length - 1;
     }
 
-
-    /* ========================================
-       14. CONFIGURAÇÃO DOS EVENTOS
-    ======================================== */
+    /* ---- 3.11 Eventos globais ---- */
 
     function setupEvents() {
         // Menu lateral e botões da capa.
-
         [...navButtons, ...coverButtons].forEach(button => {
             button.addEventListener("click", () => {
-                const target = button.dataset.target;
-
-                if (target) {
-                    goToScreen(target);
-                }
+                if (button.dataset.target) goToScreen(button.dataset.target);
             });
         });
 
-        // Links internos que apontam para outras seções.
-
+        // Links internos (#secao) viram rolagem suave.
         document.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener("click", event => {
                 const targetId = link.getAttribute("href").slice(1);
 
-                const targetScreen = screens.find(
-                    screen => screen.id === targetId
-                );
-
-                if (targetScreen) {
+                if (screens.some(screen => screen.id === targetId)) {
                     event.preventDefault();
                     goToScreen(targetId);
                 }
@@ -2312,83 +1172,39 @@ function initializeDossier() {
         });
 
         // Filtros do inventário.
-
         document.querySelectorAll(".filter-tab").forEach(button => {
-            button.addEventListener("click", () => {
-                renderInventory(button.dataset.filter);
-            });
+            button.addEventListener("click", () => renderInventory(button.dataset.filter));
         });
 
-        // Clique nos itens do inventário.
+        // Clique em um item do inventário.
+        document.getElementById("inventory-grid")?.addEventListener("click", event => {
+            const card = event.target.closest("[data-item-index]");
 
-        const inventoryGrid = document.getElementById("inventory-grid");
+            if (card) showItem(Number(card.dataset.itemIndex));
+        });
 
-        if (inventoryGrid) {
-            inventoryGrid.addEventListener("click", event => {
-                const card = event.target.closest("[data-item-index]");
+        // Clique em uma magia.
+        document.getElementById("spells-content")?.addEventListener("click", event => {
+            const card = event.target.closest(".spell-card");
 
-                if (card) {
-                    showItem(Number(card.dataset.itemIndex));
-                }
-            });
-        }
+            if (card) {
+                showSpell(card.dataset.spellCategory, Number(card.dataset.spellIndex));
+            }
+        });
 
-        // Clique nos cartões de magia.
-        const spellsContent = document.getElementById("spells-content");
-
-        if (spellsContent) {
-            spellsContent.addEventListener("click", event => {
-                const card = event.target.closest(".spell-card");
-
-                if (!card) return;
-
-                showSpell(
-                    card.dataset.spellCategory,
-                    Number(card.dataset.spellIndex)
-                );
-            });
-        }
-
-        // Botões de avançar e voltar.
-
-        if (previousButton) {
-            previousButton.addEventListener("click", () => {
-                moveScreen(-1);
-            });
-        }
-
-        if (nextButton) {
-            nextButton.addEventListener("click", () => {
-                moveScreen(1);
-            });
-        }
+        previousButton?.addEventListener("click", () => moveScreen(-1));
+        nextButton?.addEventListener("click", () => moveScreen(1));
 
         // Fecha o diálogo ao clicar fora do conteúdo.
-
         const dialog = document.getElementById("item-dialog");
 
-        if (dialog) {
-            dialog.addEventListener("click", event => {
-                if (event.target === dialog) {
-                    dialog.close();
-                }
-            });
-        }
+        dialog?.addEventListener("click", event => {
+            if (event.target === dialog) dialog.close();
+        });
 
-        // Rodinha do mouse: navegação horizontal,
-        // exceto dentro das áreas com rolagem vertical.
-
-        
-// Rodinha do mouse: navegação horizontal,
-// exceto dentro das áreas com rolagem vertical.
-
+        // Roda do mouse: navegação horizontal, exceto nas áreas com rolagem vertical.
         world.addEventListener("wheel", event => {
-            if (
-                event.target instanceof Element &&
-                event.target.closest(
-                    ".profile-layout, .stats-main, .defenses-card, .relations-grid, .spells-list-column, .spell-details-panel"
-                )
-            ) {
+            if (event.target instanceof Element && event.target.closest(VERTICAL_SCROLL_AREAS)) {
                 return;
             }
 
@@ -2398,34 +1214,14 @@ function initializeDossier() {
             }
         }, { passive: false });
 
-        // Atualiza a navegação ao deslizar as páginas.
+        world.addEventListener("scroll", updateNavigation, { passive: true });
 
-        world.addEventListener(
-            "scroll",
-            updateNavigation,
-            { passive: true }
-        );
-
-        // Navegação pelas setas do teclado.
-
+        // Setas do teclado (ignoradas ao digitar ou com o diálogo aberto).
         window.addEventListener("keydown", event => {
-            const tag = document.activeElement?.tagName?.toLowerCase();
+            const active = document.activeElement;
+            const isTyping = ["input", "textarea", "select"].includes(active?.tagName?.toLowerCase());
 
-            const isTyping = [
-                "input",
-                "textarea",
-                "select"
-            ].includes(tag);
-
-            const dialog = document.getElementById("item-dialog");
-
-            if (isTyping || document.activeElement?.isContentEditable) {
-                return;
-            }
-
-            if (dialog?.open) {
-                return;
-            }
+            if (isTyping || active?.isContentEditable || dialog?.open) return;
 
             if (event.key === "ArrowRight") {
                 event.preventDefault();
@@ -2437,22 +1233,23 @@ function initializeDossier() {
         });
     }
 
-function addRunicDividers() {
-    document.querySelectorAll(".screen-heading").forEach((heading) => {
-        if (heading.querySelector(".heading-runes")) return;
+    /* ---- 3.12 Ornamentos ---- */
 
-        const runes = document.createElement("span");
-        runes.className = "heading-runes";
-        runes.textContent = generateRunicInscription();
-        runes.setAttribute("aria-hidden", "true");
+    /** Adiciona uma inscrição rúnica ao divisor de cada título de seção. */
+    function addRunicDividers() {
+        document.querySelectorAll(".screen-heading").forEach(heading => {
+            if (heading.querySelector(".heading-runes")) return;
 
-        heading.appendChild(runes);
-    });
-}
+            const runes = document.createElement("span");
 
-    /* ========================================
-       15. INICIALIZAÇÃO
-    ======================================== */
+            runes.className = "heading-runes";
+            runes.textContent = generateRunicInscription();
+            runes.setAttribute("aria-hidden", "true");
+            heading.appendChild(runes);
+        });
+    }
+
+    /* ---- 3.13 Inicialização ---- */
 
     renderCharacter();
     renderStats();
@@ -2470,14 +1267,11 @@ function addRunicDividers() {
 }
 
 /* ========================================
-   15. INICIA QUANDO O HTML ESTIVER PRONTO
+   4. PONTO DE ENTRADA
 ======================================== */
 
 if (document.readyState === "loading") {
-    document.addEventListener(
-        "DOMContentLoaded",
-        initializeDossier
-    );
+    document.addEventListener("DOMContentLoaded", initializeDossier);
 } else {
     initializeDossier();
 }
