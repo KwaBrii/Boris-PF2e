@@ -240,6 +240,14 @@ const character = {
             audio: "assets/music/04-Why.mp3",
             cover: "assets/images/covers/04.png",
             description: ""
+        },
+        {
+            title: "05 - Aqua's Dance (Nohr)",
+            artist: "Adriana Figueroa",
+            album: "Fire Emblem Conquest Cover",
+            audio: "assets/music/05-Aqua's Dance.mp3",
+            cover: "assets/images/covers/05.png",
+            description: ""
         }
     ]
 };
