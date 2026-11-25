@@ -3375,3 +3375,32 @@ img {
         rgba(77, 130, 199, 0)
     );
 }
+
+
+/* ========================================
+   CONSTELAÇÕES DA CAPA
+======================================== */
+
+.cover-constellations {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    color: #8eb8e8;
+    opacity: 0.65;
+}
+
+.cover-constellations .constellation-lines {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.55;
+}
+
+.cover-constellations .constellation-stars {
+    fill: currentColor;
+}
