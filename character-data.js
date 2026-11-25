@@ -514,6 +514,14 @@ const character = {
             audio: "assets/music/06-Playing In The Sun.mp3",
             cover: "assets/images/covers/06.png",
             description: ""
+        },
+        {
+            title: "07 - My Moon My Man",
+            artist: "Feist",
+            album: "",
+            audio: "assets/music/07-My Moon My Man.mp3",
+            cover: "assets/images/covers/07.png",
+            description: ""
         }
     ]
 };
