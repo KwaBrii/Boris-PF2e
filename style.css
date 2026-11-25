@@ -2112,3 +2112,920 @@ img {
 .profile-art-panel {
     position: sticky; top: 24px; align-self: start; height: fit-content;
 }
+
+/* =========================================
+   18. MAGIAS
+========================================= */
+
+/* ESTRUTURA GERAL */
+
+.spells-screen {
+    display: flex;
+    flex-direction: column;
+}
+
+.spells-content {
+    width: 100%;
+}
+
+.spells-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+    align-items: start;
+    gap: clamp(24px, 4vw, 55px);
+}
+
+.spells-list-column {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    min-width: 0;
+}
+
+/* PAINEL DE DETALHES */
+
+.spell-details-panel {
+    position: sticky;
+    top: 0;
+    display: flex;
+    min-width: 0;
+    min-height: 380px;
+    padding: clamp(22px, 3vw, 34px);
+    background: rgba(255, 255, 255, 0.30);
+    border: 1px solid var(--line);
+    box-shadow: 0 8px 24px rgba(38, 57, 72, 0.05);
+}
+
+/* MENSAGEM INICIAL */
+
+.spell-details-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: 100%;
+    min-height: 320px;
+    color: var(--ink-soft);
+    text-align: center;
+}
+
+.spell-details-emblem {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    margin-bottom: 10px;
+    color: var(--blue-medium);
+    border: 1px solid var(--silver-dark);
+    border-radius: 50%;
+    font-size: 1.6rem;
+}
+
+.spell-details-empty h3,
+.spell-details-content h3 {
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+    font-weight: 400;
+    line-height: 1.15;
+}
+
+.spell-details-empty p {
+    max-width: 300px;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+/* CONTEÚDO DA MAGIA */
+
+.spell-details-content {
+    width: 100%;
+}
+
+.spell-details-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 22px 0 14px;
+}
+
+.spell-details-rank {
+    padding: 4px 8px;
+    color: var(--blue-medium);
+    background: rgba(174, 187, 199, 0.15);
+    border: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.spell-details-content h3 {
+    margin-bottom: 14px;
+}
+
+.spell-details-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* DIVISOR ORNAMENTAL */
+
+.spell-details-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+    color: var(--silver-dark);
+}
+
+.spell-details-divider::before,
+.spell-details-divider::after {
+    flex: 1;
+    content: "";
+    border-top: 1px solid var(--line);
+}
+
+.spell-details-divider span {
+    font-size: 0.8rem;
+}
+
+.spell-details-content > p {
+    color: var(--ink-soft);
+    font-size: 0.93rem;
+    line-height: 1.8;
+    white-space: pre-line;
+}
+
+/* MAGIA SELECIONADA */
+
+.spell-card.is-selected {
+    background: rgba(174, 187, 199, 0.18);
+    border-color: var(--blue-medium);
+    box-shadow: 0 4px 14px rgba(38, 57, 72, 0.08);
+}
+
+.spell-card:focus-visible {
+    outline: 2px solid var(--blue-medium);
+    outline-offset: 3px;
+}
+
+/* ESTADO VAZIO */
+
+.spells-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 260px;
+    padding: 35px;
+    color: var(--ink-soft);
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px dashed var(--line);
+    text-align: center;
+}
+
+.spells-empty-state > span {
+    color: var(--silver-dark);
+    font-size: 2rem;
+}
+
+.spells-empty-state p {
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
+/* CATEGORIAS DE MAGIA */
+
+.spell-category {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.spell-category-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+}
+
+.spell-category-heading h3 {
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 400;
+}
+
+/* ORGANIZAÇÃO POR RANK */
+
+.spell-rank-list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.spell-rank-group {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 18px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+}
+
+.spell-rank-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.spell-rank-heading h4 {
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+}
+
+.spell-rank-heading span {
+    color: var(--muted);
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* CARTÕES DE MAGIA */
+
+.spell-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+}
+
+.spell-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    min-width: 0;
+    min-height: 140px;
+    padding: 15px;
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid var(--line);
+    text-align: left;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.spell-card:hover {
+    background: var(--paper-light);
+    border-color: var(--silver-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(38, 57, 72, 0.07);
+}
+
+.spell-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.spell-card-title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.spell-card-name {
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 400;
+}
+
+.spell-card-rank {
+    margin-top: auto;
+    color: var(--muted);
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* TRADIÇÕES MÁGICAS */
+
+.spell-tradition {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-family: var(--sans);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Divine — laranja */
+
+.spell-tradition--divine {
+    color: #bd702c;
+    background: rgba(189, 112, 44, 0.10);
+    border-color: rgba(189, 112, 44, 0.25);
+}
+
+/* Occult — roxo */
+
+.spell-tradition--occult {
+    color: #8054a3;
+    background: rgba(128, 84, 163, 0.10);
+    border-color: rgba(128, 84, 163, 0.25);
+}
+
+/* Primal — verde */
+
+.spell-tradition--primal {
+    color: #397b50;
+    background: rgba(57, 123, 80, 0.10);
+    border-color: rgba(57, 123, 80, 0.25);
+}
+
+/* Arcane — azul */
+
+.spell-tradition--arcane {
+    color: #3976ae;
+    background: rgba(57, 118, 174, 0.10);
+    border-color: rgba(57, 118, 174, 0.25);
+}
+
+/* DANO */
+
+.spell-damage {
+    flex-shrink: 0;
+    padding: 4px 7px;
+    color: #a94343;
+    background: rgba(169, 67, 67, 0.10);
+    border: 1px solid rgba(169, 67, 67, 0.25);
+    border-radius: 3px;
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* SIGNATURE SPELL */
+
+.spell-signature {
+    padding: 4px 7px;
+    color: var(--blue-medium);
+    background: rgba(174, 187, 199, 0.18);
+    border: 1px solid rgba(52, 77, 101, 0.22);
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* PONTOS DE FOCO */
+
+.focus-points-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 22px;
+    background: rgba(174, 187, 199, 0.13);
+    border: 1px solid var(--line);
+}
+
+.focus-points-info h4 {
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+}
+
+.focus-points-info p {
+    margin-top: 5px;
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+}
+
+.focus-points {
+    display: flex;
+    gap: 10px;
+}
+
+.focus-point {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+.focus-point input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.focus-point span {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    color: var(--blue-medium);
+    background: var(--paper-light);
+    border: 1px solid var(--silver-dark);
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 700;
+    transition: 0.2s ease;
+}
+
+.focus-point:hover span {
+    border-color: var(--blue-medium);
+}
+
+.focus-point input:checked + span {
+    color: var(--paper-light);
+    background: var(--blue-medium);
+    border-color: var(--blue-medium);
+}
+
+.focus-point input:focus-visible + span {
+    outline: 2px solid var(--blue-medium);
+    outline-offset: 3px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 850px) {
+    .spells-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .spell-details-panel {
+        position: static;
+        min-height: 280px;
+    }
+
+    .spell-rank-group {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .spell-rank-heading {
+        flex-direction: row;
+        align-items: baseline;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .spells-content {
+        gap: 25px;
+    }
+
+    .spell-category {
+        gap: 15px;
+    }
+
+    .spell-category-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .spell-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .focus-points-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .spell-details-panel {
+        min-height: 260px;
+        padding: 20px;
+    }
+}
+
+/* ========================================
+   DETALHES DAS MAGIAS — ESPECIFICAÇÕES
+======================================== */
+
+/* Oculta corretamente os campos opcionais */
+.spell-details-content [hidden] {
+    display: none !important;
+}
+
+/* Organização das especificações */
+.spell-details-specs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+}
+
+/* Cartões individuais */
+.spell-detail-spec {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+}
+
+/* Nome do atributo */
+.spell-detail-label {
+    color: var(--muted);
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* Informação do atributo */
+.spell-detail-value {
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+/* Heightened ocupa toda a largura */
+.spell-detail-spec--heightened {
+    grid-column: 1 / -1;
+    background: rgba(113, 134, 154, 0.1);
+    border-left: 3px solid var(--blue-light);
+}
+
+/* Etiqueta de cura */
+.spell-healing {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: rgba(57, 123, 80, 0.12);
+    color: #397b50;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+/* ========================================
+   MAGIAS — SCROLL INDEPENDENTE DAS COLUNAS
+======================================== */
+
+@media (min-width: 851px) {
+    .spells-screen {
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .spells-content {
+        flex: 1 1 auto;
+        min-height: 0;
+    }
+
+    .spells-layout {
+        height: 100%;
+        min-height: 0;
+        align-items: stretch;
+    }
+
+    .spells-list-column {
+        height: 100%;
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        overscroll-behavior-y: contain;
+        scrollbar-gutter: stable;
+        padding-right: 10px;
+    }
+
+    .spell-details-panel {
+        height: 100%;
+        min-height: 0;
+        display: block;
+        overflow-y: auto;
+        overflow-x: hidden;
+        overscroll-behavior-y: contain;
+        scrollbar-gutter: stable;
+        position: relative;
+        top: auto;
+    }
+
+    .spell-details-content {
+        width: 100%;
+        overflow: visible;
+    }
+}
+
+@media (max-width: 850px) {
+    .spells-list-column,
+    .spell-details-panel {
+        height: auto;
+        max-height: none;
+        overflow: visible;
+        overscroll-behavior: auto;
+    }
+
+    .spell-details-panel {
+        display: block;
+        position: static;
+    }
+
+    .spell-details-content {
+        flex: none;
+        overflow: visible;
+    }
+}
+
+/* ========================================
+   VISUAL DAS INFORMAÇÕES DAS MAGIAS
+======================================== */
+
+/* Organização do nome, dano e cura nos cartões */
+.spell-card-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.spell-card-name {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/* Estilo compartilhado entre dano e cura */
+.spell-damage,
+.spell-healing {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+    padding: 5px 10px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* Dano */
+.spell-damage {
+    color: #a34f50;
+    background: rgba(163, 79, 80, 0.12);
+    border-color: rgba(163, 79, 80, 0.28);
+}
+
+.spell-damage::before {
+    content: "⚔";
+    font-size: 0.9rem;
+}
+
+/* Cura */
+.spell-healing {
+    color: #39764f;
+    background: rgba(65, 133, 85, 0.13);
+    border-color: rgba(65, 133, 85, 0.3);
+}
+
+.spell-healing::before {
+    content: "✚";
+    font-size: 0.9rem;
+}
+
+/* Organização das informações no painel lateral */
+.spell-details-tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Garante que informações ocultas continuem ocultas */
+.spell-damage[hidden],
+.spell-healing[hidden],
+.spell-signature[hidden] {
+    display: none !important;
+}
+
+/* Ícones das especificações da magia */
+.spell-detail-label::before {
+    display: inline-block;
+    width: 1.3em;
+    margin-right: 5px;
+    color: var(--blue-medium);
+    font-size: 0.95em;
+    text-align: center;
+}
+
+/* Ações */
+#spell-actions-row .spell-detail-label::before {
+    content: "⚡";
+}
+
+/* Alcance */
+#spell-range-row .spell-detail-label::before {
+    content: "↔";
+}
+
+/* Área */
+#spell-area-row .spell-detail-label::before {
+    content: "◎";
+}
+
+/* Alvos */
+#spell-targets-row .spell-detail-label::before {
+    content: "♙";
+}
+
+/* Duração */
+#spell-duration-row .spell-detail-label::before {
+    content: "◷";
+}
+
+/* Teste de resistência */
+#spell-saving-throw-row .spell-detail-label::before {
+    content: "◇";
+}
+
+/* Defesa */
+#spell-defense-row .spell-detail-label::before {
+    content: "⛨";
+}
+
+/* Custo */
+#spell-cost-row .spell-detail-label::before {
+    content: "◈";
+}
+
+/* Requisitos */
+#spell-requirements-row .spell-detail-label::before {
+    content: "⚑";
+}
+
+/* Gatilho */
+#spell-trigger-row .spell-detail-label::before {
+    content: "↯";
+}
+
+/* Componentes */
+#spell-components-row .spell-detail-label::before {
+    content: "✧";
+}
+
+/* Traços */
+#spell-traits-row .spell-detail-label::before {
+    content: "❖";
+}
+
+/* Aprimoramento */
+#spell-heightened-row .spell-detail-label::before {
+    content: "↗";
+}
+
+/* Ajuste do espaço nos cartões de magia */
+.spell-card-title-row {
+    justify-content: flex-start;
+}
+
+.spell-card-name {
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+/* Indicador de Signature Spell */
+.spell-signature {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    color: #b58a3a;
+    font-size: 1.15rem;
+    line-height: 1;
+}
+
+/* Signature no painel de detalhes da magia */
+#spell-details-signature {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    border: 1px solid rgba(120, 136, 150, 0.3);
+    border-radius: 20px;
+    background: rgba(113, 134, 154, 0.10);
+    color: var(--ink-soft);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    line-height: 1.3;
+}
+
+#spell-details-signature[hidden] {
+    display: none !important;
+}
+
+#spell-details-description {
+    white-space: pre-line;
+}
+
+#spell-details-description strong {
+    font-weight: 700;
+}
+
+.spell-granted {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    padding: 3px 8px;
+    border: 1px solid rgba(207, 139, 224, 0.3);
+    border-radius: 20px;
+    background: rgba(244, 184, 247, 0.26);
+    color: rgb(94, 9, 99);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+}
+
+.spell-dc-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    width: fit-content;
+    margin: 0 0 1rem auto;
+    padding: 8px 14px;
+    border: 1px solid rgba(4, 113, 216, 0.562);
+    border-radius: 8px;
+    background: rgba(140, 179, 216, 0.219);
+}
+
+.spell-dc-label {
+    color: var(--ink-soft);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+.spell-dc-value {
+    color: #084b8a;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.spells-screen .screen-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+}
+
+.spells-heading-top,
+.spells-heading-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+}
+
+.spells-heading-bottom {
+    flex-wrap: wrap;
+}
+
+.spells-heading-bottom h2 {
+    margin: 0;
+}

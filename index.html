@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
-<link rel="icon" type="image/png" href="assets/images/favicon-boris-azul.png">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="assets/images/favicon-boris-azul.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#18212c">
     <title>Arquivo de Boris Leuenaar | RPG</title>
@@ -379,19 +378,213 @@
         <section class="screen screen-paper spells-screen" id="magias" aria-labelledby="spells-heading">
 
             <div class="screen-heading">
-                <div>
+                <div class="spells-heading-top">
                     <span class="eyebrow">04 / GRIMÓRIO & CONHECIMENTO</span>
-                    <h2 id="spells-heading">Magias</h2>
+                    <span class="heading-side-note">SPELL RECORD · 004</span>
                 </div>
 
-                <span class="heading-side-note">SPELL RECORD · 004</span>
-            </div>
+                <div class="spells-heading-bottom">
+                    <h2 id="spells-heading">Magias</h2>
 
-            <div class="spells-content" id="spells-content">
-                <p>
-                    As magias de Boris serão organizadas aqui.
-                </p>
+                    <div class="spell-dc-display">
+                        <span class="spell-dc-label">SPELL DC</span>
+                        <strong class="spell-dc-value" id="spell-dc-value">—</strong>
+                    </div>
+                </div>
+
             </div>
+        <div class="spells-content" id="spells-content">
+            <div class="spells-layout">
+                <!-- COLUNA ESQUERDA: LISTA DE MAGIAS -->
+                <div class="spells-list-column">
+
+                    <!-- MENSAGEM INICIAL -->
+                    <div class="spells-empty-state" id="spells-empty-state">
+                        <span>✧</span>
+                        <p>As magias registradas aparecerão aqui.</p>
+                    </div>
+
+                    <!-- MAGIAS DE CLASSE -->
+                    <section class="spell-category" id="class-spells-section" hidden>
+                        <div class="spell-category-heading">
+                            <span class="eyebrow">ORACLE · MAGIAS DE CLASSE</span>
+                            <h3>Magias de Classe</h3>
+                        </div>
+
+                        <div class="spell-rank-list" id="class-spells-list">
+                        </div>
+                    </section>
+
+                    <!-- MAGIAS INATAS -->
+                    <section class="spell-category" id="innate-spells-section" hidden>
+                        <div class="spell-category-heading">
+                            <span class="eyebrow">INNATE MAGIC</span>
+                            <h3>Magias Inatas</h3>
+                        </div>
+
+                        <div class="spell-rank-list" id="innate-spells-list">
+                        </div>
+                    </section>
+
+                    <!-- FOCUS SPELLS -->
+                    <section class="spell-category" id="focus-spells-section" hidden>
+                        <div class="spell-category-heading">
+                            <span class="eyebrow">FOCUS MAGIC</span>
+                            <h3>Focus Spells</h3>
+                        </div>
+
+                        <!-- PONTOS DE FOCO -->
+                        <div class="focus-points-card">
+                            <div class="focus-points-info">
+                                <h4>Pontos de Foco</h4>
+                                <p>Marque os pontos utilizados durante a sessão.</p>
+                            </div>
+
+                            <div class="focus-points" id="focus-points">
+                                <label class="focus-point">
+                                    <input type="checkbox" name="focus-point" value="1">
+                                    <span>01</span>
+                                </label>
+
+                                <label class="focus-point">
+                                    <input type="checkbox" name="focus-point" value="2">
+                                    <span>02</span>
+                                </label>
+
+                                <label class="focus-point">
+                                    <input type="checkbox" name="focus-point" value="3">
+                                    <span>03</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="spell-rank-list" id="focus-spells-list">
+                        </div>
+                    </section>
+
+                </div>
+
+                <!-- COLUNA DIREITA: DETALHES DA MAGIA -->
+                <aside class="spell-details-panel" id="spell-details-panel"
+                    aria-label="Detalhes da magia" aria-live="polite">
+
+                    <!-- MENSAGEM INICIAL DO PAINEL -->
+                    <div class="spell-details-empty" id="spell-details-empty">
+                        <span class="spell-details-emblem" aria-hidden="true">✧</span>
+                        <span class="eyebrow">CONSULTA DO GRIMÓRIO</span>
+                        <h3>Detalhes da magia</h3>
+                        <p>
+                            Selecione uma magia na lista para consultar
+                            sua descrição e outras informações.
+                        </p>
+                    </div>
+
+                    <!-- INFORMAÇÕES DA MAGIA SELECIONADA -->
+                    <div class="spell-details-content" id="spell-details-content" hidden>
+
+                        <span class="eyebrow" id="spell-details-category">
+                            MAGIA DE CLASSE
+                        </span>
+
+                        <div class="spell-details-meta">
+                            <span class="spell-details-rank" id="spell-details-rank"></span>
+                            <span class="spell-tradition" id="spell-details-tradition"></span>
+                        </div>
+
+                        <h3 id="spell-details-name"></h3>
+
+                        <!-- DANO, CURA E SIGNATURE -->
+                        <div class="spell-details-tags">
+                            <span class="spell-damage" id="spell-details-damage" hidden></span>
+                            <span class="spell-healing" id="spell-details-healing" hidden></span>
+                            <span class="spell-signature" id="spell-details-signature" hidden>
+                                SIGNATURE
+                            </span>
+                        </div>
+
+                        <div class="spell-details-divider">
+                            <span>✦</span>
+                        </div>
+
+                        <!-- ESPECIFICAÇÕES DA MAGIA -->
+                        <div class="spell-details-specs">
+
+                            <div class="spell-detail-spec" id="spell-actions-row" hidden>
+                                <span class="spell-detail-label">Actions</span>
+                                <span class="spell-detail-value" id="spell-details-actions"></span>
+                            </div>
+
+                            <div class="spell-detail-spec" id="spell-range-row" hidden>
+                                <span class="spell-detail-label">Range</span>
+                                <span class="spell-detail-value" id="spell-details-range"></span>
+                            </div>
+
+                            <div class="spell-detail-spec" id="spell-area-row" hidden>
+                                <span class="spell-detail-label">Area</span>
+                                <span class="spell-detail-value" id="spell-details-area"></span>
+                            </div>
+
+                            <div class="spell-detail-spec" id="spell-targets-row" hidden>
+                                <span class="spell-detail-label">Targets</span>
+                                <span class="spell-detail-value" id="spell-details-targets"></span>
+                            </div>
+
+                            <div class="spell-detail-spec" id="spell-duration-row" hidden>
+                                <span class="spell-detail-label">Duration</span>
+                                <span class="spell-detail-value" id="spell-details-duration"></span>
+                            </div>
+
+                            <div class="spell-detail-spec" id="spell-saving-throw-row" hidden>
+                                <span class="spell-detail-label">Saving Throw</span>
+                                <span class="spell-detail-value" id="spell-details-saving-throw"></span>
+                            </div>
+
+                            <div class="spell-detail-spec" id="spell-defense-row" hidden>
+                                <span class="spell-detail-label">Save Type</span>
+                                <span class="spell-detail-value" id="spell-details-defense"></span>
+                            </div>
+
+                            <div class="spell-detail-spec" id="spell-cost-row" hidden>
+                                <span class="spell-detail-label">Cost</span>
+                                <span class="spell-detail-value" id="spell-details-cost"></span>
+                            </div>
+
+                            <div class="spell-detail-spec" id="spell-requirements-row" hidden>
+                                <span class="spell-detail-label">Requirements</span>
+                                <span class="spell-detail-value" id="spell-details-requirements"></span>
+                            </div>
+
+                            <div class="spell-detail-spec" id="spell-trigger-row" hidden>
+                                <span class="spell-detail-label">Trigger</span>
+                                <span class="spell-detail-value" id="spell-details-trigger"></span>
+                            </div>
+
+                            <div class="spell-detail-spec" id="spell-components-row" hidden>
+                                <span class="spell-detail-label">Components</span>
+                                <span class="spell-detail-value" id="spell-details-components"></span>
+                            </div>
+
+                            <div class="spell-detail-spec" id="spell-traits-row" hidden>
+                                <span class="spell-detail-label">Traits</span>
+                                <span class="spell-detail-value" id="spell-details-traits"></span>
+                            </div>
+
+                            <div class="spell-detail-spec spell-detail-spec--heightened"
+                                id="spell-heightened-row" hidden>
+                                <span class="spell-detail-label">Heightened</span>
+                                <span class="spell-detail-value" id="spell-details-heightened"></span>
+                            </div>
+
+                        </div>
+
+                        <!-- DESCRIÇÃO COMPLETA -->
+                        <p id="spell-details-description"></p>
+
+                    </div>
+                </aside>
+
+            </div>
+        </div>
 
         </section>
 
@@ -646,7 +839,7 @@
     <footer class="bottom-hud">
         <div class="page-indicator">
             <strong id="current-page">00</strong>
-            <span>/ 07</span>
+            <span>/ <span id="total-pages">07</span></span>
         </div>
         <div class="progress-track">
             <span id="page-progress"></span>

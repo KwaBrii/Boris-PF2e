@@ -1,4 +1,3 @@
-
 /* ========================================
    1. DADOS DO PERSONAGEM
 ======================================== */
@@ -15,6 +14,11 @@ const character = {
     level: 1,
 
     className: "Oracle",
+
+    spellcasting: {
+        ability: "CAR",
+        proficiency: "trained"
+    },
 
     art: "",
 
@@ -201,6 +205,259 @@ const character = {
             description: `Este item é o kit inicial para um aventureiro, contendo os itens essenciais para exploração e sobrevivência. O valor de volume (Bulk) refere-se ao conjunto completo; consulte as descrições de cada item individual, se necessário. O kit contém os seguintes itens: uma mochila, um saco de dormir (ou rolo de dormir), 10 pedaços de giz, pederneira (fogo e aço), 50 pés (aprox. 15 metros) de corda, rações para 2 semanas, sabão, 5 tochas e um odre.`
         }
     ],
+
+        spells: {
+            class: [
+                {
+                    name: "Haunting Hymn (Cantarolar Assombroso)",
+                    rank: "cantrip",
+                    tradition: "divine",
+                    actions: "2 ações",
+                    range: "",
+                    area: "Cone de 3 quadrados",
+                    targets: "Criaturas na área que podem escutar",
+                    duration: "",
+                    savingThrow: "Fortitude",
+                    defense: "Basic",
+                    cost: "",
+                    requirements: "",
+                    trigger: "",
+                    components: "",
+                    traits: "Auditory, Cantrip, Concentrate, Manipulate, Sonic",
+                    damage: "1d8",
+                    healing: "",
+                    heightened: "+2: O dano aumenta em 1d8.",
+                    description: "Você entoa um hino estridente que apenas as criaturas na área conseguem ouvir. O hino causa 1d8 de dano sônico, com um teste de Fortitude básico. Se um alvo falhar criticamente no teste, ele também fica surdo por 1 minuto.",
+                    signature: false
+                },
+                {
+                    name: "Prestidigitation (Prestidigitação)",
+                    rank: "cantrip",
+                    tradition: "divine",
+                    actions: "2 ações",
+                    range: "2 quadrados",
+                    area: "",
+                    targets: "Um objeto",
+                    duration: "Sustentada",
+                    savingThrow: "",
+                    defense: "",
+                    cost: "",
+                    requirements: "",
+                    trigger: "",
+                    components: "",
+                    traits: "Auditory, Cantrip, Concentrate, Manipulate, Sonic",
+                    damage: "",
+                    healing: "",
+                    heightened: "",
+                    description: `A magia mais simples atende aos seus comandos. Você pode realizar efeitos mágicos simples enquanto Mantiver a magia. Cada vez que você Mantiver a magia, pode escolher uma de quatro opções:
+                                    **• Cozinhar:** Esfriar, aquecer ou dar sabor a até 1 libra (aprox. 0,5 kg) de material inanimado.
+                                    **• Levantar:** Levantar lentamente um objeto sem dono, de volume leve ou menor, a 1 pé (aprox. 30 cm) do chão.
+                                    **• Criar:** Criar um objeto temporário de volume desprezível, feito de substância mágica solidificada. O objeto tem uma aparência grosseira e artificial, sendo extremamente frágil — ele não pode ser usado como ferramenta, arma, foco ou componente para uma magia.
+                                    **• ​​Organizar:** Colorir, limpar ou sujar um objeto de volume leve ou menor. Você pode afetar um objeto de volume 1 com 10 rodadas de concentração, e objetos maiores à taxa de 1 minuto por unidade de volume. Prestidigitação não pode causar dano nem condições adversas. Qualquer alteração real em um objeto (além das mencionadas acima) persiste apenas enquanto você Mantiver a magia.`,
+                    signature: false
+                },
+                {
+                    name: "Daze (Atordoar)",
+                    rank: "cantrip",
+                    tradition: "divine",
+                    actions: "2 ações",
+                    range: "12 quadrados",
+                    area: "",
+                    targets: "1 criatura",
+                    duration: "1 rodada",
+                    savingThrow: "Vontade",
+                    defense: "basic",
+                    cost: "",
+                    requirements: "",
+                    trigger: "",
+                    components: "",
+                    traits: "Cantrip, Concentrate, Manipulate, Mental, Nonlethal",
+                    damage: "1d6",
+                    healing: "",
+                    heightened: "+2: O dano aumenta em 1d6.",
+                    description: `Você invade a mente do alvo e o atordoa com um choque mental. O choque causa 1d6 de dano mental, sujeito a um teste de Vontade básico. Se o alvo falhar criticamente no teste, ele também fica atordoado 1.`,
+                    signature: false
+                },
+                {
+                    name: "Message (Mensagem)",
+                    rank: "cantrip",
+                    tradition: "divine",
+                    actions: "1 ação",
+                    range: "24 quadrados",
+                    area: "",
+                    targets: "1 criatura",
+                    duration: "",
+                    savingThrow: "",
+                    defense: "",
+                    cost: "",
+                    requirements: "",
+                    trigger: "",
+                    components: "",
+                    traits: "Auditory, Cantrip, Concentrate, Illusion, Linguistic, Mental, Subtle",
+                    damage: "1d6",
+                    healing: "",
+                    heightened: "+3: O alcance da magia aumenta para 100 quadrados.",
+                    description: `Você articula palavras silenciosamente, mas, em vez de saírem da sua boca, elas são transmitidas diretamente para os ouvidos do alvo. Embora outras pessoas não consigam ouvir suas palavras melhor do que se você as estivesse articulando normalmente, o alvo consegue ouvi-las como se estivesse ao seu lado. O alvo pode dar uma breve resposta como uma reação, ou como uma ação livre no seu próximo turno, caso deseje; no entanto, para isso, ele precisa ser capaz de vê-lo e estar dentro do alcance. Se o alvo responder, a resposta é transmitida diretamente ao seu ouvido, da mesma forma que a mensagem original.`,
+                    signature: false
+                },
+                {
+                    name: "Stabilize (Estabilizar)",
+                    rank: "cantrip",
+                    tradition: "divine",
+                    actions: "2 ações",
+                    range: "6 quadrados",
+                    area: "",
+                    targets: "1 criatura morrendo",
+                    duration: "",
+                    savingThrow: "",
+                    defense: "",
+                    cost: "",
+                    requirements: "",
+                    trigger: "",
+                    components: "",
+                    traits: "Cantrip, Concentrate, Healing, Manipulate, Vitality",
+                    damage: "",
+                    healing: "",
+                    heightened: "+3: O alcance da magia aumenta para 100 quadrados.",
+                    description: `A energia vital fecha a porta da morte. O alvo perde a condição de morrendo, embora permaneça inconsciente com 0 Pontos de Vida.`,
+                    signature: false
+                },
+                {
+                    name: "Read Aura (Ler Aura)",
+                    rank: "cantrip",
+                    tradition: "divine",
+                    granted: true,
+                    actions: "1 minute",
+                    range: "6 quadrados",
+                    area: "",
+                    targets: "1 objeto",
+                    duration: "",
+                    savingThrow: "",
+                    defense: "",
+                    cost: "",
+                    requirements: "",
+                    trigger: "",
+                    components: "",
+                    traits: "Cantrip, Concentrate, Detection, Manipulate",
+                    damage: "",
+                    healing: "",
+                    heightened: `+3: Você pode escolher como alvo até 10 objetos. +6: Você pode escolher como alvo qualquer quantidade de objetos.`,
+                    description: `Você se concentra no objeto-alvo, abrindo sua mente para perceber auras mágicas. Ao concluir a conjuração, você sabe se o item é mágico. Você, ou qualquer pessoa a quem você informe sobre a aura, recebe um bônus de circunstância de +2 em testes para Identificar Magia no item. Se o objeto for ilusório, você só detectará isso se o nível do efeito for inferior ao nível da sua magia Ler Aura.`,
+                    signature: false
+                },
+                {
+                    name: "Heal (Curar)",
+                    rank: "1",
+                    tradition: "divine",
+                    actions: "1 ação",
+                    range: "Vária",
+                    area: "",
+                    targets: "1 criatura viva disposta ou 1 criatura morta-viva",
+                    duration: "",
+                    savingThrow: "Fortitude (se morto-vivo)",
+                    defense: "Basic",
+                    cost: "",
+                    requirements: "",
+                    trigger: "",
+                    components: "",
+                    traits: "Healing, Manipulate, Vitality",
+                    damage: "1d8",
+                    healing: "1d8",
+                    heightened: "+1: A quantidade de cura ou dano aumenta em 1d8, e a cura adicional para a versão de 2 ações aumenta em 8.",
+                    description: `Você canaliza energia vital para curar seres vivos ou causar dano a mortos-vivos. Se o alvo for uma criatura viva disposta, você restaura 1d8 Pontos de Vida. Se o alvo for uma criatura morta-viva, você causa a ela uma quantidade equivalente de dano de vitalidade, e ela tem direito a um teste básico de Fortitude. O número de ações que você gasta ao conjurar esta magia determina seus alvos, alcance, área e outros parâmetros.
+                        **1 ação:** A magia tem alcance de toque.
+                        **2 ações + trait concentrate:** A magia tem um alcance de 30 pés (aprox. 9 metros). Se você estiver curando uma criatura viva, aumente a quantidade de Pontos de Vida restaurados em 8.
+                        **3 ações + trait concentrate:** Você dispersa energia vital em uma emanação de 30 pés (aprox. 9 metros). Isso afeta todas as criaturas vivas e mortas-vivas dentro da área.`,
+                    signature: false
+                },
+                {
+                    name: "Command (Comandar)",
+                    rank: 1,
+                    tradition: "divine",
+                    traits: "Auditory, Concentrate, Linguistic, Manipulate, Mental",
+                    actions: "2 ações",
+                    range: "6 quadrados",
+                    targets: "1 criatura",
+                    duration: "Até o fim do próximo turno do alvo",
+                    savingThrow: "Vontade",
+                    heightened: "(+5): Você pode escolher como alvo até 10 criaturas.",
+                    description: `Você profere um comando difícil de ignorar. É possível ordenar que o alvo se aproxime de você, fuja (como se estivesse sob a condição de fuga), solte o que estiver segurando, caia no chão (ficando caído) ou permaneça onde está. O alvo não pode adiar sua ação nem realizar reações até que tenha obedecido ao seu comando. Os efeitos dependem do teste de Vontade do alvo.
+                                    **Sucesso:** A criatura não é afetada.
+                                    **Falha:** A criatura deve gastar a primeira ação de seu próximo turno para obedecer ao seu comando.
+                                    **Falha Crítica:** O alvo deve usar todas as suas ações em seu próximo turno para obedecer ao seu comando.`,
+                    signature: false
+                },
+                {
+                    name: "Benediction (Bênção)",
+                    rank: 1,
+                    tradition: "divine",
+                    actions: "2 ações",
+                    range: "Pessoal (emana de você)",
+                    area: "Emanação de 3 quadrados",
+                    targets: "Aliados na área",
+                    duration: "1 minuto",
+                    savingThrow: "",
+                    defense: "",
+                    cost: "",
+                    requirements: "",
+                    trigger: "",
+                    components: "",
+                    traits: "Aura, Concentrate, Manipulate, Mental",
+                    damage: "",
+                    healing: "",
+                    heightened: "",
+                    description: "Proteção divina ajuda a proteger seus companheiros. Você e seus aliados recebem um bônus de status de +1 na CA enquanto estiverem dentro da emanação. Uma vez por rodada, em turnos subsequentes, você pode manter o efeito da magia para aumentar o raio da emanação em 10 pés. A Bênção pode neutralizar a magia Maldição.",
+                    signature: false
+                },
+                {
+                    name: "Mindlink (Elo Mental)",
+                    rank: 1,
+                    tradition: "divine",
+                    actions: "2 ações",
+                    range: "Toque",
+                    area: "",
+                    targets: "1 Criatura disposta",
+                    duration: "",
+                    savingThrow: "",
+                    defense: "",
+                    cost: "",
+                    requirements: "",
+                    trigger: "",
+                    components: "",
+                    traits: "Concentrate, Manipulate, Mental",
+                    damage: "",
+                    healing: "",
+                    heightened: "",
+                    description: "Você conecta sua mente à mente do alvo e, instantaneamente, transmite a ele uma quantidade de informações que, de outra forma, levaria 10 minutos para ser comunicada.",
+                    signature: false
+                }
+            ],
+            innate: [],
+            focus: [
+                {
+                    name: "Brain Drain (Dreno Mental)",
+                    rank: 1,
+                    tradition: "divine",
+                    actions: "2 ações",
+                    range: "6 quadrados",
+                    area: "",
+                    targets: "1 Criatura",
+                    duration: "",
+                    savingThrow: "Vontade",
+                    defense: "",
+                    cost: "",
+                    requirements: "",
+                    trigger: "",
+                    components: "",
+                    traits: "Uncommon, Concentrate, Focus, Manipulate, Mental, Oracle",
+                    damage: "1d8",
+                    healing: "",
+                    heightened: "+1: O dano mental aumenta em 1d8.",
+                    description: "Você sonda a mente do alvo para obter conhecimento. Isso causa 1d8 de dano mental, sujeito a um teste básico de Vontade. Se o alvo falhar no teste, você examina as memórias roubadas para tentar realizar um único teste de Recordar Conhecimento. Escolha uma perícia que possua a ação Recordar Conhecimento e utilize o modificador de perícia do alvo para esse teste.",
+                    signature: false
+                }
+            ]
+        },
 
     journalTitle: "",
 
@@ -399,7 +656,6 @@ function initializeDossier() {
         }
     }
 
-
     /* ========================================
        5. ATRIBUTOS E ESTATÍSTICAS
     ======================================== */
@@ -477,8 +733,6 @@ function initializeDossier() {
             }
         }
     }
-
-
 
 /* ========================================
        6. PERÍCIAS
@@ -732,9 +986,450 @@ function initializeDossier() {
         }
     }
 
+    function calculateSpellDC() {
+        const spellcasting = character.spellcasting || {};
+
+        const ability = character.stats.find(
+            stat => stat.abbreviation === spellcasting.ability
+        );
+
+        const abilityModifier = Number(ability?.value) || 0;
+        const level = Number(character.level) || 0;
+
+        const proficiencyRanks = {
+            untrained: 0,
+            trained: 2,
+            expert: 4,
+            master: 6,
+            legendary: 8
+        };
+
+        const rank = String(
+            spellcasting.proficiency || "untrained"
+        ).toLowerCase();
+
+        const rankBonus = proficiencyRanks[rank];
+
+        if (rankBonus === undefined) {
+            console.error("Proficiência de conjuração inválida:", rank);
+            return "—";
+        }
+
+        const proficiencyBonus = rank === "untrained"
+            ? 0
+            : level + rankBonus;
+
+        return 10 + abilityModifier + proficiencyBonus;
+    }
+
+    /* ========================================
+   9. MAGIAS
+======================================== */
+
+    function renderSpells() {
+        setText("spell-dc-value", calculateSpellDC());
+        const categories = [
+            {
+                key: "class",
+                sectionId: "class-spells-section",
+                listId: "class-spells-list"
+            },
+            {
+                key: "innate",
+                sectionId: "innate-spells-section",
+                listId: "innate-spells-list"
+            },
+            {
+                key: "focus",
+                sectionId: "focus-spells-section",
+                listId: "focus-spells-list"
+            }
+        ];
+
+        const traditionLabels = {
+            divine: "Divine",
+            occult: "Occult",
+            primal: "Primal",
+            arcane: "Arcane"
+        };
+
+        let totalSpells = 0;
+
+        categories.forEach(category => {
+            const section = document.getElementById(category.sectionId);
+            const list = document.getElementById(category.listId);
+
+            if (!section || !list) return;
+
+            const spells = Array.isArray(character.spells?.[category.key])
+                ? character.spells[category.key]
+                : [];
+
+            totalSpells += spells.length;
+
+            // Oculta categorias sem magias cadastradas.
+            section.hidden = spells.length === 0;
+
+            if (spells.length === 0) {
+                list.innerHTML = "";
+                return;
+            }
+
+            // Agrupa as magias pelo rank.
+            const rankGroups = new Map();
+
+            spells.forEach((spell, index) => {
+                const rank = String(spell.rank ?? "unknown").toLowerCase();
+
+                if (!rankGroups.has(rank)) {
+                    rankGroups.set(rank, []);
+                }
+
+                rankGroups.get(rank).push({
+                    ...spell,
+                    originalIndex: index
+                });
+            });
+
+            // Ordena: Cantrips primeiro, depois ranks numéricos.
+            const sortedRanks = [...rankGroups.keys()].sort((a, b) => {
+                const rankA = a === "cantrip" ? 0 : Number(a) || 99;
+                const rankB = b === "cantrip" ? 0 : Number(b) || 99;
+
+                return rankA - rankB;
+            });
+
+            list.innerHTML = sortedRanks.map(rank => {
+                const rankSpells = rankGroups.get(rank);
+
+                const rankLabel = rank === "cantrip"
+                    ? "CANTRIP"
+                    : /^\d+$/.test(rank)
+                        ? `SPELL RANK ${rank}`
+                        : "RANK NÃO INFORMADO";
+
+                const cards = rankSpells.map(spell => {
+                    const tradition = String(spell.tradition || "").toLowerCase();
+
+                    const traditionClass = traditionLabels[tradition]
+                        ? `spell-tradition--${tradition}`
+                        : "";
+
+                    const traditionLabel = traditionLabels[tradition]
+                        || "Tradição não informada";
+
+                    const damage = spell.damage
+                        ? `<span class="spell-damage">${escapeHTML(spell.damage)}</span>`
+                        : "";
+
+                    const healing = spell.healing
+                        ? `<span class="spell-healing">${escapeHTML(spell.healing)}</span>`
+                        : "";
+
+                    const signature = category.key === "class" && spell.signature === true
+                        ? `<span class="spell-signature" title="Signature Spell" aria-label="Signature Spell">★</span>`
+                        : "";
+
+                    const granted = category.key === "class" && spell.granted === true
+                        ? `<span class="spell-granted">Granted Spell</span>`
+                        : "";
+
+                    return `
+                        <button
+                            class="spell-card"
+                            type="button"
+                            data-spell-category="${category.key}"
+                            data-spell-index="${spell.originalIndex}"
+                        >
+                            <span class="spell-card-top">
+                                <span class="spell-tradition ${traditionClass}">
+                                    ${traditionLabel}
+                                </span>
+
+                                <span class="spell-card-rank">
+                                    ${escapeHTML(rankLabel)}
+                                </span>
+                            </span>
+
+                            <span class="spell-card-title-row">
+                                <span class="spell-card-name">${escapeHTML(spell.name || "Magia sem nome")}</span>
+                                ${signature}
+                                ${granted}
+                                ${damage}
+                                ${healing}
+                            </span>
+                        </button>
+                    `;
+                }).join("");
+
+                return `
+                    <div class="spell-rank-group">
+                        <div class="spell-rank-heading">
+                            <h4>${escapeHTML(rankLabel)}</h4>
+                            <span>
+                                ${rankSpells.length}
+                                ${rankSpells.length === 1 ? "MAGIA" : "MAGIAS"}
+                            </span>
+                        </div>
+
+                        <div class="spell-grid">
+                            ${cards}
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        });
+
+        // Oculta a mensagem inicial quando houver alguma magia.
+        const emptyState = document.getElementById("spells-empty-state");
+
+        if (emptyState) {
+            emptyState.hidden = totalSpells > 0;
+        }
+    }
+
 
 /* ========================================
-   9. PLAYLIST
+   DETALHES DAS MAGIAS
+======================================== */
+    function formatSpellDescription(description) {
+        const safeText = String(description)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+
+        return safeText.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    }
+
+    function showSpell(category, index) {
+        const spells = character.spells?.[category];
+        const spell = Array.isArray(spells) ? spells[index] : null;
+
+        if (!spell) return;
+
+        const categoryLabels = {
+            class: "MAGIA DE CLASSE · ORACLE",
+            innate: "MAGIA INATA",
+            focus: "FOCUS SPELL"
+        };
+
+        const traditionLabels = {
+            divine: "Divine",
+            occult: "Occult",
+            primal: "Primal",
+            arcane: "Arcane"
+        };
+
+        // Categoria e rank.
+        setText(
+            "spell-details-category",
+            categoryLabels[category] || "MAGIA"
+        );
+
+        const rank = String(spell.rank ?? "").toLowerCase();
+
+        const rankLabel = rank === "cantrip"
+            ? "CANTRIP"
+            : /^\d+$/.test(rank)
+                ? `SPELL RANK ${rank}`
+                : "RANK NÃO INFORMADO";
+
+        setText("spell-details-rank", rankLabel);
+
+        // Nome e descrição.
+        setText("spell-details-name", spell.name || "Magia sem nome");
+
+        document.getElementById("spell-details-description").innerHTML =
+            formatSpellDescription(spell.description || "Descrição não cadastrada.");
+
+        // Tradição mágica.
+        const traditionElement = document.getElementById(
+            "spell-details-tradition"
+        );
+
+        if (traditionElement) {
+            const tradition = String(spell.tradition || "").toLowerCase();
+
+            traditionElement.textContent =
+                traditionLabels[tradition] || "Tradição não informada";
+
+            traditionElement.className = "spell-tradition";
+
+            if (traditionLabels[tradition]) {
+                traditionElement.classList.add(
+                    `spell-tradition--${tradition}`
+                );
+            }
+        }
+
+        // Exibe ou oculta campos opcionais.
+        function updateOptionalField(rowId, valueId, value) {
+            const row = document.getElementById(rowId);
+            const element = document.getElementById(valueId);
+
+            const hasValue =
+                value !== undefined &&
+                value !== null &&
+                String(value).trim() !== "";
+
+            if (element) {
+                element.textContent = hasValue ? value : "";
+            }
+
+            if (row) {
+                row.hidden = !hasValue;
+            }
+        }
+
+        // Especificações da magia.
+        updateOptionalField(
+            "spell-actions-row",
+            "spell-details-actions",
+            spell.actions
+        );
+
+        updateOptionalField(
+            "spell-range-row",
+            "spell-details-range",
+            spell.range
+        );
+
+        updateOptionalField(
+            "spell-area-row",
+            "spell-details-area",
+            spell.area
+        );
+
+        updateOptionalField(
+            "spell-targets-row",
+            "spell-details-targets",
+            spell.targets
+        );
+
+        updateOptionalField(
+            "spell-duration-row",
+            "spell-details-duration",
+            spell.duration
+        );
+
+        updateOptionalField(
+            "spell-saving-throw-row",
+            "spell-details-saving-throw",
+            spell.savingThrow
+        );
+
+        updateOptionalField(
+            "spell-defense-row",
+            "spell-details-defense",
+            spell.defense
+        );
+
+        updateOptionalField(
+            "spell-cost-row",
+            "spell-details-cost",
+            spell.cost
+        );
+
+        updateOptionalField(
+            "spell-requirements-row",
+            "spell-details-requirements",
+            spell.requirements
+        );
+
+        updateOptionalField(
+            "spell-trigger-row",
+            "spell-details-trigger",
+            spell.trigger
+        );
+
+        updateOptionalField(
+            "spell-components-row",
+            "spell-details-components",
+            spell.components
+        );
+
+        updateOptionalField(
+            "spell-traits-row",
+            "spell-details-traits",
+            spell.traits
+        );
+
+        updateOptionalField(
+            "spell-heightened-row",
+            "spell-details-heightened",
+            spell.heightened
+        );
+
+        // Dano.
+        const damageElement = document.getElementById(
+            "spell-details-damage"
+        );
+
+        if (damageElement) {
+            const hasDamage = Boolean(spell.damage);
+
+            damageElement.textContent = hasDamage
+                ? `Dano: ${spell.damage}`
+                : "";
+
+            damageElement.hidden = !hasDamage;
+        }
+
+        // Cura.
+        const healingElement = document.getElementById(
+            "spell-details-healing"
+        );
+
+        if (healingElement) {
+            const hasHealing = Boolean(spell.healing);
+
+            healingElement.textContent = hasHealing
+                ? `Cura: ${spell.healing}`
+                : "";
+
+            healingElement.hidden = !hasHealing;
+        }
+
+        // Signature: somente para magias de classe.
+        const signatureElement = document.getElementById(
+            "spell-details-signature"
+        );
+
+        if (signatureElement) {
+            signatureElement.hidden = !(
+                category === "class" && spell.signature === true
+            );
+        }
+
+        // Alterna a mensagem inicial pelo painel de detalhes.
+        const emptyPanel = document.getElementById(
+            "spell-details-empty"
+        );
+
+        const detailsPanel = document.getElementById(
+            "spell-details-content"
+        );
+
+        if (emptyPanel) emptyPanel.hidden = true;
+        if (detailsPanel) detailsPanel.hidden = false;
+
+        // Destaca o cartão selecionado.
+        document.querySelectorAll(".spell-card").forEach(card => {
+            const selected =
+                card.dataset.spellCategory === category &&
+                Number(card.dataset.spellIndex) === index;
+
+            card.classList.toggle("is-selected", selected);
+        });
+    }
+
+
+
+
+/* ========================================
+   10. PLAYLIST
 ======================================== */
 
     function renderPlaylist() {
@@ -1429,7 +2124,7 @@ function initializeDossier() {
 
 
     /* ========================================
-       10. DETALHES DOS ITENS
+       11. DETALHES DOS ITENS
     ======================================== */
 
     function showItem(index) {
@@ -1459,7 +2154,7 @@ function initializeDossier() {
 
 
     /* ========================================
-       11. NAVEGAÇÃO ENTRE AS SEÇÕES
+       12. NAVEGAÇÃO ENTRE AS SEÇÕES
     ======================================== */
 
     function goToScreen(id) {
@@ -1487,7 +2182,7 @@ function initializeDossier() {
 
 
     /* ========================================
-       12. ATUALIZAÇÃO DO MENU E HUD
+       13. ATUALIZAÇÃO DO MENU E HUD
     ======================================== */
 
     function updateNavigation() {
@@ -1561,7 +2256,7 @@ function initializeDossier() {
 
 
     /* ========================================
-       13. CONFIGURAÇÃO DOS EVENTOS
+       14. CONFIGURAÇÃO DOS EVENTOS
     ======================================== */
 
     function setupEvents() {
@@ -1616,6 +2311,22 @@ function initializeDossier() {
             });
         }
 
+        // Clique nos cartões de magia.
+        const spellsContent = document.getElementById("spells-content");
+
+        if (spellsContent) {
+            spellsContent.addEventListener("click", event => {
+                const card = event.target.closest(".spell-card");
+
+                if (!card) return;
+
+                showSpell(
+                    card.dataset.spellCategory,
+                    Number(card.dataset.spellIndex)
+                );
+            });
+        }
+
         // Botões de avançar e voltar.
 
         if (previousButton) {
@@ -1645,10 +2356,16 @@ function initializeDossier() {
         // Rodinha do mouse: navegação horizontal,
         // exceto dentro das áreas com rolagem vertical.
 
+        
+// Rodinha do mouse: navegação horizontal,
+// exceto dentro das áreas com rolagem vertical.
+
         world.addEventListener("wheel", event => {
             if (
                 event.target instanceof Element &&
-                event.target.closest(".profile-layout, .stats-main, .defenses-card, .relations-grid")
+                event.target.closest(
+                    ".profile-layout, .stats-main, .defenses-card, .relations-grid, .spells-list-column, .spell-details-panel"
+                )
             ) {
                 return;
             }
@@ -1700,7 +2417,7 @@ function initializeDossier() {
 
 
     /* ========================================
-       14. INICIALIZAÇÃO
+       15. INICIALIZAÇÃO
     ======================================== */
 
     renderCharacter();
@@ -1709,12 +2426,12 @@ function initializeDossier() {
     renderDefenses();
     renderRelationships();
     renderInventory();
+    renderSpells();
     renderPlaylist();
     setupEvents();
     setupMusicPlayerEvents();
     setupMusicPlayerDrag();
     updateNavigation();
-
 }
 
 /* ========================================
