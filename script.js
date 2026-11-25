@@ -2437,6 +2437,18 @@ function initializeDossier() {
         });
     }
 
+function addRunicDividers() {
+    document.querySelectorAll(".screen-heading").forEach((heading) => {
+        if (heading.querySelector(".heading-runes")) return;
+
+        const runes = document.createElement("span");
+        runes.className = "heading-runes";
+        runes.textContent = generateRunicInscription();
+        runes.setAttribute("aria-hidden", "true");
+
+        heading.appendChild(runes);
+    });
+}
 
     /* ========================================
        15. INICIALIZAÇÃO
@@ -2453,6 +2465,7 @@ function initializeDossier() {
     setupEvents();
     setupMusicPlayerEvents();
     setupMusicPlayerDrag();
+    addRunicDividers();
     updateNavigation();
 }
 

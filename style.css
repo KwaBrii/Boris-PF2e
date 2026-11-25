@@ -3404,3 +3404,54 @@ img {
 .cover-constellations .constellation-stars {
     fill: currentColor;
 }
+
+
+/* ========================================
+   DIVISÓRIAS RÚNICAS DAS SEÇÕES
+======================================== */
+
+.screen-heading {
+    position: relative;
+    border-bottom: none;
+}
+
+.screen-heading::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--line) 15%,
+        rgba(77, 130, 199, 0.6) 38%,
+        transparent 38%,
+        transparent 62%,
+        rgba(77, 130, 199, 0.6) 62%,
+        var(--line) 85%,
+        transparent 100%
+    );
+}
+
+.heading-runes {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 50%);
+    z-index: 1;
+
+    display: inline-block;
+    padding: 0 10px;
+
+    color: #4D82C7;
+    font-size: 0.95rem;
+    letter-spacing: 0.3em;
+    line-height: 1;
+    white-space: nowrap;
+
+    opacity: 0.85;
+    text-shadow: 0 0 8px rgba(77, 130, 199, 0.2);
+    pointer-events: none;
+}
