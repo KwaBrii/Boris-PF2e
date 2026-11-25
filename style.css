@@ -973,7 +973,7 @@ img {
 }
 
 .relations-intro {
-    padding-right: 25px; border-right: 1px solid var(--line);
+    position: relative; padding-right: 25px; border-right: 1px solid var(--line);
 }
 
 .relations-intro .eyebrow {
@@ -3558,4 +3558,43 @@ img {
         right: -10px;
         bottom: -5px;
     }
+}
+
+/* ========================================
+   ORNAMENTOS HERÁLDICOS DAS RELAÇÕES
+======================================== */
+
+.relations-intro::before,
+.relations-intro::after {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 42px;
+
+    color: #aebbc7;
+    background: rgba(77, 130, 199, 0.08);
+    border: 1px solid rgba(174, 187, 199, 0.45);
+
+    clip-path: polygon(50% 0, 100% 18%, 90% 70%, 50% 100%, 10% 70%, 0 18%);
+
+    font-family: "Segoe UI Symbol", serif;
+    font-size: 1.25rem;
+    line-height: 1;
+
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+.relations-intro::before {
+    content: "⚜";
+    top: -12px;
+    left: 3px;
+}
+
+.relations-intro::after {
+    content: "✥";
+    bottom: 3px;
+    right: 10px;
+    font-size: 1.1rem;
 }
