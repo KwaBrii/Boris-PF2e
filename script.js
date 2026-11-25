@@ -232,6 +232,14 @@ const character = {
             audio: "assets/music/03-Bewitching Eyes.mp3",
             cover: "assets/images/covers/03.png",
             description: ""
+        },
+        {
+            title: "04 - Why",
+            artist: "Nauts",
+            album: "Lies of P Original Soundtrack",
+            audio: "assets/music/04-Why.mp3",
+            cover: "assets/images/covers/04.png",
+            description: ""
         }
     ]
 };
