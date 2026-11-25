@@ -1056,7 +1056,7 @@ img {
 }
 
 .playlist-emblem {
-    display: grid; place-items: center; width: 145px; height: 145px; margin: 40px auto;
+    position: relative; display: grid; place-items: center; width: 145px; height: 145px; margin: 40px auto;
     color: var(--silver); border: 1px solid rgba(213, 220, 226, 0.35); border-radius: 50%;
     font-size: 3rem;
     box-shadow: 0 0 0 12px rgba(213, 220, 226, 0.025),
@@ -3597,4 +3597,46 @@ img {
     bottom: 3px;
     right: 10px;
     font-size: 1.1rem;
+}
+
+/* ========================================
+   ORNAMENTOS DE PARTITURA DA PLAYLIST
+======================================== */
+
+.playlist-emblem::before {
+    content: "";
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    top: 50%;
+    height: 40px;
+
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(142, 184, 232, 0.35) 0 1px,
+        transparent 1px 8px
+    );
+
+    transform: translateY(-50%) rotate(-8deg);
+    pointer-events: none;
+}
+
+.playlist-emblem::after {
+    content: "♪";
+    position: absolute;
+    top: 20px;
+    right: 27px;
+
+    color: #8eb8e8;
+    font-family: "Segoe UI Symbol", serif;
+    font-size: 1.3rem;
+
+    transform: rotate(12deg);
+    opacity: 0.75;
+    pointer-events: none;
+}
+
+.playlist-emblem span {
+    position: relative;
+    z-index: 2;
 }
