@@ -3455,3 +3455,30 @@ img {
     text-shadow: 0 0 8px rgba(77, 130, 199, 0.2);
     pointer-events: none;
 }
+
+/* ========================================
+   ARABESCOS DO INVENTÁRIO
+======================================== */
+
+.inventory-aside::before,
+.inventory-aside::after {
+    content: "❧";
+    position: absolute;
+    color: #4D82C7;
+    font-family: "Segoe UI Symbol", serif;
+    font-size: 2.4rem;
+    line-height: 1;
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.inventory-aside::before {
+    top: 10px;
+    left: 12px;
+}
+
+.inventory-aside::after {
+    right: 12px;
+    bottom: 10px;
+    transform: rotate(180deg);
+}
