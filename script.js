@@ -35,7 +35,7 @@ const character = {
 
     Boris acabou ficando pela famosa Praça do Livre Comércio, com sua afinidade com magia e com seu charme natural, era fácil ser um cartomante para tirar dinheiro dos turistas e pobras desesperados por uma leitura de sorte. Ele só tinha que fugir, vez ou outra, de alguém que veio cobrar por suas leituras 'inconclusivas', mas regra de seu estabelecimento era clara: Nada de reembolsos!
 
-    Um dia porém, ele viu algo que não deveria ter visto enquanto lia suas cartas. Sentindo uma leve vertigem, acabou tendo uma visão do seu passado onde viu uma cidade grande que parecia a capital (Anthusis), uma embarcação e uma família. Nesse dia, com as fortes enxaquecas causadas pela visão, decidiu sair para beber sozinho.
+    Um dia porém, ele viu algo que não deveria ter visto enquanto lia suas cartas. Sentindo uma leve vertigem, acabou tendo uma visão do seu passado onde viu uma cidade grande que parecia a capital (Anthusis), uma embarcação e uma família, junto de seu verdadeiro nome: Boreas Krasiv von Aaramong. Nesse dia, com as fortes enxaquecas causadas pela visão, decidiu sair para beber sozinho.
 
     Em uma famosa taverna, O Gancho do Pirata, se sentou no balcão e começou a beber. Em sua segunda ou terceira garrafa, um homem sorridente se aproximou, puxando conversa. O homem, que se identificou como Professor Ot, disse ter visto de longe a aura mágica de Boris e que via potencial no rapaz. Apesar de um pouco leve por conta do álcool, o tiefling rapidamente se empertigou na cadeira, achando que seria mais um humano que caçoaria dele por conta de sua herança, mas... A zombaria nunca veio. O tal professor Ot o tratou com um respeito que Boris nunca havia recebido. 
 
