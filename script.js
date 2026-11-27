@@ -479,6 +479,28 @@ function initializeDossier() {
         }
     }
 
+    /** Atualiza os valores da bolsa de moedas. */
+    function renderCurrency() {
+        const currency = character.currency || {};
+
+        const denominations = [
+            ["copper", "currency-copper"],
+            ["silver", "currency-silver"],
+            ["gold", "currency-gold"],
+            ["platinum", "currency-platinum"]
+        ];
+
+        denominations.forEach(([key, elementId]) => {
+            const amount = Number(currency[key]);
+
+            const safeAmount = Number.isFinite(amount)
+                ? Math.max(0, Math.floor(amount))
+                : 0;
+
+            setText(elementId, safeAmount.toLocaleString("pt-BR"));
+        });
+    }
+
     /** Abre a janela de detalhes de um item. */
     function showItem(index) {
         const item = character.inventory[index];
@@ -1259,6 +1281,7 @@ function initializeDossier() {
     renderDefenses();
     renderRelationships();
     renderInventory();
+    renderCurrency();
     renderSpells();
     renderPlaylist();
     setupEvents();

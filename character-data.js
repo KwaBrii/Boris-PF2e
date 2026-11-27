@@ -162,6 +162,13 @@ const character = {
 
     carry: { current: 4, max: 10 },
 
+    currency: {
+        copper: 0,
+        silver: 5,
+        gold: 7,
+        platinum: 0
+    },
+
     inventory: [
         {
             name: "Tesoura",
@@ -171,6 +178,15 @@ const character = {
             icon: "✂",
             quantity: 1,
             description: "Uma tesoura para costura que fica sempre no cinto de Boris. Não é como se ele à escondesse, mas ela também não parece uma arma até ser sacada."
+        },
+        {
+            name: "Deck de Cartas",
+            category: "equipment",
+            type: "Diversos",
+            rarity: "Incomum",
+            icon: "🃩",
+            quantity: 1,
+            description: "Um baralho padrão consiste em 54 cartas feitas de papel espesso, acondicionadas em uma embalagem de papel. Boris carrega para todo lado, nunca se sabe quando é hora de usá-lo!"
         },
         {
             name: "Armadura de Couro Reforçada",
