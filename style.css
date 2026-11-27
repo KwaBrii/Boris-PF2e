@@ -926,51 +926,6 @@ img {
         inset 0 0 35px rgba(80, 75, 60, 0.05);
 }
 
-/* Pilha de registros do diário */
-.journal-stack {
-    position: relative;
-    display: grid;
-    width: min(680px, 100%);
-}
-
-.journal-stack > .journal-paper {
-    grid-area: 1 / 1;
-    width: 100%;
-    cursor: pointer;
-    transition:
-        transform .45s ease,
-        box-shadow .45s ease,
-        filter .45s ease;
-}
-
-/* Carta que está em primeiro plano */
-.journal-stack > .journal-paper.is-current {
-    z-index: 10;
-    transform: rotate(-1deg);
-    cursor: default;
-}
-
-/* Cartas que ficam atrás */
-.journal-stack > .journal-paper:nth-child(2) {
-    z-index: 9;
-    transform: translate(10px, 8px) rotate(1.2deg);
-}
-
-.journal-stack > .journal-paper:nth-child(3) {
-    z-index: 8;
-    transform: translate(18px, 15px) rotate(-1.5deg);
-}
-
-.journal-stack > .journal-paper:nth-child(4) {
-    z-index: 7;
-    transform: translate(26px, 22px) rotate(2deg);
-}
-
-.journal-stack > .journal-paper:nth-child(n+5) {
-    z-index: 1;
-    transform: translate(32px, 28px) rotate(-2deg);
-}
-
 /* Destaque de navegação pelo teclado */
 .journal-stack > .journal-paper:focus-visible {
     outline: 2px solid var(--wine);
@@ -1845,26 +1800,6 @@ img {
         font-size: 0.9rem;
         max-height: clamp(120px, 22vh, 220px);
 
-    }
-
-    .journal-stack {
-    width: 100%;
-}
-
-    .journal-stack > .journal-paper:nth-child(2) {
-        transform: translate(6px, 5px) rotate(1deg);
-    }
-
-    .journal-stack > .journal-paper:nth-child(3) {
-        transform: translate(11px, 9px) rotate(-1.5deg);
-    }
-
-    .journal-stack > .journal-paper:nth-child(4) {
-        transform: translate(16px, 13px) rotate(2deg);
-    }
-
-    .journal-stack > .journal-paper:nth-child(n+5) {
-        transform: translate(20px, 17px) rotate(-2deg);
     }
 
     .relations-layout {
@@ -3788,3 +3723,69 @@ img {
     font-size: 8px;
     letter-spacing: .2em;
 }
+
+/* ============================================================================
+   DIÁRIO — PILHA DE REGISTROS
+   ----------------------------------------------------------------------------
+   Substitui os blocos antigos de `.journal-stack` (nth-child, keyframes
+   `journal-card-flip` e os ajustes de nth-child no @media 600px).
+   Os tempos devem coincidir com as constantes de `journal.js`:
+     --journal-leave  = JOURNAL_LEAVE_MS  (650ms)
+     --journal-return = JOURNAL_RETURN_MS (500ms)
+   ============================================================================ */
+
+.journal-stack {
+    /* Tempos da animação */
+    --journal-leave: 650ms;
+    --journal-return: 500ms;
+    --journal-rise: 15000ms;
+
+    /* Deslocamento de cada carta na pilha (profundidades 1 a 4) */
+    --x1: 10px; --y1: 8px;
+    --x2: 18px; --y2: 15px;
+    --x3: 26px; --y3: 22px;
+    --x4: 32px; --y4: 28px;
+
+    position: relative;
+    display: grid;
+    width: min(680px, 100%);
+}
+
+.journal-stack > .journal-paper {
+    grid-area: 1 / 1;
+    width: 100%;
+    cursor: pointer;
+    /* Quanto menor a profundidade, mais à frente. */
+    z-index: calc(20 - var(--depth, 0));
+    transition:
+        transform var(--journal-rise) cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity var(--journal-return) ease;
+    will-change: transform, opacity;
+}
+
+.journal-stack > .journal-paper.is-current {
+    cursor: default;
+}
+
+/* ---- Poses na pilha (a atributo data-depth vem do JS) ---- */
+
+.journal-stack > .journal-paper[data-depth="0"] {
+    transform: rotate(-1deg);
+}
+
+.journal-stack > .journal-paper[data-depth="1"] {
+    transform: translate(var(--x1), var(--y1)) rotate(1.2deg);
+}
+
+.journal-stack > .journal-paper[data-depth="2"] {
+    transform: translate(var(--x2), var(--y2)) rotate(-1.5deg);
+}
+
+.journal-stack > .journal-paper[data-depth="3"] {
+    transform: translate(var(--x3), var(--y3)) rotate(2deg);
+}
+
+.journal-stack > .journal-paper[data-depth="4"] {
+    transform: translate(var(--x4), var(--y4)) rotate(-2deg);
+}
+
