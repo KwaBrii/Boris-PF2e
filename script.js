@@ -91,7 +91,8 @@ const VERTICAL_SCROLL_AREAS = [
     ".defenses-card",
     ".relations-grid",
     ".spells-list-column",
-    ".spell-details-panel"
+    ".spell-details-panel",
+    ".journal-paper-content"
 ].join(", ");
 
 /** Chave do localStorage com a posição do player flutuante. */
@@ -712,7 +713,9 @@ function initializeDossier() {
                         ? `<span class="journal-date">${date}</span>`
                         : ""}
 
-                    ${paragraphs}
+                    <div class="journal-paper-content">
+                        ${paragraphs}
+                    </div>
 
                     <div class="journal-signature">
                         <span class="${hasSignature ? "journal-autograph" : ""}">

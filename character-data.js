@@ -472,9 +472,9 @@ const character = {
             date: "Dia 07",
             text: `Já fazem alguns dias que aceitei o convite do professor Ot. O primeiro dia não foi ruim, acho que por ser uma visita guiada com ele, mas os outros dias... Não sei, sinto que não fiz a escolha certa. Talvez seja a impressão por como os outros alunos me veem. Aquele olhar de que eu não deveria estar ali, ou de que a culpa de qualquer coisa errada é minha.
 
-    Não vi nenhum outro como eu na academia, mas o professor me garantiu que eles existiam. Sendo ou não a decisão certa, agora eu já estava ali. Tinha que fazer valer a pena.
+            Não vi nenhum outro como eu na academia, mas o professor me garantiu que eles existiam. Sendo ou não a decisão certa, agora eu já estava ali. Tinha que fazer valer a pena.
 
-    Ot recomendou que eu me escrevesse no Ramos Esmeralda, uma das turmas feita para as 'borboletas sociais' como eu.`,
+            Ot recomendou que eu me inscrevesse no Ramos Esmeralda, uma das turmas feita para as 'borboletas sociais' como eu.`,
             signature: "Boris L."
         },
         {

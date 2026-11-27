@@ -1000,7 +1000,32 @@ img {
     font-size: clamp(1.8rem, 3vw, 2.7rem); font-weight: 400;
 }
 
-.journal-paper > p {
+/* Área de leitura das entradas */
+.journal-paper-content {
+    max-height: clamp(180px, 34vh, 340px);
+    overflow-y: auto;
+    padding-right: 12px;
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 78, 49, .45) transparent;
+}
+
+/* Personalização da barra de rolagem */
+.journal-paper-content::-webkit-scrollbar {
+    width: 5px;
+}
+
+.journal-paper-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.journal-paper-content::-webkit-scrollbar-thumb {
+    background: rgba(100, 78, 49, .35);
+    border-radius: 10px;
+}
+
+.journal-paper-content > p {
     color: var(--ink-soft); font-size: 1rem; line-height: 2; white-space: pre-line;
 }
 
@@ -1816,8 +1841,10 @@ img {
         font-size: 1.8rem;
     }
 
-    .journal-paper > p {
+    .journal-paper-content > p {
         font-size: 0.9rem;
+        max-height: clamp(120px, 22vh, 220px);
+
     }
 
     .journal-stack {
