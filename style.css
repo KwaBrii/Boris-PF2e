@@ -3730,3 +3730,34 @@ img {
     position: relative;
     z-index: 2;
 }
+
+/* Contador de registros do diário */
+.journal-counter {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 22px;
+    color: var(--silver);
+    font-family: var(--serif);
+    letter-spacing: .12em;
+}
+
+.journal-counter span:first-child {
+    color: var(--paper);
+    font-size: 22px;
+}
+
+.journal-counter-divider {
+    opacity: .45;
+}
+
+.journal-counter span:nth-child(3) {
+    font-size: 12px;
+}
+
+.journal-counter small {
+    margin-left: 8px;
+    color: var(--silver);
+    font-size: 8px;
+    letter-spacing: .2em;
+}

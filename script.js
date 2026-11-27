@@ -666,6 +666,7 @@ function initializeDossier() {
                     Nenhum registro encontrado.
                 </p>
             `;
+            updateJournalCounter(stack);
             return;
         }
 
@@ -728,6 +729,24 @@ function initializeDossier() {
                 </article>
             `;
         }).join("");
+        updateJournalCounter(stack);
+    }
+
+    function updateJournalCounter(stack) {
+        const currentCard = stack.querySelector(".journal-paper.is-current");
+        const cards = stack.querySelectorAll(".journal-paper");
+
+        const currentDisplay = document.getElementById("journal-current-entry");
+        const totalDisplay = document.getElementById("journal-total-entries");
+
+        if (!currentDisplay || !totalDisplay) return;
+
+        const currentIndex = currentCard
+            ? Number(currentCard.dataset.journalIndex) + 1
+            : 0;
+
+        currentDisplay.textContent = String(currentIndex).padStart(2, "0");
+        totalDisplay.textContent = String(cards.length).padStart(2, "0");
     }
 
     /* ---- 3.8.1 Interação do Diário ---- */
@@ -761,6 +780,7 @@ function initializeDossier() {
                 card.classList.toggle("is-current", isCurrent);
                 card.setAttribute("aria-pressed", String(isCurrent));
             });
+            updateJournalCounter(stack);
         }
 
         // Clique do mouse.
