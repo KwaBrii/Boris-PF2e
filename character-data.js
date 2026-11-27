@@ -464,7 +464,7 @@ const character = {
             ]
         },
 
-    journalQuote: "",
+    journalQuote: "Eu sei o que eles esperam de mim. Por isso não faço questão de prová-los como certos ou errados. Faço questão de ser eu mesmo.",
 
     journal: [
         {

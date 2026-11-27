@@ -274,6 +274,7 @@ function initializeDossier() {
         setTextIfProvided("profile-name", character.name);
         setTextIfProvided("profile-role", character.role);
         setTextIfProvided("profile-bio", character.bio);
+        setTextIfProvided("journal-quote", character.journalQuote);
         setTextIfProvided("character-level", String(character.level).padStart(2, "0"));
         setTextIfProvided("character-class", character.className);
 
